@@ -1,0 +1,176 @@
+build/firered/src/pokemon_special_anim_scene.i:        str = StringCopy(scene->textBuf, ItemId_GetName(itemId));
+build/firered/src/pokemon_special_anim_scene.i:        StringAppend(scene->textBuf, gUnknown_841B293);
+build/firered/src/pokemon_special_anim_scene.i:        GetMonData(pokemon, 2, scene->textBuf);
+build/firered/src/pokemon_special_anim_scene.i:        str = StringAppend(scene->textBuf, gUnknown_841B295);
+build/firered/src/pokemon_special_anim_scene.i:        DynamicPlaceholderTextUtil_ExpandPlaceholders(scene->textBuf, gUnknown_841B32E);
+build/firered/src/pokemon_special_anim_scene.i:        StringCopy(scene->textBuf, s1_2_and_Poof_textPtrs[messageId - 2]);
+build/firered/src/pokemon_special_anim_scene.i:        DynamicPlaceholderTextUtil_ExpandPlaceholders(scene->textBuf, gUnknown_841B306);
+build/firered/src/pokemon_special_anim_scene.i:        StringCopy(scene->textBuf, gUnknown_841B315);
+build/firered/src/pokemon_special_anim_scene.i:        StringCopy(scene->textBuf, gUnknown_841B31B);
+build/firered/src/pokemon_special_anim_scene.i:        StringCopy(scene->textBuf, gUnknown_841B329);
+build/firered/src/pokemon_special_anim_scene.i:    AddTextPrinterParameterized5(0, 2, scene->textBuf, strWidth, 0, textSpeed, ((void *)0), 0, 4);
+build/firered/src/pokemon_special_anim_scene.i:    scene->state = 0;
+build/firered/src/pokemon_special_anim_scene.i:    switch (scene->state)
+build/firered/src/pokemon_special_anim_scene.i:            scene->state++;
+build/firered/src/pokemon_special_anim_scene.i:    scene->state = 0;
+build/firered/src/pokemon_special_anim_scene.i:    switch (scene->state)
+build/firered/src/pokemon_special_anim_scene.i:        scene->state++;
+build/firered/src/pokemon_special_anim_scene.i:            scene->field_0004 = 0;
+build/firered/src/pokemon_special_anim_scene.i:            scene->state++;
+build/firered/src/pokemon_special_anim_scene.i:        scene->field_0004++;
+build/firered/src/pokemon_special_anim_scene.i:        if (scene->field_0004 > 20)
+build/firered/src/pokemon_special_anim_scene.i:            scene->state++;
+build/firered/src/pokemon_special_anim_scene.i:        scene->field_0004 = 0;
+build/firered/src/pokemon_special_anim_scene.i:        scene->state++;
+build/firered/src/pokemon_special_anim_scene.i:        scene->field_0004++;
+build/firered/src/pokemon_special_anim_scene.i:        if (scene->field_0004 > 0)
+build/firered/src/pokemon_special_anim_scene.i:            scene->field_0004 = 0;
+build/firered/src/pokemon_special_anim_scene.i:            scene->state++;
+build/firered/src/pokemon_special_anim_scene.i:        scene->field_0004++;
+build/firered/src/pokemon_special_anim_scene.i:        if (scene->field_0004 > 70)
+build/firered/src/pokemon_special_anim_scene.i:            scene->field_0004 = 0;
+build/firered/src/pokemon_special_anim_scene.i:            scene->state++;
+build/firered/src/pokemon_special_anim_scene.i:        scene->field_0004++;
+build/firered/src/pokemon_special_anim_scene.i:        if (!IsOutwardSpiralDotsTaskRunning() && scene->field_0004 > 40)
+build/firered/src/pokemon_special_anim_scene.i:            scene->field_0004 = 0;
+build/firered/src/pokemon_special_anim_scene.i:            scene->state++;
+build/firered/src/pokemon_special_anim_scene.i:        scene->field_0004++;
+build/firered/src/pokemon_special_anim_scene.i:        if (scene->field_0004 > 20)
+build/firered/src/pokemon_special_anim_scene.i:            scene->state++;
+build/firered/src/pokemon_special_anim_scene.i:        DestroySprite(scene->itemIconSprite);
+build/firered/src/pokemon_special_anim_scene.i:        scene->state++;
+build/firered/src/pokemon_special_anim_scene.i:    scene->state = 0;
+build/firered/src/pokemon_special_anim_scene.i:    switch (scene->state)
+build/firered/src/pokemon_special_anim_scene.i:        scene->state++;
+build/firered/src/pokemon_special_anim_scene.i:        scene->monSpriteY1 = 0x48;
+build/firered/src/pokemon_special_anim_scene.i:        scene->monSpriteY2 = r1 + 0x30;
+build/firered/src/pokemon_special_anim_scene.i:        scene->monSpriteY1 = 0x48;
+build/firered/src/pokemon_special_anim_scene.i:        scene->monSpriteY2 = 0x60;
+build/firered/src/pokemon_special_anim_scene.i:        spriteId = CreateSprite(&sSpriteTemplate_MonSprite, 120, scene->monSpriteY1, 4);
+build/firered/src/pokemon_special_anim_scene.i:            scene->monSprite = &gSprites[spriteId];
+build/firered/src/pokemon_special_anim_scene.i:            MonSpriteZoom_UpdateYPos(scene->monSprite, closeness);
+build/firered/src/pokemon_special_anim_scene.i:            scene->monSprite = ((void *)0);
+build/firered/src/pokemon_special_anim_scene.i:        scene->lastCloseness = closeness;
+build/firered/src/pokemon_special_anim_scene.i:    if (closeness != scene->lastCloseness)
+build/firered/src/pokemon_special_anim_scene.i:        SetWordTaskArg(taskId, 6, (uintptr_t)scene->monSprite);
+build/firered/src/pokemon_special_anim_scene.i:        gTasks[taskId].data[1] = scene->lastCloseness;
+build/firered/src/pokemon_special_anim_scene.i:        if (closeness > scene->lastCloseness)
+build/firered/src/pokemon_special_anim_scene.i:    s32 v = ((((((scene->monSpriteY2 - scene->monSpriteY1) << 16) >> 8) / 256 * (pos - 256)) << 8) >> 16);
+build/firered/src/pokemon_special_anim_scene.i:    return v += scene->monSpriteY1;
+build/firered/src/pokemon_special_anim_scene.i:    scene->monSprite->data[0] = frameLen;
+build/firered/src/pokemon_special_anim_scene.i:    scene->monSprite->data[1] = niter;
+build/firered/src/pokemon_special_anim_scene.i:    scene->monSprite->data[2] = amplitude;
+build/firered/src/pokemon_special_anim_scene.i:    scene->monSprite->callback = SpriteCallback_MonSpriteWiggle;
+build/firered/src/pokemon_special_anim_scene.i:    scene->monSprite->x2 = 0;
+build/firered/src/pokemon_special_anim_scene.i:    scene->monSprite->callback = SpriteCallbackDummy;
+build/firered/src/pokemon_special_anim_scene.i:    scene->itemIconSprite = PSA_CreateItemIconObject(itemId);
+build/firered/src/pokemon_special_anim_scene.i:    if (scene->itemIconSprite != ((void *)0))
+build/firered/src/pokemon_special_anim_scene.i:        InitItemIconSpriteState(scene, scene->itemIconSprite, closeness);
+build/firered/src/pokemon_special_anim_scene.i:        StartSpriteAffineAnim(scene->itemIconSprite, closeness);
+build/firered/src/pokemon_special_anim_scene.i:        scene->itemIconSprite->invisible = 1;
+build/firered/src/pokemon_special_anim_scene.i:        SetWordTaskArg(taskId, 4, (uintptr_t)scene->itemIconSprite);
+build/firered/src/pokemon_special_anim_scene.i:    scene->itemIconSprite = PSA_CreateItemIconObject(itemId);
+build/firered/src/pokemon_special_anim_scene.i:    if (scene->itemIconSprite != ((void *)0))
+build/firered/src/pokemon_special_anim_scene.i:        StartSpriteAffineAnim(scene->itemIconSprite, 3);
+build/firered/src/pokemon_special_anim_scene.i:        InitItemIconSpriteState(scene, scene->itemIconSprite, 3);
+build/firered/src/pokemon_special_anim_scene.i:        sprite->y = scene->monSpriteY2;
+build/firered/src/pokemon_special_anim_scene.i:        sprite->y = scene->monSpriteY1;
+build/firered/src/pokemon_special_anim_scene.i:    MachineSetWobble_SetCB(scene->monSprite);
+build/firered/src/pokemon_special_anim_scene.i:    MachineSetWobble_SetCB(scene->itemIconSprite);
+build/firered/src/pokemon_special_anim_scene.i:    return scene->monSprite->callback != SpriteCallbackDummy;
+build/firered/src/pokemon_special_anim_scene.i:    if (closeness != scene->lastCloseness)
+build/firered/src/pokemon_special_anim_scene.i:        SetWordTaskArg(taskId, 6, (uintptr_t)scene->monSprite);
+build/firered/src/pokemon_special_anim_scene.i:        SetWordTaskArg(taskId, 9, (uintptr_t)scene->itemIconSprite);
+build/firered/src/pokemon_special_anim_scene.i:        gTasks[taskId].data[1] = scene->lastCloseness;
+build/firered/src/pokemon_special_anim_scene.i:        if (closeness > scene->lastCloseness)
+build/firered/src/pokemon_special_anim_scene.i:    scene->field_0002 = 0;
+build/firered/src/pokemon_special_anim_scene.i:        spriteId = CreateSprite(&sSpriteTemplate_Star, 120 + sStarCoordOffsets[i][0], scene->monSpriteY2 + sStarCoordOffsets[i][1], 2);
+build/firered/src/pokemon_special_anim_scene.i:            scene->field_0002++;
+src/pokemon_special_anim_scene.c:        str = StringCopy(scene->textBuf, ItemId_GetName(itemId));
+src/pokemon_special_anim_scene.c:        StringAppend(scene->textBuf, gUnknown_841B293);
+src/pokemon_special_anim_scene.c:        GetMonData(pokemon, MON_DATA_NICKNAME, scene->textBuf);
+src/pokemon_special_anim_scene.c:        str = StringAppend(scene->textBuf, gUnknown_841B295);
+src/pokemon_special_anim_scene.c:        DynamicPlaceholderTextUtil_ExpandPlaceholders(scene->textBuf, gUnknown_841B32E);
+src/pokemon_special_anim_scene.c:        StringCopy(scene->textBuf, s1_2_and_Poof_textPtrs[messageId - 2]);
+src/pokemon_special_anim_scene.c:        DynamicPlaceholderTextUtil_ExpandPlaceholders(scene->textBuf, gUnknown_841B306);
+src/pokemon_special_anim_scene.c:        StringCopy(scene->textBuf, gUnknown_841B315);
+src/pokemon_special_anim_scene.c:        StringCopy(scene->textBuf, gUnknown_841B31B);
+src/pokemon_special_anim_scene.c:        StringCopy(scene->textBuf, gUnknown_841B329);
+src/pokemon_special_anim_scene.c:    AddTextPrinterParameterized5(0, 2, scene->textBuf, strWidth, 0, textSpeed, NULL, 0, 4);
+src/pokemon_special_anim_scene.c:    scene->state = 0;
+src/pokemon_special_anim_scene.c:    switch (scene->state)
+src/pokemon_special_anim_scene.c:            scene->state++;
+src/pokemon_special_anim_scene.c:    scene->state = 0;
+src/pokemon_special_anim_scene.c:    switch (scene->state)
+src/pokemon_special_anim_scene.c:        scene->state++;
+src/pokemon_special_anim_scene.c:            scene->field_0004 = 0;
+src/pokemon_special_anim_scene.c:            scene->state++;
+src/pokemon_special_anim_scene.c:        scene->field_0004++;
+src/pokemon_special_anim_scene.c:        if (scene->field_0004 > 20)
+src/pokemon_special_anim_scene.c:            scene->state++;
+src/pokemon_special_anim_scene.c:        scene->field_0004 = 0;
+src/pokemon_special_anim_scene.c:        scene->state++;
+src/pokemon_special_anim_scene.c:        scene->field_0004++;
+src/pokemon_special_anim_scene.c:        if (scene->field_0004 > 0)
+src/pokemon_special_anim_scene.c:            scene->field_0004 = 0;
+src/pokemon_special_anim_scene.c:            scene->state++;
+src/pokemon_special_anim_scene.c:        scene->field_0004++;
+src/pokemon_special_anim_scene.c:        if (scene->field_0004 > 70)
+src/pokemon_special_anim_scene.c:            scene->field_0004 = 0;
+src/pokemon_special_anim_scene.c:            scene->state++;
+src/pokemon_special_anim_scene.c:        scene->field_0004++;
+src/pokemon_special_anim_scene.c:        if (!IsOutwardSpiralDotsTaskRunning() && scene->field_0004 > 40)
+src/pokemon_special_anim_scene.c:            scene->field_0004 = 0;
+src/pokemon_special_anim_scene.c:            scene->state++;
+src/pokemon_special_anim_scene.c:        scene->field_0004++;
+src/pokemon_special_anim_scene.c:        if (scene->field_0004 > 20)
+src/pokemon_special_anim_scene.c:            scene->state++;
+src/pokemon_special_anim_scene.c:        DestroySprite(scene->itemIconSprite);
+src/pokemon_special_anim_scene.c:        scene->state++;
+src/pokemon_special_anim_scene.c:    scene->state = 0;
+src/pokemon_special_anim_scene.c:    switch (scene->state)
+src/pokemon_special_anim_scene.c:        scene->state++;
+src/pokemon_special_anim_scene.c:        scene->monSpriteY1 = 0x48;
+src/pokemon_special_anim_scene.c:        scene->monSpriteY2 = r1 + 0x30;
+src/pokemon_special_anim_scene.c:        scene->monSpriteY1 = 0x48;
+src/pokemon_special_anim_scene.c:        scene->monSpriteY2 = 0x60;
+src/pokemon_special_anim_scene.c:        spriteId = CreateSprite(&sSpriteTemplate_MonSprite, 120, scene->monSpriteY1, 4);
+src/pokemon_special_anim_scene.c:            scene->monSprite = &gSprites[spriteId];
+src/pokemon_special_anim_scene.c:            MonSpriteZoom_UpdateYPos(scene->monSprite, closeness);
+src/pokemon_special_anim_scene.c:            scene->monSprite = NULL;
+src/pokemon_special_anim_scene.c:        scene->lastCloseness = closeness;
+src/pokemon_special_anim_scene.c:    if (closeness != scene->lastCloseness)
+src/pokemon_special_anim_scene.c:        SetWordTaskArg(taskId, tOff_MonSprite, (uintptr_t)scene->monSprite);
+src/pokemon_special_anim_scene.c:        gTasks[taskId].tCurrCloseness = scene->lastCloseness;
+src/pokemon_special_anim_scene.c:        if (closeness > scene->lastCloseness)
+src/pokemon_special_anim_scene.c:    s32 v = ((((((scene->monSpriteY2 - scene->monSpriteY1) << 16) >> 8) / 256 * (pos - 256)) << 8) >> 16);
+src/pokemon_special_anim_scene.c:    return v += scene->monSpriteY1;
+src/pokemon_special_anim_scene.c:    scene->monSprite->data[0] = frameLen;
+src/pokemon_special_anim_scene.c:    scene->monSprite->data[1] = niter;
+src/pokemon_special_anim_scene.c:    scene->monSprite->data[2] = amplitude;
+src/pokemon_special_anim_scene.c:    scene->monSprite->callback = SpriteCallback_MonSpriteWiggle;
+src/pokemon_special_anim_scene.c:    scene->monSprite->x2 = 0;
+src/pokemon_special_anim_scene.c:    scene->monSprite->callback = SpriteCallbackDummy;
+src/pokemon_special_anim_scene.c:    scene->itemIconSprite = PSA_CreateItemIconObject(itemId);
+src/pokemon_special_anim_scene.c:    if (scene->itemIconSprite != NULL)
+src/pokemon_special_anim_scene.c:        InitItemIconSpriteState(scene, scene->itemIconSprite, closeness);
+src/pokemon_special_anim_scene.c:        StartSpriteAffineAnim(scene->itemIconSprite, closeness);
+src/pokemon_special_anim_scene.c:        scene->itemIconSprite->invisible = TRUE;
+src/pokemon_special_anim_scene.c:        SetWordTaskArg(taskId, tOff_ItemSprite, (uintptr_t)scene->itemIconSprite);
+src/pokemon_special_anim_scene.c:    scene->itemIconSprite = PSA_CreateItemIconObject(itemId);
+src/pokemon_special_anim_scene.c:    if (scene->itemIconSprite != NULL)
+src/pokemon_special_anim_scene.c:        StartSpriteAffineAnim(scene->itemIconSprite, 3);
+src/pokemon_special_anim_scene.c:        InitItemIconSpriteState(scene, scene->itemIconSprite, 3);
+src/pokemon_special_anim_scene.c:        sprite->y = scene->monSpriteY2;
+src/pokemon_special_anim_scene.c:        sprite->y = scene->monSpriteY1;
+src/pokemon_special_anim_scene.c:    MachineSetWobble_SetCB(scene->monSprite);
+src/pokemon_special_anim_scene.c:    MachineSetWobble_SetCB(scene->itemIconSprite);
+src/pokemon_special_anim_scene.c:    return scene->monSprite->callback != SpriteCallbackDummy;
+src/pokemon_special_anim_scene.c:    if (closeness != scene->lastCloseness)
+src/pokemon_special_anim_scene.c:        SetWordTaskArg(taskId, tOff_MonSprite, (uintptr_t)scene->monSprite);
+src/pokemon_special_anim_scene.c:        SetWordTaskArg(taskId, tOff_ItemSprite, (uintptr_t)scene->itemIconSprite);
+src/pokemon_special_anim_scene.c:        gTasks[taskId].tCurrCloseness = scene->lastCloseness;
+src/pokemon_special_anim_scene.c:        if (closeness > scene->lastCloseness)
+src/pokemon_special_anim_scene.c:    scene->field_0002 = 0;
+src/pokemon_special_anim_scene.c:        spriteId = CreateSprite(&sSpriteTemplate_Star, 120 + sStarCoordOffsets[i][0],  scene->monSpriteY2 + sStarCoordOffsets[i][1], 2);
+src/pokemon_special_anim_scene.c:            scene->field_0002++;

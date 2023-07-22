@@ -1,0 +1,14 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\asm",
+    "\\asm\\macros",
+    "\\data",
+    "\\sound",
+    "\\src",
+    "\\src\\data",
+    "\\src\\data\\pokemon"
+  ],
+  "SelectedNode": "\\src\\data\\pokemon\\base_stats.h",
+  "PreviewInSolutionExplorer": false
+}
