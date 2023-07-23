@@ -897,7 +897,7 @@ const u8 *const gBattleStringsTable[] = {
     [STRINGID_PKMNSATTACKUP - 12]                 = sText_PkmnsAttackUp,
     [STRINGID_PKMNSSPECIALATTACKUP - 12]          = sText_PkmnsSpecialAttackUp,
     [STRINGID_CUSEDBODYDISABLED - 12]             = sText_CursedBodyDisabled,
-    [STRINGID_PKMNSXACTIVATED - 12]               = sText_PkmnsXActivatedSpeed
+    [STRINGID_PKMNSXACTIVATED - 12]               = sText_PkmnsXActivated
 };
 
 const u16 gMissStringIds[] = {

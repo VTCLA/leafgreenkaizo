@@ -2540,7 +2540,7 @@ s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *de
     if (defender->ability == ABILITY_FUR_COAT)
         defense *= 2;
     if (attacker->ability == ABILITY_FLARE_BOOST && (attacker->status1 & STATUS1_BURN))
-        spAttack = (15 * spAttack) / 10
+        spAttack = (15 * spAttack) / 10;
     if (attacker->ability == ABILITY_SHEER_FORCE && gBattleMoves[move].secondaryEffectChance != 0
      && gBattleMoves[move].secondaryEffectChance != 100)
         gBattleMovePower = (13 * gBattleMovePower) / 10;

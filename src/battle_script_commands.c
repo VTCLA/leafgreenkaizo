@@ -8799,7 +8799,7 @@ static void atkE2_switchoutabilities(void)
         gBattleMoveDamage += gBattleMons[gActiveBattler].hp;
         if (gBattleMoveDamage > gBattleMons[gActiveBattler].maxHP)
             gBattleMoveDamage = gBattleMons[gActiveBattler].maxHP;
-        BtlController_EmitSetMonData(BUFFER_A, REQUEST_HP_BATTLE,
+        BtlController_EmitSetMonData(0, REQUEST_HP_BATTLE,
                                     gBitTable[*(gBattleStruct->battlerPartyIndexes + gActiveBattler)],
                                     sizeof(gBattleMoveDamage),
                                     &gBattleMoveDamage);

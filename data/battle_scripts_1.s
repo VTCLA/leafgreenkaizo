@@ -3940,7 +3940,7 @@ BattleScript_ItemSteal::
 	
 BattleScript_CursedBodyActivates::
 	printstring STRINGID_CUSEDBODYDISABLED
-	waitmessage B_WAIT_TIME_LONG
+	waitmessage 0x40
 	return
 
 BattleScript_GooeyActivates::

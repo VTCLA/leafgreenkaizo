@@ -750,17 +750,14 @@ u8 DoBattlerEndTurnEffects(void)
                  && gBattleMons[gActiveBattler].hp != 0
                  && gBattleMons[gActiveBattler].ability != ABILITY_MAGIC_GUARD)
                 {
-                    if (ability == ABILITY_POISON_HEAL)
+                    if (gBattleMons[gActiveBattler].ability == ABILITY_POISON_HEAL)
                     {
-                        if (!BATTLER_MAX_HP(gActiveBattler))
-                        {
-                            gBattleMoveDamage = gBattleMons[gActiveBattler].maxHP / 8;
-                            if (gBattleMoveDamage == 0)
-                                gBattleMoveDamage = 1;
-                            gBattleMoveDamage *= -1;
-                            BattleScriptExecute(BattleScript_RainDishActivates);
-                            effect++;
-                        }
+                        gBattleMoveDamage = gBattleMons[gActiveBattler].maxHP / 8;
+                        if (gBattleMoveDamage == 0)
+                            gBattleMoveDamage = 1;
+                        gBattleMoveDamage *= -1;
+                        BattleScriptExecute(BattleScript_RainDishActivates);
+                        effect++;
                     }
                     else
                     {
@@ -778,17 +775,14 @@ u8 DoBattlerEndTurnEffects(void)
                  && gBattleMons[gActiveBattler].hp != 0
                  && gBattleMons[gActiveBattler].ability != ABILITY_MAGIC_GUARD)
                 {
-                    if (ability == ABILITY_POISON_HEAL)
+                    if (gBattleMons[gActiveBattler].ability == ABILITY_POISON_HEAL)
                     {
-                        if (!BATTLER_MAX_HP(gActiveBattler))
-                        {
-                            gBattleMoveDamage = gBattleMons[gActiveBattler].maxHP / 8;
-                            if (gBattleMoveDamage == 0)
-                                gBattleMoveDamage = 1;
-                            gBattleMoveDamage *= -1;
-                            BattleScriptExecute(BattleScript_RainDishActivates);
-                            effect++;
-                        }
+                        gBattleMoveDamage = gBattleMons[gActiveBattler].maxHP / 8;
+                        if (gBattleMoveDamage == 0)
+                            gBattleMoveDamage = 1;
+                        gBattleMoveDamage *= -1;
+                        BattleScriptExecute(BattleScript_RainDishActivates);
+                        effect++;
                     }
                     else
                     {
@@ -2158,7 +2152,7 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u8 ability, u8 special, u16 moveA
             case ABILITY_GOOEY:
                 if (!(gMoveResultFlags & MOVE_RESULT_NO_EFFECT)
                  && gBattleMons[gBattlerAttacker].hp != 0
-                 && (CompareStat(gBattlerAttacker, STAT_SPEED, MIN_STAT_STAGE, CMP_GREATER_THAN))
+                 && gBattleMons[gBattlerAttacker].statStages[STAT_SPEED] > 0
                  && !gProtectStructs[gBattlerAttacker].confusionSelfDmg
                  && TARGET_TURN_DAMAGED
                  && (gBattleMoves[moveArg].flags & FLAG_MAKES_CONTACT))
