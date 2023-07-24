@@ -1960,40 +1960,99 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u8 ability, u8 special, u16 moveA
                 case ABILITY_LIGHTNING_ROD:
                     if (moveType == TYPE_ELECTRIC)
                     {
-                        ++gBattleMons[battler].statStages[STAT_SPATK];
-                        gBattleScripting.animArg1 = 0xE + STAT_SPATK;
-                        gBattleScripting.animArg2 = 0;
-                        gBattlescriptCurrInstr = BattleScript_DefenderSpecialAttackUp;
-                        effect = 2;
+                        if (gBattleMons[battler].statStages[STAT_SPATK] < 12)
+                        {
+                            if (gProtectStructs[gBattlerAttacker].notFirstStrike)
+                                gBattlescriptCurrInstr = BattleScript_DefenderSpecialAttackUp;
+                            else
+                                gBattlescriptCurrInstr = BattleScript_DefenderSpecialAttackUp_PPLoss;
+                            ++gBattleMons[battler].statStages[STAT_SPATK];
+                            gBattleScripting.animArg1 = 0xE + STAT_SPATK;
+                            gBattleScripting.animArg2 = 0;
+                            effect = 2;
+                        }
+                        else
+                        {
+                            if (gProtectStructs[gBattlerAttacker].notFirstStrike)
+                                gBattlescriptCurrInstr = BattleScript_MonMadeMoveUseless;
+                            else
+                                gBattlescriptCurrInstr = BattleScript_MonMadeMoveUseless_PPLoss;
+                            effect = 2;
+                        }
                     }
-                break;
+                    break;
                 case ABILITY_MOTOR_DRIVE:
                     if (moveType == TYPE_ELECTRIC)
                     {
-                        ++gBattleMons[battler].statStages[STAT_SPEED];
-                        gBattleScripting.animArg1 = 0xE + STAT_SPEED;
-                        gBattleScripting.animArg2 = 0;
-                        gBattlescriptCurrInstr = BattleScript_DefenderSpeedUp;
-                        effect = 2;
+                        if (gBattleMons[battler].statStages[STAT_SPEED] < 12)
+                        {
+                            if (gProtectStructs[gBattlerAttacker].notFirstStrike)
+                                gBattlescriptCurrInstr = BattleScript_DefenderSpeedUp;
+                            else
+                                gBattlescriptCurrInstr = BattleScript_DefenderSpeedUp_PPLoss;
+                            ++gBattleMons[battler].statStages[STAT_SPEED];
+                            gBattleScripting.animArg1 = 0xE + STAT_SPEED;
+                            gBattleScripting.animArg2 = 0;
+                            effect = 2;
+                        }
+                        else
+                        {
+                            if (gProtectStructs[gBattlerAttacker].notFirstStrike)
+                                gBattlescriptCurrInstr = BattleScript_MonMadeMoveUseless;
+                            else
+                                gBattlescriptCurrInstr = BattleScript_MonMadeMoveUseless_PPLoss;
+                            effect = 2;
+                        }
                     }
+                    break;
                 case ABILITY_SAP_SIPPER:
                     if (moveType == TYPE_GRASS)
                     {
-                        ++gBattleMons[battler].statStages[STAT_ATK];
-                        gBattleScripting.animArg1 = 0xE + STAT_ATK;
-                        gBattleScripting.animArg2 = 0;
-                        gBattlescriptCurrInstr = BattleScript_DefenderAttackUp;
-                        effect = 2;
+                        if (gBattleMons[battler].statStages[STAT_SPATK] < 12)
+                        {
+                            if (gProtectStructs[gBattlerAttacker].notFirstStrike)
+                                gBattlescriptCurrInstr = BattleScript_DefenderAttackUp;
+                            else
+                                gBattlescriptCurrInstr = BattleScript_DefenderAttackUp_PPLoss;
+                            ++gBattleMons[battler].statStages[STAT_ATK];
+                            gBattleScripting.animArg1 = 0xE + STAT_ATK;
+                            gBattleScripting.animArg2 = 0;
+                            effect = 2;
+                        }
+                        else
+                        {
+                            if (gProtectStructs[gBattlerAttacker].notFirstStrike)
+                                gBattlescriptCurrInstr = BattleScript_MonMadeMoveUseless;
+                            else
+                                gBattlescriptCurrInstr = BattleScript_MonMadeMoveUseless_PPLoss;
+                            effect = 2;
+                        }
                     }
+                    break;
                 case ABILITY_STORM_DRAIN:
                     if (moveType == TYPE_WATER)
                     {
-                        ++gBattleMons[battler].statStages[STAT_SPATK];
-                        gBattleScripting.animArg1 = 0xE + STAT_SPATK;
-                        gBattleScripting.animArg2 = 0;
-                        gBattlescriptCurrInstr = BattleScript_DefenderSpecialAttackUp;
-                        effect = 2;
+                        if (gBattleMons[battler].statStages[STAT_ATK] < 12)
+                        {
+                            if (gProtectStructs[gBattlerAttacker].notFirstStrike)
+                                gBattlescriptCurrInstr = BattleScript_DefenderSpecialAttackUp;
+                            else
+                                gBattlescriptCurrInstr = BattleScript_DefenderSpecialAttackUp_PPLoss;
+                            ++gBattleMons[battler].statStages[STAT_SPATK];
+                            gBattleScripting.animArg1 = 0xE + STAT_SPATK;
+                            gBattleScripting.animArg2 = 0;
+                            effect = 2;
+                        }
+                        else
+                        {
+                            if (gProtectStructs[gBattlerAttacker].notFirstStrike)
+                                gBattlescriptCurrInstr = BattleScript_MonMadeMoveUseless;
+                            else
+                                gBattlescriptCurrInstr = BattleScript_MonMadeMoveUseless_PPLoss;
+                            effect = 2;
+                        }
                     }
+                    break;
                 }
                 if (effect == 1)
                 {

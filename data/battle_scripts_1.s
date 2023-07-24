@@ -3964,6 +3964,8 @@ BattleScript_SpeedBoostActivates::
 	waitmessage 0x40
 	end3
 
+BattleScript_DefenderSpeedUp_PPLoss::
+	ppreduce
 BattleScript_DefenderSpeedUp::
 	attackstring
 	pause 0x20
@@ -3975,6 +3977,8 @@ BattleScript_DefenderSpeedUp::
 	orbyte gMoveResultFlags, MOVE_RESULT_DOESNT_AFFECT_FOE
 	goto BattleScript_MoveEnd
 
+BattleScript_DefenderAttackUp_PPLoss::
+	ppreduce
 BattleScript_DefenderAttackUp::
 	attackstring
 	pause 0x20
@@ -3986,6 +3990,8 @@ BattleScript_DefenderAttackUp::
 	orbyte gMoveResultFlags, MOVE_RESULT_DOESNT_AFFECT_FOE
 	goto BattleScript_MoveEnd
 
+BattleScript_DefenderSpecialAttackUp_PPLoss::
+	ppreduce
 BattleScript_DefenderSpecialAttackUp::
 	attackstring
 	pause 0x20

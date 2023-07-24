@@ -234,6 +234,9 @@ extern const u8 BattleScript_EffectSpeedUp[];
 extern const u8 BattleScript_DefenderSpeedUp[];
 extern const u8 BattleScript_DefenderAttackUp[];
 extern const u8 BattleScript_DefenderSpecialAttackUp[];
+extern const u8 BattleScript_DefenderSpeedUp_PPLoss[];
+extern const u8 BattleScript_DefenderAttackUp_PPLoss[];
+extern const u8 BattleScript_DefenderSpecialAttackUp_PPLoss[];
 extern const u8 BattleScript_CursedBodyActivates[];
 extern const u8 BattleScript_GooeyActivates[];
 
