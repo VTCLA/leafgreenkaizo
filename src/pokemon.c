@@ -1466,6 +1466,22 @@ const u8 gPPUpSetMask[] = { 0xfc, 0xf3, 0xcf, 0x3f }; // Masks for setting PP Up
 
 const u8 gPPUpAddMask[] = { 0x01, 0x04, 0x10, 0x40 }; // Values added to PP Up count
 
+const u8 gLevelCaps[] = { 15, 25, 31, 44, 52, 60, 71, 81, 87, 94, 100 };
+
+const u32 gCapTrainers[] = 
+{
+    TRAINER_LEADER_BROCK,
+    TRAINER_LEADER_MISTY,
+    TRAINER_LEADER_LT_SURGE,
+    TRAINER_BOSS_GIOVANNI,
+    TRAINER_LEADER_ERIKA,
+    TRAINER_LEADER_KOGA,
+    TRAINER_BOSS_GIOVANNI_2,
+    TRAINER_LEADER_SABRINA,
+    TRAINER_LEADER_BLAINE,
+    TRAINER_LEADER_GIOVANNI,
+};
+
 const u8 gStatStageRatios[][2] =
 {
     { 10, 40 },
@@ -2207,7 +2223,7 @@ static u8 GetLevelFromMonExp(struct Pokemon *mon)
     u32 exp = GetMonData(mon, MON_DATA_EXP, NULL);
     s32 level = 1;
 
-    while (level <= MAX_LEVEL && gExperienceTables[gBaseStats[species].growthRate][level] <= exp)
+    while (level <= GetLevelCap() && gExperienceTables[gBaseStats[species].growthRate][level] <= exp)
         level++;
 
     return level - 1;
@@ -2219,7 +2235,7 @@ u8 GetLevelFromBoxMonExp(struct BoxPokemon *boxMon)
     u32 exp = GetBoxMonData(boxMon, MON_DATA_EXP, NULL);
     s32 level = 1;
 
-    while (level <= MAX_LEVEL && gExperienceTables[gBaseStats[species].growthRate][level] <= exp)
+    while (level <= GetLevelCap() && gExperienceTables[gBaseStats[species].growthRate][level] <= exp)
         level++;
 
     return level - 1;
@@ -3366,6 +3382,17 @@ u32 GetBoxMonData(struct BoxPokemon *boxMon, s32 field, u8 *data)
         EncryptBoxMon(boxMon);
 
     return retVal;
+}
+
+u8 GetLevelCap()
+{
+    u8 i = 0;
+    for (i=0; i < LEVEL_CAP_COUNT; i++)
+    {
+        if (!FlagGet(TRAINER_FLAGS_START + gCapTrainers[i]))
+            return gLevelCaps[i];
+    }
+    return MAX_LEVEL;
 }
 
 #define SET8(lhs) (lhs) = *data

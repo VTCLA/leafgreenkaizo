@@ -333,6 +333,10 @@ extern const u8 gFacilityClassToPicIndex[];
 extern const u8 gFacilityClassToTrainerClass[];
 extern const struct SpriteTemplate gSpriteTemplates_Battlers[];
 extern const u8 gPPUpGetMask[];
+extern const u8 gLevelCaps[];
+extern const u32 gCapTrainers[];
+
+#define LEVEL_CAP_COUNT     0x9
 
 void ZeroBoxMonData(struct BoxPokemon *boxMon);
 void ZeroMonData(struct Pokemon *mon);
@@ -383,6 +387,8 @@ u32 GetBoxMonData(struct BoxPokemon *, s32, u8 *);
 u32 GetMonData();
 u32 GetBoxMonData();
 #endif // IS_POKEMON_C
+
+u8 GetLevelCap(void);
 
 void SetMonData(struct Pokemon *mon, s32 field, const void *dataArg);
 void SetBoxMonData(struct BoxPokemon *boxMon, s32 field, const void *dataArg);
