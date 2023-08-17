@@ -1060,3 +1060,236 @@ gMoveDescription_DoomDesire:: @ 848865A
 gMoveDescription_PsychoBoost:: @ 84886A1
 	.string "An intense attack\nthat also sharply\nreduces the user's\nSP. ATK stat.$"
 
+gMoveDescription_HammerArm:: 
+	.string "A swinging fist\nattack that also\nlowers Speed..$"
+
+gMoveDescription_IceHammer:: 
+	.string "A swinging fist\nattack that also\nlowers Speed.$"
+
+gMoveDescription_ForcePalm:: 
+	.string "A shock wave\nattack that may\nparalyze the foe.$"
+
+gMoveDesciption_AuraSphere::
+	.string "Attacks with\nan aura blast\nthat cannot be\nevaded.$"
+
+gMoveDescription_RockPolish::
+	.string "Polishes the\nbody to sharply\nraise Speed.$"
+
+gMoveDescription_PoisonJab::
+	.string "A stabbing attack\nthat may poison.$"
+
+gMoveDescription_DarkPulse::
+	.string "Attacks with a\nhorrible aura.\nMay cause flinching.$"
+
+gMoveDescription_NightSlash::
+	.string "The foe is slashed\nwith claws, etc.\nIt has a high\ncritical-hit ratio.$"
+
+gMoveDescription_AquaTail::
+	.string "The user swings\nits tail like a\nwave to attack.$"
+
+gMoveDescription_SeedBomb::
+	.string "A barrage of\nhard seeds is\nfired at the foe.$"
+
+gMoveDescription_AirSlash::
+	.string "Attacks with a\nblade of air.\nMay cause flinching.$"
+
+gMoveDescription_XScissor::
+	.string "Slashes the foe\nwith crossed claws,\nscythes, etc.$"
+
+gMoveDescription_BugBuzz::
+	.string "A damaging sound\nwave that may\nlower Sp. Def.$"
+
+gMoveDescription_DragonPulse::
+	.string "Generates a\nshock wave to\ndamage the foe.$"
+
+gMoveDescription_DragonRush::
+	.string "Tackles the foe\nwith menace. May\ncause flinching.$"
+
+gMoveDescription_PowerGem::
+	.string "Attacks with light\nrays that sparkle\nlike diamonds.$"
+
+gMoveDescription_VacuumWave::
+	.string "Whirls its fists\nto send a wave\nthat strikes first.$"
+
+gMoveDescription_FocusBlast::
+	.string "Attacks at full\npower. May lower\nSp. Def.$"
+
+gMoveDescription_EnergyBall::
+	.string "Draws power from\nnature to attack.\nMay lower Sp. Def.$"
+
+gMoveDescription_BraveBird::
+	.string "A low altitude\ncharge that also\nhurts the user.$"
+
+gMoveDescription_EarthPower::
+	.string "Makes the ground\nerupt with power.\nMay lower Sp. Def.$"
+
+gMoveDescription_BulletPunch::
+	.string "Punches as fast\nas a bullet.\nAlways hits first.$"
+
+gMoveDescription_IceShard::
+	.string "Hurls a chunk\nof ice that\nalways strikes first.$"
+
+gMoveDescription_ShadowClaw::
+	.string "Strikes with a\nshadow claw. High\ncritical-hit ratio$"
+
+gMoveDescription_ShadowSneak::
+	.string "Extends the user's\nshadow to strike\nfirst.$"
+
+gMoveDescription_MudBomb::
+	.string "Throws a blob of\nmud to damage\nand cut accuracy.$"
+
+gMoveDescription_PsychoCut::
+	.string "Tears with psychic\nblades. High\ncritical-hit ratio.$"
+
+gMoveDescription_ZenHeadbutt::
+	.string "Focuses its will\nand rams the foe.\nMay cause flinching.$"
+
+gMoveDescription_FlashCannon::
+	.string "Releases a blast\nof light. May\nlower Sp. Def.$"
+
+gMoveDescription_DracoMeteor::
+	.string "Casts comets onto\nthe foe. Harshly\nlowers the user's\nSp. Atk.$"
+
+gMoveDescription_Discharge::
+	.string "Zaps the foes\nwith electricity.\nMay paralyze.$"
+
+gMoveDescription_PowerWhip::
+	.string "Violently lashes\nwith vines or\ntentacles.$"
+
+gMoveDescription_GunkShot::
+	.string "Shoots filthy\ngarbage at the\nfoe. May poison.$"
+
+gMoveDescription_IronHead::
+	.string "Slams the foe\nwith a hard head.\nMay cause flinching.$"
+
+gMoveDescription_MagnetBomb::
+	.string "Launches a magnet\nthat strikes\nwithout fail.$"
+
+gMoveDescription_StoneEdge::
+	.string "Stabs the foe\nwith stones. high\ncritical-hit ratio.$"
+
+gMoveDescription_GrassKnot::
+	.string "A snare attack\nthat does more\ndamage to\nheavier foes.$"
+
+gMoveDescription_WoodHammer::
+	.string "Slams the body\ninto a foe. The\nuser is hurt too.$"
+
+gMoveDescription_AquaJet::
+	.string "Strikes first by\ndashing at the\nfoe at high speed.$"
+
+gMoveDescription_NastyPlot::
+	.string "Thinks bad thoughts\nto sharply boost\nSp. Atk.$"
+
+gMoveDescription_DoubleHit::
+	.string "Slams the foe\nwith a tail\netc. Strikes twice.$"
+
+gMoveDescription_OminousWind::
+	.string "A repulsive\nattack that may\nraise all stats.$"
+
+gMoveDescription_TailSlap::
+	.string "Strikes the foe\nwith its tail\n2 to 5 times.$"
+
+gMoveDescription_RagePowder::
+	.string "Scatters powder\nto make foes\nattack the user.$"
+
+gMoveDescription_LowSweep::
+	.string "Attacks the foe's\nlegs, lowering its\nSpeed.$"
+
+gMoveDescription_Scald::
+	.string "Shoots boiling water\nat the foe. May\ninflict a burn.$"
+
+gMoveDescription_Bulldoze::
+	.string "Stomps the ground,\nstriking all POKéMON\nand lowering\ntheir Speed.$"
+
+gMoveDescription_Electroweb::
+	.string "Snares the foes\nwith an electric\nnet. Lowers Speed.$"
+
+gMoveDescription_WildCharge::
+	.string "An electrical\ntackle that also\nhurts the user.$"
+
+gMoveDescription_DualChop::
+	.string "Attacks with brutal\nhits. Strikes twice.$"
+
+gMoveDescription_IcicleCrash::
+	.string "Drops large icicles\non the foe. May\ncause flinching.$"
+
+gMoveDescription_PetalBlizzard::
+	.string "Stirs up a\nviolent storm of\npetals to attack.$"
+
+gMoveDescription_DrainPunch::
+	.string "A tough attack that\ndrains half the\ndamage it inflicted\nto restore HP.$"
+
+gMoveDescription_DrainingKiss::
+	.string "Steals the target's\nenergy. Half the\ndamage is restored\nto the user.$"
+
+gMoveDescription_PlayRough::
+	.string "Plays rough with\nthe foe. May\nlower attack.$"
+
+gMoveDescription_LavaPlume::
+	.string "Scarlet flames\ntorch everything\naround the user.$"
+
+gMoveDescription_LeafStorm::
+	.string "Whips up a storm\nof leaves. Harshly\nlowers the user's\nSp. Atk.$"
+
+gMoveDescription_DualWingbeat::
+	.string "User slams the\ntarget with wings.\nStrikes twice.$"
+
+gMoveDescription_DrillRun::
+	.string "Spins its body\nlike a drill. High\ncritical-hit ratio.$"
+
+gMoveDescription_Boomburst::
+	.string "Attacks everything\nwith a destructive\nsound wave.$"
+
+gMoveDescription_DazzlingGleam::
+	.string "Damages foes by\nemitting a\nbright flash.$"
+
+gMoveDescription_Moonblast::
+	.string	"Attacks with the\npower of the\nmoon. May lower\nSP. ATK.$"
+
+gMoveDescription_Nuzzle::
+	.string "Rubs its cheeks\nagainst the foe,\nparalyzing it.$"
+
+gMoveDescription_Snarl::
+	.string "Yells and rants\nat the foe,\nlowering SP. ATK.$"
+
+gMoveDescription_Lunge::
+	.string "Lunges at the\nfoe and lowers\nits ATTACK.$"
+
+gMoveDescription_Accelerock::
+	.string "Hits with a\nhigh-speed rock\nthat always goes\nfirst.$"
+
+gMoveDescription_SpiritBreak::
+	.string "Attacks with a\nspirit-breaking\nforce. Lowers the\nSP. ATK. stat.$"
+
+gMoveDescription_FireLash::
+	.string "Whips the foe with\nfire, lowering its\nDEFENSE stat.$"
+	
+gMoveDescription_ScorchingSands::
+	.string "Throws scorching\nsand at the\ntarget. May burn.$"
+
+gMoveDescription_Liquidation::
+	.string "Slams the foe\nwith water. Can\nlower DEFENSE.$"
+
+gMoveDescription_WaveCrash::
+	.string "A slam shrouded\nin water. Also\nhurts the user.$"
+
+gMoveDescription_SolarBlade::
+	.string "Charges first turn\nthen chops with a\nblade of light.$"
+
+gMoveDescription_RazorShell::
+	.string "Tears at the\nfoe with sharp\nshells. May lower\nDEFENSE.$"
+
+gMoveDescription_MysticalFire::
+	.string "Breathes a hot\notherworldly fire.\nLowers SP. ATK.$"
+	
+gMoveDescription_PowerUpPunch::
+	.string "A hard punch\nthat raises the\nuser's ATTACK stat.$"
+
+gMoveDescription_SmartStrike::
+	.string "A precise horn\nstrike that never\nmisses.$"
+
+gMoveDescription_DragonHammer::
+	.string "Swings its whole\nbody like a\nhammer to charge.$"
+
+gMoveDescription_Steamroller::
+	.string "Crushes the foe\nwith its body\nMay cause flinching.$"

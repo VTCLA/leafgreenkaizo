@@ -2,19 +2,6 @@ EventScript_CutTree:: @ 81BDF13
 	goto_if_questlog EventScript_ReleaseEnd
 	lockall
 	goto_if_unset FLAG_BADGE02_GET, EventScript_CantCutTree
-	checkpartymove MOVE_CUT
-	compare VAR_RESULT, PARTY_SIZE
-	goto_if_eq EventScript_CantCutTree
-	setfieldeffectarg 0, VAR_RESULT
-	getpartymonname 0, VAR_RESULT
-	getmovename 1, MOVE_CUT
-	msgbox Text_CutTreeDown, MSGBOX_YESNO
-	compare VAR_RESULT, NO
-	goto_if_eq EventScript_DontCutTree
-	msgbox Text_MonUsedMove
-	closemessage
-	dofieldeffect FLDEFF_USE_CUT_ON_TREE
-	waitstate
 	goto EventScript_CutTreeDown
 	end
 
@@ -62,19 +49,6 @@ EventScript_RockSmash:: @ 81BE00C
 	goto_if_questlog EventScript_ReleaseEnd
 	lockall
 	goto_if_unset FLAG_BADGE06_GET, EventScript_CantSmashRock
-	checkpartymove MOVE_ROCK_SMASH
-	compare VAR_RESULT, PARTY_SIZE
-	goto_if_eq EventScript_CantSmashRock
-	setfieldeffectarg 0, VAR_RESULT
-	getpartymonname 0, VAR_RESULT
-	getmovename 1, MOVE_ROCK_SMASH
-	msgbox Text_UseRockSmash, MSGBOX_YESNO
-	compare VAR_RESULT, NO
-	goto_if_eq EventScript_DontSmashRock
-	msgbox Text_MonUsedMove
-	closemessage
-	dofieldeffect FLDEFF_USE_ROCK_SMASH
-	waitstate
 	goto EventScript_UseRockSmash
 	end
 
@@ -126,16 +100,6 @@ EventScript_StrengthBoulder:: @ 81BE11D
 	lockall
 	goto_if_unset FLAG_BADGE04_GET, EventScript_CantMoveBoulder
 	goto_if_set FLAG_SYS_USE_STRENGTH, EventScript_AlreadyUsedStrength
-	checkpartymove MOVE_STRENGTH
-	compare VAR_RESULT, PARTY_SIZE
-	goto_if_eq EventScript_CantMoveBoulder
-	setfieldeffectarg 0, VAR_RESULT
-	msgbox Text_UseStrength, MSGBOX_YESNO
-	compare VAR_RESULT, NO
-	goto_if_eq EventScript_DontUseStrength
-	closemessage
-	dofieldeffect FLDEFF_USE_STRENGTH
-	waitstate
 	goto EventScript_UseStrength
 	end
 
@@ -170,9 +134,8 @@ Text_UseStrength:: @ 81BE19A
 	.string "Would you like to use STRENGTH?$"
 
 Text_MonUsedStrengthCanMoveBoulders:: @ 81BE1FA
-	.string "{STR_VAR_1} used STRENGTH!\p"
-	.string "{STR_VAR_1}'s STRENGTH made it\n"
-	.string "possible to move boulders around!$"
+	.string "STRENGTH made it possible to move\n"
+	.string "boulders around.$"
 
 Text_MonMayPushBoulder:: @ 81BE244
 	.string "It's a big boulder, but a POKéMON\n"

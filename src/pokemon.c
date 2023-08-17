@@ -43,7 +43,8 @@ static const u16 sPunchMovesTable[] =
 {
     MOVE_COMET_PUNCH, MOVE_DIZZY_PUNCH, MOVE_DYNAMIC_PUNCH, MOVE_FIRE_PUNCH,
     MOVE_FOCUS_PUNCH, MOVE_ICE_PUNCH, MOVE_THUNDER_PUNCH, MOVE_MACH_PUNCH,
-    MOVE_MEGA_PUNCH, MOVE_SKY_UPPERCUT, MOVE_SHADOW_PUNCH, 0xFFFF
+    MOVE_MEGA_PUNCH, MOVE_SKY_UPPERCUT, MOVE_SHADOW_PUNCH, MOVE_HAMMER_ARM,
+    MOVE_BULLET_PUNCH, MOVE_POWER_UP_PUNCH, 0xFFFF
 };
 
 static const u16 sBiteMovesTable[] = 
@@ -2652,7 +2653,7 @@ s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *de
         damage = damage / damageHelper;
         damage /= 50;
 
-        if ((attacker->status1 & STATUS1_BURN) && attacker->ability != ABILITY_GUTS)
+        if ((attacker->status1 & STATUS1_BURN) && attacker->ability != ABILITY_GUTS && move != MOVE_FACADE)
             damage /= 2;
 
         if ((sideStatus & SIDE_STATUS_REFLECT) && gCritMultiplier == 1)

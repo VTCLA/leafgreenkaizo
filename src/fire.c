@@ -37,6 +37,8 @@ static void sub_80AD3E4(struct Sprite *sprite);
 static void sub_80AD4A8(struct Sprite *sprite);
 static void sub_80AD690(struct Sprite *sprite);
 static void sub_80AD870(u8 taskId);
+static void AnimLavaPlumeOrbitScatter(struct Sprite *);
+static void AnimLavaPlumeOrbitScatterStep(struct Sprite *);
 
 static const union AnimCmd sAnim_FireSpiralSpread_0[] =
 {
@@ -1193,4 +1195,44 @@ void AnimTask_ShakeTargetInPattern(u8 taskId)
         gSprites[spriteId].y2 = 0;
         DestroyAnimVisualTask(taskId);
     }
+}
+
+const union AffineAnimCmd gLavaPlumeAffineAnimCmd[] =
+{
+    AFFINEANIMCMD_FRAME(0x80, 0x80, 0, 0),
+    AFFINEANIMCMD_FRAME(0x8, 0x8, 0, 1),
+    AFFINEANIMCMD_JUMP(1),
+};
+
+const union AffineAnimCmd *const gLavaPlumeAffineAnims[] =
+{
+    gLavaPlumeAffineAnimCmd,
+};
+
+const struct SpriteTemplate gLavaPlumeSpriteTemplate =
+{
+    .tileTag = ANIM_TAG_FIRE_PLUME,
+    .paletteTag = ANIM_TAG_FIRE_PLUME,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
+    .anims = sAnims_FirePlume,
+    .images = NULL,
+    .affineAnims = gLavaPlumeAffineAnims,
+    .callback = AnimLavaPlumeOrbitScatter,
+};
+
+static void AnimLavaPlumeOrbitScatter(struct Sprite *sprite)
+{
+    sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, 2);
+    sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, 3);
+    sprite->data[0] = Sin(gBattleAnimArgs[0], 10);
+    sprite->data[1] = Cos(gBattleAnimArgs[0], 7);
+    sprite->callback = AnimLavaPlumeOrbitScatterStep;
+}
+
+static void AnimLavaPlumeOrbitScatterStep(struct Sprite *sprite)
+{
+    sprite->x2 += sprite->data[0];
+    sprite->y2 += sprite->data[1];
+    if (sprite->x + sprite->x2 + 16 > 272u || sprite->y + sprite->y2 > 160 || sprite->y + sprite->y2 < -16)
+        DestroyAnimSprite(sprite);
 }

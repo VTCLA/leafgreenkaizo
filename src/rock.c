@@ -5,6 +5,7 @@
 #include "task.h"
 #include "trig.h"
 #include "constants/songs.h"
+#include "random.h"
 
 static void AnimFallingRock(struct Sprite *sprite);
 static void AnimRockFragment(struct Sprite *sprite);
@@ -23,6 +24,8 @@ static void sub_80B4E70(struct Task *task);
 static u8 sub_80B4FB8(void);
 static void sub_80B5024(struct Sprite *sprite);
 static void sub_80B50F8(struct Sprite *sprite);
+static void AnimRockPolishStreak(struct Sprite *);
+static void AnimRockPolishSparkle(struct Sprite *);
 
 static const union AnimCmd sAnim_FlyingRock_0[] =
 {
@@ -826,3 +829,70 @@ void AnimTask_SeismicTossBgAccelerateDownAtEnd(u8 taskId)
         DestroyAnimVisualTask(taskId);
     }
 }
+
+const union AnimCmd gRockPolishSparkle_AnimCmd1[] =
+{
+    ANIMCMD_FRAME(0, 7),
+    ANIMCMD_FRAME(4, 7),
+    ANIMCMD_FRAME(8, 7),
+    ANIMCMD_FRAME(12, 7),
+    ANIMCMD_END,
+};
+
+const union AnimCmd *const gRockPolishSparkle_AnimCmds[] =
+{
+    gRockPolishSparkle_AnimCmd1,
+};
+
+const struct SpriteTemplate gRockPolishSparkleSpriteTemplate =
+{
+    .tileTag = ANIM_TAG_SPARKLE_3,
+    .paletteTag = ANIM_TAG_SPARKLE_3,
+    .oam = &gOamData_AffineOff_ObjNormal_16x16,
+    .anims = gRockPolishSparkle_AnimCmds,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimRockPolishSparkle,
+};
+
+// Places a blue sparkle that plays its default animation.
+// arg 0: initial x pixel offset
+// arg 1: initial y pixel offset
+static void AnimRockPolishSparkle(struct Sprite *sprite)
+{
+    InitSpritePosToAnimAttacker(sprite, TRUE);
+    StoreSpriteCallbackInData6(sprite, DestroySpriteAndMatrix);
+    sprite->callback = RunStoredCallbackWhenAnimEnds;
+}
+
+const struct SpriteTemplate gStoneEdgeSpriteTemplate =
+{
+    .tileTag = ANIM_TAG_ROCKS,
+    .paletteTag = ANIM_TAG_ROCKS,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
+    .anims = gAnims_BasicFire,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimParticleInVortex,
+};
+
+//icicle crash
+static const union AffineAnimCmd sSpriteAffineAnim_IcicleCrash[] =
+{
+    AFFINEANIMCMD_FRAME(0, 0, 128, 1), //180 degree turn
+    AFFINEANIMCMD_END
+};
+static const union AffineAnimCmd* const sSpriteAffineAnimTable_IcicleCrash[] =
+{
+    sSpriteAffineAnim_IcicleCrash,
+};
+const struct SpriteTemplate gIcicleCrashSpearTemplate =
+{
+    .tileTag = ANIM_TAG_ICICLE_SPEAR,
+    .paletteTag = ANIM_TAG_ICICLE_SPEAR,
+    .oam = &gOamData_AffineNormal_ObjNormal_32x32,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = sSpriteAffineAnimTable_IcicleCrash,
+    .callback = AnimFallingRock
+};

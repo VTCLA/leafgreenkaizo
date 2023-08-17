@@ -355,3 +355,23 @@ PalletTown_ProfessorOaksLab_Text_RivalIllCompleteThePokedex:: @ 818F1DB
     .string "ONE ISLAND first…\p"
     .string "Anyways, I'm outta here!$"
 
+PalletTown_ProfessorOaksLab_Text_ThisWillHelpFish::
+    .string "This will help you find\n"
+    .string "POKéMON in new places.$"
+
+PalletTown_ProfessorOaksLab_Text_ReceivedSuperRod:: @ 819F0B2
+    .string "{PLAYER} received a SUPER ROD\n"
+    .string "from PROF. OAK.$"
+
+PalletTown_ProfessorOaksLab_Text_BeforeYouGo::
+    .string "Before you go, I have some\n"
+    .string "more things to help you on\p"
+    .string "your journey, {PLAYER}.$"
+
+PalletTown_ProfessorOaksLab_Text_ReceivedRunningShoesFromOak:: @ 817E970
+    .string "{PLAYER} received the\n"
+    .string "RUNNING SHOES from PROF. OAK.$"
+
+PalletTown_ProfessorOaksLab_Text_ExplainRunningShoes:: @ 817E9C7
+    .string "Press the B Button to run.\n"
+    .string "But be careful where you run!$"

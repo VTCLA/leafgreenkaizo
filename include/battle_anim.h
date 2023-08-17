@@ -225,6 +225,7 @@ void AnimFollowMeFinger(struct Sprite *);
 void AnimTauntFinger(struct Sprite *);
 void SetSpriteNextToMonHead(u8 battler, struct Sprite* sprite);
 void AnimTask_ShrinkTargetCopy(u8 taskId);
+extern const union AffineAnimCmd *const sAffineAnims_PoisonProjectile[];
 
 // battle_anim_effects_2.c
 extern const union AffineAnimCmd *const gGrowingRingAffineAnimTable[];

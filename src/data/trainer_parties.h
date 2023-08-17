@@ -3738,7 +3738,7 @@ static const struct TrainerMonNoItemCustomMoves sParty_RivalOaksLabCharmander[] 
         .iv = 0,
         .lvl = 5,
         .species = SPECIES_CHARMANDER,
-        .moves = {MOVE_SCRATCH, MOVE_NONE, MOVE_NONE, MOVE_NONE},
+        .moves = {MOVE_STEAMROLLER, MOVE_NONE, MOVE_NONE, MOVE_NONE},
     },
 };
 
@@ -3777,7 +3777,7 @@ static const struct TrainerMonNoItemCustomMoves sParty_RivalRoute22EarlyCharmand
         .iv = 50,
         .lvl = 9,
         .species = SPECIES_PIDGEY,
-        .moves = {MOVE_TACKLE, MOVE_SAND_ATTACK, MOVE_NONE, MOVE_NONE},
+        .moves = {MOVE_THUNDER_WAVE, MOVE_NONE, MOVE_NONE, MOVE_NONE},
     },
     {
         .iv = 50,

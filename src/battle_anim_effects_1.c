@@ -82,6 +82,8 @@ static void AnimFollowMeFingerStep1(struct Sprite *);
 static void AnimFollowMeFingerStep2(struct Sprite *);
 static void AnimTauntFingerStep1(struct Sprite *);
 static void AnimTauntFingerStep2(struct Sprite *);
+static void AnimGrassKnotStep(struct Sprite *);
+static void AnimGrassKnot(struct Sprite *);
 
 // Unused
 static const u8 sUnknown_83E2964[] = {0x02, 0x04, 0x01, 0x03};
@@ -5607,4 +5609,148 @@ static void AnimTauntFingerStep2(struct Sprite* sprite)
     if (++sprite->data[1] > 5)
         DestroyAnimSprite(sprite);
 }
+
+void AnimTask_BlendEnergyBall(u8 taskId)
+{
+    int paletteOffset = IndexOfSpritePaletteTag(ANIM_TAG_CIRCLE_OF_LIGHT) * 16 + 256;
+    BlendPalette(paletteOffset, 16, 6, RGB(19,31,19));
+    DestroyAnimVisualTask(taskId);
+}
+
+const struct SpriteTemplate gGrassKnotSpriteTemplate =
+{
+    .tileTag = ANIM_TAG_RAZOR_LEAF,
+    .paletteTag = ANIM_TAG_RAZOR_LEAF,
+    .oam = &gOamData_AffineOff_ObjNormal_32x16,
+    .anims = sRazorLeafCutterAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimGrassKnot,
+};
+
+static void AnimGrassKnot(struct Sprite *sprite)
+{
+    if (BATTLE_PARTNER(gBattleAnimAttacker) == gBattleAnimTarget && GetBattlerPosition(gBattleAnimTarget) < B_POSITION_PLAYER_RIGHT)
+        gBattleAnimArgs[0] *= -1;
+
+    InitSpritePosToAnimTarget(sprite, TRUE);
+
+    if (GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
+        gBattleAnimArgs[2] = -gBattleAnimArgs[2];
+
+    sprite->data[0] = gBattleAnimArgs[3];
+    sprite->data[1] = sprite->x;
+    sprite->data[2] = sprite->x + gBattleAnimArgs[2];
+    sprite->data[3] = sprite->y;
+    sprite->data[4] = sprite->y;
+
+    InitAnimLinearTranslation(sprite);
+
+    sprite->data[5] = gBattleAnimArgs[5];
+    sprite->data[6] = gBattleAnimArgs[4];
+    sprite->data[7] = 0;
+
+    sprite->callback = AnimGrassKnotStep;
+}
+
+static void AnimGrassKnotStep(struct Sprite *sprite)
+{
+    if (!AnimTranslateLinear(sprite))
+    {
+        sprite->y2 += Sin(sprite->data[7] >> 8, sprite->data[5]);
+        sprite->data[7] += sprite->data[6];
+    }
+    else
+    {
+        DestroyAnimSprite(sprite);
+    }
+}
+
+//rage powder
+const struct SpriteTemplate gRagePowderRedPowderTemplate =
+{
+    .tileTag = ANIM_TAG_SPORE,
+    .paletteTag = ANIM_TAG_RED_HEART,
+    .oam = &gOamData_AffineOff_ObjNormal_16x16,
+    .anims = sSporeParticleAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimSporeParticle
+};
+
+//petal blizzard
+static const union AnimCmd sAnimCmd_PetalBlizzard1_0[] =
+{
+    ANIMCMD_FRAME(0, 10),
+    ANIMCMD_JUMP(0),
+};
+static const union AnimCmd *const sAnimCmdTable_PetalBlizzard1[] =
+{
+    sAnimCmd_PetalBlizzard1_0,
+};
+const struct SpriteTemplate gPetalBlizzardTwister1Template =
+{
+    .tileTag = ANIM_TAG_FLOWER,
+    .paletteTag = ANIM_TAG_FLOWER,
+    .oam = &gOamData_AffineOff_ObjNormal_16x16,
+    .anims = sAnimCmdTable_PetalBlizzard1,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimMoveTwisterParticle
+};
+static const u16 sPetalBlizzardFlowerOam[] = {0x0, 0x2000,0x0800,0x0};  //todo: convert to oam data
+static const union AnimCmd sAnimCmd_PetalBlizzard2_0[] =
+{
+    ANIMCMD_FRAME(0, 4),
+    ANIMCMD_FRAME(4, 0),
+    ANIMCMD_END,
+};
+static const union AnimCmd *const sAnimCmdTable_PetalBlizzard2[] =
+{
+    sAnimCmd_PetalBlizzard2_0,
+};
+const struct SpriteTemplate gPetalBlizzardTwister2Template =
+{
+    .tileTag = ANIM_TAG_FLOWER,
+    .paletteTag = ANIM_TAG_FLOWER,
+    .oam = (const struct OamData *) &sPetalBlizzardFlowerOam,
+    .anims = sAnimCmdTable_PetalBlizzard2,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimMoveTwisterParticle
+};
+
+static const union AnimCmd sAnim_PoisonProjectile[] =
+{
+    ANIMCMD_FRAME(0, 1),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sAnims_PoisonProjectile[] =
+{
+    sAnim_PoisonProjectile,
+};
+static const union AffineAnimCmd sAffineAnim_PoisonProjectile[] =
+{
+    AFFINEANIMCMD_FRAME(0x160, 0x160, 0, 0),
+    AFFINEANIMCMD_FRAME(-0xA, -0xA, 0, 10),
+    AFFINEANIMCMD_FRAME(0xA, 0xA, 0, 10),
+    AFFINEANIMCMD_JUMP(0),
+};
+
+static const union AffineAnimCmd *const sAffineAnims_PoisonProjectile[] =
+{
+    sAffineAnim_PoisonProjectile,
+};
+
+const struct SpriteTemplate gBattleAnimSpriteTemplate_LeafStorm2 =
+{
+    .tileTag = ANIM_TAG_LEAF,
+    .paletteTag = ANIM_TAG_LEAF,
+    .oam = &gOamData_AffineDouble_ObjNormal_16x16,
+    .anims = sRazorLeafParticleAnimTable,
+    .images = NULL,
+    .affineAnims = sAffineAnims_PoisonProjectile,
+    .callback = AnimNeedleArmSpike,
+};
 

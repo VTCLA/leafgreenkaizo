@@ -13,6 +13,9 @@ static void sub_80B74D8(struct Sprite *sprite);
 static void sub_80B76B0(u8 taskId);
 static void sub_80B776C(struct Task *task);
 static void sub_80B7894(struct Sprite *sprite);
+static void AnimDragonRushStep(struct Sprite *sprite);
+static void AnimSpinningDracoMeteor(struct Sprite *sprite);
+static void AnimSpinningDracoMeteorFinish(struct Sprite *sprite);
 
 static EWRAM_DATA u16 gUnknown_20399A4[7] = {0};
 
@@ -429,3 +432,123 @@ static void sub_80B7894(struct Sprite *sprite)
     if (++sprite->data[0] > sprite->data[3])
         DestroyAnimSprite(sprite);
 }
+
+const union AnimCmd gDragonRushAnimCmds[] =
+{
+    ANIMCMD_FRAME(0, 4),
+    ANIMCMD_FRAME(64, 4),
+    ANIMCMD_END,
+};
+
+const union AnimCmd *const gDragonRushAnimTable[] =
+{
+    gDragonRushAnimCmds,
+};
+
+const union AffineAnimCmd gDragonRushAffineanimCmds1[] =
+{
+    AFFINEANIMCMD_FRAME(0x100, 0x100, 0, 0),
+    AFFINEANIMCMD_FRAME(0, 0, -4, 8),
+    AFFINEANIMCMD_END,
+};
+
+const union AffineAnimCmd gDragonRushAffineanimCmds2[] =
+{
+    AFFINEANIMCMD_FRAME(-0x100, 0x100, 0, 0),
+    AFFINEANIMCMD_FRAME(0, 0, 4, 8),
+    AFFINEANIMCMD_END,
+};
+
+const union AffineAnimCmd *const gDragonRushAffineAnimTable[] =
+{
+    gDragonRushAffineanimCmds1,
+    gDragonRushAffineanimCmds2,
+};
+
+const struct SpriteTemplate gDragonRushSpriteTemplate =
+{
+    .tileTag = ANIM_TAG_SLAM_HIT_2,
+    .paletteTag = ANIM_TAG_RED_HEART,
+    .oam = &gOamData_AffineNormal_ObjNormal_64x64,
+    .anims = gDragonRushAnimTable,
+    .images = NULL,
+    .affineAnims = gDragonRushAffineAnimTable,
+    .callback = AnimDragonRushStep,
+};
+
+static void AnimDragonRushStep(struct Sprite *sprite)
+{
+    // These two cases are identical.
+    if (GetBattlerSide(gBattleAnimTarget) == B_SIDE_PLAYER)
+    {
+        sprite->data[1] += sprite->data[0];
+        sprite->data[1] &= 0xFF;
+    }
+    else
+    {
+        sprite->data[1] += sprite->data[0];
+        sprite->data[1] &= 0xFF;
+    }
+
+    sprite->x2 = Cos(sprite->data[1], 20);
+    sprite->y2 = Sin(sprite->data[1], 20);
+    if (sprite->animEnded)
+        DestroyAnimSprite(sprite);
+
+    sprite->data[2]++;
+}
+
+const union AnimCmd gDracoMeteorAnimTable[] =
+{
+    ANIMCMD_FRAME(0, 1),
+    ANIMCMD_END,
+};
+
+const union AnimCmd *const gDracoMeteorAnimCmd[] =
+{
+    gDracoMeteorAnimTable,
+};
+
+const union AffineAnimCmd gDracoMeteorAffineAnimCmd[] =
+{
+    AFFINEANIMCMD_FRAME(0x100, 0x100, 0, 0),
+    AFFINEANIMCMD_FRAME(0xFFF8, 0xFFF8, 20, 1),
+    AFFINEANIMCMD_JUMP(1),
+};
+
+const union AffineAnimCmd *const gDracoMeteorAffineAnims[] =
+{
+    gDracoMeteorAffineAnimCmd,
+};
+
+const struct SpriteTemplate gDracoMetorSpriteTemplate =
+{
+    .tileTag = ANIM_TAG_IMPACT,
+    .paletteTag = ANIM_TAG_IMPACT,
+    .oam = &gOamData_AffineDouble_ObjNormal_32x32,
+    .anims = gDracoMeteorAnimCmd,
+    .images = NULL,
+    .affineAnims = gDracoMeteorAffineAnims,
+    .callback = AnimSpinningDracoMeteor,
+};
+
+static void AnimSpinningDracoMeteorFinish(struct Sprite *sprite)
+{
+    StartSpriteAffineAnim(sprite, 0);
+    sprite->affineAnimPaused = 1;
+    sprite->data[0] = 20;
+
+    sprite->callback = WaitAnimForDuration;
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
+}
+
+static void AnimSpinningDracoMeteor(struct Sprite *sprite)
+{
+    InitSpritePosToAnimTarget(sprite, TRUE);
+    StartSpriteAnim(sprite, gBattleAnimArgs[2]);
+    sprite->data[0] = gBattleAnimArgs[3];
+
+    sprite->callback = WaitAnimForDuration;
+    StoreSpriteCallbackInData6(sprite, AnimSpinningDracoMeteorFinish);
+}
+

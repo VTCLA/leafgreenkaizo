@@ -1023,6 +1023,17 @@ const struct SpriteTemplate gMeteorMashStarSpriteTemplate =
     .callback = AnimMeteorMashStar,
 };
 
+const struct SpriteTemplate gDracoMeteorSmashSpriteTemplate =
+{
+    .tileTag = ANIM_TAG_WARM_ROCK,
+    .paletteTag = ANIM_TAG_WARM_ROCK,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimMeteorMashStar,
+};
+
 const struct SpriteTemplate gUnknown_83FF6D4 =
 {
     .tileTag = ANIM_TAG_GOLD_STARS,
@@ -5311,3 +5322,11 @@ static void AnimTask_SlackOffSquishStep(u8 taskId)
     if (!RunAffineAnimFromTaskData(&gTasks[taskId]))
         DestroyAnimVisualTask(taskId);
 }
+
+void AnimTask_BlendFlashCannon(u8 taskId)
+{
+    int paletteOffset = IndexOfSpritePaletteTag(ANIM_TAG_SHADOW_BALL) * 16 + 256;
+    BlendPalette(paletteOffset, 16, 6, RGB_WHITE);
+    DestroyAnimVisualTask(taskId);
+}
+

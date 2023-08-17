@@ -42,6 +42,7 @@ static void sub_80B6BE4(u8 taskId);
 static void sub_80B6F30(u8 taskId);
 static void sub_80B6FC4(u8 taskId);
 static void sub_80B71B0(struct Sprite *sprite);
+void AnimTask_BlendShadowSneak(u8 taskId);
 
 static const union AffineAnimCmd sAffineAnim_ConfuseRayBallBounce[] =
 {
@@ -1477,4 +1478,11 @@ static void sub_80B71B0(struct Sprite *sprite)
         gSprites[sprite->data[5]].y -= 8;
         sprite->callback = DestroySpriteAndMatrix;
     }
+}
+
+void AnimTask_BlendShadowSneak(u8 taskId)
+{
+    int paletteOffset = IndexOfSpritePaletteTag(ANIM_TAG_WHITE_SHADOW) * 16 + 256;
+    BlendPalette(paletteOffset, 16, 15, RGB_BLACK);
+    DestroyAnimVisualTask(taskId);
 }
