@@ -3863,6 +3863,12 @@ u8 GetAbilityBySpecies(u16 species, bool8 abilityNum)
     return gLastUsedAbility;
 }
 
+u8 GetHiddenAbilityBySpecies(u16 species)
+{
+    gLastUsedAbility = gBaseStats[species].abilities[2];
+    return gLastUsedAbility;
+}
+
 u8 GetMonAbility(struct Pokemon *mon)
 {
     u16 species = GetMonData(mon, MON_DATA_SPECIES, NULL);

@@ -98,6 +98,8 @@ struct TrainerMonItemCustomMoves
     u16 species;
     u16 heldItem;
     u16 moves[4];
+    u8 abilitynum;
+    u8 nature;
 };
 
 union TrainerMonPtr
