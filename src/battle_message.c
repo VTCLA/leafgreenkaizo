@@ -113,6 +113,7 @@ static const u8 sText_FoeStoppedWorking[] = _("The foe's {B_BUFF1}\nstopped work
 static const u8 sText_PkmnIsConfused[] = _("{B_ATK_NAME_WITH_PREFIX} is\nconfused!");
 static const u8 sText_PkmnHealedConfusion[] = _("{B_ATK_NAME_WITH_PREFIX} snapped\nout of confusion!");
 static const u8 sText_PkmnWasConfused[] = _("{B_EFF_NAME_WITH_PREFIX} became\nconfused!");
+static const u8 sText_PkmnWasConfusedBerry[] = _("{B_SCR_ACTIVE_NAME_WITH_PREFIX} became\nconfused!");
 static const u8 sText_PkmnAlreadyConfused[] = _("{B_DEF_NAME_WITH_PREFIX} is\nalready confused!");
 static const u8 sText_PkmnFellInLove[] = _("{B_DEF_NAME_WITH_PREFIX}\nfell in love!");
 static const u8 sText_PkmnInLove[] = _("{B_ATK_NAME_WITH_PREFIX} is in love\nwith {B_SCR_ACTIVE_NAME_WITH_PREFIX}!");
@@ -503,6 +504,7 @@ static const u8 sText_PkmnsItemRestoredStatus[] = _("{B_SCR_ACTIVE_NAME_WITH_PRE
 static const u8 sText_PkmnsItemRestoredHPALittle[] = _("{B_SCR_ACTIVE_NAME_WITH_PREFIX}'s {B_LAST_ITEM}\nrestored its HP a little!");
 static const u8 sText_ItemAllowsOnlyYMove[] = _("{B_LAST_ITEM}'s effect allows only\n{B_CURRENT_MOVE} to be used!\p");
 static const u8 sText_PkmnHungOnWithX[] = _("{B_DEF_NAME_WITH_PREFIX} hung on\nusing its {B_LAST_ITEM}!");
+static const u8 sText_PkmnHungOnWithXAbility[] = _("{B_DEF_NAME_WITH_PREFIX} hung on\nthanks to {B_DEF_ABILITY}!");
 const u8 gText_EmptyString3[] = _("");
 static const u8 sText_PlayedFluteCatchyTune[] = _("{B_PLAYER_NAME} played the {B_LAST_ITEM}.\pNow, that's a catchy tune!");
 static const u8 sText_PlayedThe[] = _("{B_PLAYER_NAME} played the\n{B_LAST_ITEM}.");
@@ -897,7 +899,9 @@ const u8 *const gBattleStringsTable[] = {
     [STRINGID_PKMNSATTACKUP - 12]                 = sText_PkmnsAttackUp,
     [STRINGID_PKMNSSPECIALATTACKUP - 12]          = sText_PkmnsSpecialAttackUp,
     [STRINGID_CUSEDBODYDISABLED - 12]             = sText_CursedBodyDisabled,
-    [STRINGID_PKMNSXACTIVATED - 12]               = sText_PkmnsXActivated
+    [STRINGID_PKMNSXACTIVATED - 12]               = sText_PkmnsXActivated,
+    [STRINGID_PKMNHUNGONWITHXABILITY - 12]        = sText_PkmnHungOnWithXAbility,
+    [STRINGID_PKMNWASCONFUSEDBERRY - 12]          = sText_PkmnWasConfusedBerry,
 };
 
 const u16 gMissStringIds[] = {

@@ -1384,6 +1384,8 @@ static void atk06_typecalc(void)
         gBattleMoveDamage = gBattleMoveDamage * 3;
         gBattleMoveDamage = gBattleMoveDamage / 4;
     }
+    if ((ItemId_GetHoldEffect(gBattleMons[gBattlerAttacker].item) == HOLD_EFFECT_EXPERT_BELT) && (gMoveResultFlags & MOVE_RESULT_SUPER_EFFECTIVE))
+        gBattleMoveDamage = (gBattleMoveDamage * 120) / 100;
     if (gBattleMons[gBattlerTarget].ability == ABILITY_WONDER_GUARD && AttacksThisTurn(gBattlerAttacker, gCurrentMove) == 2
      && (!(gMoveResultFlags & MOVE_RESULT_SUPER_EFFECTIVE) || ((gMoveResultFlags & (MOVE_RESULT_SUPER_EFFECTIVE | MOVE_RESULT_NOT_VERY_EFFECTIVE)) == (MOVE_RESULT_SUPER_EFFECTIVE | MOVE_RESULT_NOT_VERY_EFFECTIVE)))
      && gBattleMoves[gCurrentMove].power)
@@ -1634,13 +1636,15 @@ static void atk07_adjustnormaldamage(void)
         param = ItemId_GetHoldEffectParam(gBattleMons[gBattlerTarget].item);
     }
     gPotentialItemEffectBattler = gBattlerTarget;
-    if (holdEffect == HOLD_EFFECT_FOCUS_BAND && (Random() % 100) < param)
+    if ((holdEffect == HOLD_EFFECT_FOCUS_BAND && (Random() % 100) < param)
+     || (holdEffect == HOLD_EFFECT_FOCUS_SASH && gBattleMons[gBattlerTarget].hp == gBattleMons[gBattlerTarget].maxHP))
     {
         RecordItemEffectBattle(gBattlerTarget, holdEffect);
         gSpecialStatuses[gBattlerTarget].focusBanded = 1;
     }
     if (!(gBattleMons[gBattlerTarget].status2 & STATUS2_SUBSTITUTE)
-     && (gBattleMoves[gCurrentMove].effect == EFFECT_FALSE_SWIPE || gProtectStructs[gBattlerTarget].endured || gSpecialStatuses[gBattlerTarget].focusBanded)
+     && (gBattleMoves[gCurrentMove].effect == EFFECT_FALSE_SWIPE || gProtectStructs[gBattlerTarget].endured || gSpecialStatuses[gBattlerTarget].focusBanded
+     || (gBattleMons[gBattlerTarget].ability == ABILITY_STURDY && gBattleMons[gBattlerTarget].hp == gBattleMons[gBattlerTarget].maxHP))
      && gBattleMons[gBattlerTarget].hp <= gBattleMoveDamage)
     {
         gBattleMoveDamage = gBattleMons[gBattlerTarget].hp - 1;
@@ -1652,6 +1656,12 @@ static void atk07_adjustnormaldamage(void)
         {
             gMoveResultFlags |= MOVE_RESULT_FOE_HUNG_ON;
             gLastUsedItem = gBattleMons[gBattlerTarget].item;
+        }
+        else if (gBattleMons[gBattlerTarget].ability == ABILITY_STURDY)
+        {
+            gMoveResultFlags |= MOVE_RESULT_FOE_HUNG_ON;
+            gLastUsedAbility = ABILITY_STURDY;
+            RecordAbilityBattle(gBattlerTarget, ABILITY_STURDY);
         }
     }
     ++gBattlescriptCurrInstr;
@@ -1674,7 +1684,9 @@ static void atk08_adjustnormaldamage2(void)
         param = ItemId_GetHoldEffectParam(gBattleMons[gBattlerTarget].item);
     }
     gPotentialItemEffectBattler = gBattlerTarget;
-    if (holdEffect == HOLD_EFFECT_FOCUS_BAND && (Random() % 100) < param)
+    if ((holdEffect == HOLD_EFFECT_FOCUS_BAND && (Random() % 100) < param)
+     || (holdEffect == HOLD_EFFECT_FOCUS_SASH && gBattleMons[gBattlerTarget].hp == gBattleMons[gBattlerTarget].maxHP)
+     || (gBattleMons[gBattlerTarget].ability == ABILITY_STURDY && gBattleMons[gBattlerTarget].hp == gBattleMons[gBattlerTarget].maxHP))
     {
         RecordItemEffectBattle(gBattlerTarget, holdEffect);
         gSpecialStatuses[gBattlerTarget].focusBanded = 1;
@@ -1996,7 +2008,12 @@ static void atk0F_resultmessage(void)
                 gPotentialItemEffectBattler = gBattlerTarget;
                 gMoveResultFlags &= ~(MOVE_RESULT_FOE_ENDURED | MOVE_RESULT_FOE_HUNG_ON);
                 BattleScriptPushCursor();
-                gBattlescriptCurrInstr = BattleScript_HangedOnMsg;
+                if (gLastUsedItem == ITEM_FOCUS_BAND)
+                    gBattlescriptCurrInstr = BattleScript_HangedOnMsg;
+                else if (gLastUsedItem == ITEM_FOCUS_SASH)
+                    gBattlescriptCurrInstr = BattleScript_HangedOnMsgSash;
+                else
+                    gBattlescriptCurrInstr = BattleScript_HangedOnMsgSturdy;
                 return;
             default:
                 if (gMoveResultFlags & MOVE_RESULT_DOESNT_AFFECT_FOE)
@@ -2025,7 +2042,12 @@ static void atk0F_resultmessage(void)
                     gPotentialItemEffectBattler = gBattlerTarget;
                     gMoveResultFlags &= ~(MOVE_RESULT_FOE_ENDURED | MOVE_RESULT_FOE_HUNG_ON);
                     BattleScriptPushCursor();
+                if (gLastUsedItem == ITEM_FOCUS_BAND)
                     gBattlescriptCurrInstr = BattleScript_HangedOnMsg;
+                else if (gLastUsedItem == ITEM_FOCUS_SASH)
+                    gBattlescriptCurrInstr = BattleScript_HangedOnMsgSash;
+                else
+                    gBattlescriptCurrInstr = BattleScript_HangedOnMsgSturdy;
                     return;
                 }
                 else if (gMoveResultFlags & MOVE_RESULT_FAILED)
@@ -4086,7 +4108,7 @@ static void atk49_moveend(void)
             break;
         case ATK49_CHOICE_MOVE: // update choice band move
             if (gHitMarker & HITMARKER_OBEYS
-             && holdEffectAtk == HOLD_EFFECT_CHOICE_BAND
+             && ((holdEffectAtk == HOLD_EFFECT_CHOICE_BAND) || (holdEffectAtk == HOLD_EFFECT_CHOICE_SCARF) || (holdEffectAtk == HOLD_EFFECT_CHOICE_SPECS))
              && gChosenMove != MOVE_STRUGGLE 
              && (*choicedMoveAtk == 0 || *choicedMoveAtk == 0xFFFF))
             {
@@ -5492,13 +5514,15 @@ static void atk69_adjustsetdamage(void)
         param = ItemId_GetHoldEffectParam(gBattleMons[gBattlerTarget].item);
     }
     gPotentialItemEffectBattler = gBattlerTarget;
-    if (holdEffect == HOLD_EFFECT_FOCUS_BAND && (Random() % 100) < param)
+    if ((holdEffect == HOLD_EFFECT_FOCUS_BAND && (Random() % 100) < param)
+     || (holdEffect == HOLD_EFFECT_FOCUS_SASH && gBattleMons[gBattlerTarget].hp == gBattleMons[gBattlerTarget].maxHP))
     {
         RecordItemEffectBattle(gBattlerTarget, holdEffect);
         gSpecialStatuses[gBattlerTarget].focusBanded = 1;
     }
     if (!(gBattleMons[gBattlerTarget].status2 & STATUS2_SUBSTITUTE)
-     && (gBattleMoves[gCurrentMove].effect == EFFECT_FALSE_SWIPE || gProtectStructs[gBattlerTarget].endured || gSpecialStatuses[gBattlerTarget].focusBanded)
+     && (gBattleMoves[gCurrentMove].effect == EFFECT_FALSE_SWIPE || gProtectStructs[gBattlerTarget].endured || gSpecialStatuses[gBattlerTarget].focusBanded
+     || (gBattleMons[gBattlerTarget].ability == ABILITY_STURDY && gBattleMons[gBattlerTarget].hp == gBattleMons[gBattlerTarget].maxHP))
      && gBattleMons[gBattlerTarget].hp <= gBattleMoveDamage)
     {
         gBattleMoveDamage = gBattleMons[gBattlerTarget].hp - 1;
@@ -5510,6 +5534,13 @@ static void atk69_adjustsetdamage(void)
         {
             gMoveResultFlags |= MOVE_RESULT_FOE_HUNG_ON;
             gLastUsedItem = gBattleMons[gBattlerTarget].item;
+        }
+        else if (gBattleMons[gBattlerTarget].ability == ABILITY_STURDY)
+        {
+            gMoveResultFlags |= MOVE_RESULT_MISSED;
+            gLastUsedAbility = ABILITY_STURDY;
+            gBattlescriptCurrInstr = BattleScript_SturdyPreventsOHKO;
+            RecordAbilityBattle(gBattlerTarget, ABILITY_STURDY);
         }
     }
     ++gBattlescriptCurrInstr;
@@ -6871,7 +6902,8 @@ static void atk93_tryKO(void)
         param = ItemId_GetHoldEffectParam(gBattleMons[gBattlerTarget].item);
     }
     gPotentialItemEffectBattler = gBattlerTarget;
-    if (holdEffect == HOLD_EFFECT_FOCUS_BAND && (Random() % 100) < param)
+    if ((holdEffect == HOLD_EFFECT_FOCUS_BAND && (Random() % 100) < param)
+     || (holdEffect == HOLD_EFFECT_FOCUS_SASH && gBattleMons[gBattlerTarget].hp == gBattleMons[gBattlerTarget].maxHP))
     {
         RecordItemEffectBattle(gBattlerTarget, HOLD_EFFECT_FOCUS_BAND);
         gSpecialStatuses[gBattlerTarget].focusBanded = 1;

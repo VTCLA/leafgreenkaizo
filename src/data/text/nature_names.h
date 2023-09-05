@@ -24,6 +24,32 @@ static const u8 sSassyNatureName[] = _("SASSY");
 static const u8 sCarefulNatureName[] = _("CAREFUL");
 static const u8 sQuirkyNatureName[] = _("QUIRKY");
 
+static const u8 sHardyNatureNameEffect[] = _("HARDY (neutral)");
+static const u8 sLonelyNatureNameEffect[] = _("LONELY (+ATK -DEF)");
+static const u8 sBraveNatureNameEffect[] = _("BRAVE (+ATK -SPE)");
+static const u8 sAdamantNatureNameEffect[] = _("ADAMANT (+ATK -SPA)");
+static const u8 sNaughtyNatureNameEffect[] = _("NAUGHTY (+ATK - SPD)");
+static const u8 sBoldNatureNameEffect[] = _("BOLD (+DEF - ATK)");
+static const u8 sDocileNatureNameEffect[] = _("DOCILE (neutral)");
+static const u8 sRelaxedNatureNameEffect[] = _("RELAXED (+DEF - SPE)");
+static const u8 sImpishNatureNameEffect[] = _("IMPISH (+DEF -SPA)");
+static const u8 sLaxNatureNameEffect[] = _("LAX (+DEF -SPD)");
+static const u8 sTimidNatureNameEffect[] = _("TIMID (+SPE -ATK)");
+static const u8 sHastyNatureNameEffect[] = _("HASTY (+SPE -DEF)");
+static const u8 sSeriousNatureNameEffect[] = _("SERIOUS (neutral)");
+static const u8 sJollyNatureNameEffect[] = _("JOLLY (+SPE -SPA)");
+static const u8 sNaiveNatureNameEffect[] = _("NAIVE (+SPE -SPD)");
+static const u8 sModestNatureNameEffect[] = _("MODEST (+SPA -ATK)");
+static const u8 sMildNatureNameEffect[] = _("MILD (+SPA -DEF)");
+static const u8 sQuietNatureNameEffect[] = _("QUIET (+SPA -SPE)");
+static const u8 sBashfulNatureNameEffect[] = _("BASHFUL (neutral)");
+static const u8 sRashNatureNameEffect[] = _("RASH (+SPA -SPD)");
+static const u8 sCalmNatureNameEffect[] = _("CALM (+SPD -ATK)");
+static const u8 sGentleNatureNameEffect[] = _("GENTLE (+SPD -DEF)");
+static const u8 sSassyNatureNameEffect[] = _("SASSY (+SPD -SPE)");
+static const u8 sCarefulNatureNameEffect[] = _("CAREFUL (+SPD - SPA)");
+static const u8 sQuirkyNatureNameEffect[] = _("QUIRKY (neutral)");
+
 const u8 *const gNatureNamePointers[] = 
 {
     [NATURE_HARDY] = sHardyNatureName,
@@ -51,4 +77,33 @@ const u8 *const gNatureNamePointers[] =
     [NATURE_SASSY] = sSassyNatureName,
     [NATURE_CAREFUL] = sCarefulNatureName,
     [NATURE_QUIRKY] = sQuirkyNatureName,
+};
+
+const u8 *const gNatureNameEffectPointers[] = 
+{
+    [NATURE_HARDY] = sHardyNatureNameEffect,
+    [NATURE_LONELY] = sLonelyNatureNameEffect,
+    [NATURE_BRAVE] = sBraveNatureNameEffect,
+    [NATURE_ADAMANT] = sAdamantNatureNameEffect,
+    [NATURE_NAUGHTY] = sNaughtyNatureNameEffect,
+    [NATURE_BOLD] = sBoldNatureNameEffect,
+    [NATURE_DOCILE] = sDocileNatureNameEffect,
+    [NATURE_RELAXED] = sRelaxedNatureNameEffect,
+    [NATURE_IMPISH] = sImpishNatureNameEffect,
+    [NATURE_LAX] = sLaxNatureNameEffect,
+    [NATURE_TIMID] = sTimidNatureNameEffect,
+    [NATURE_HASTY] = sHastyNatureNameEffect,
+    [NATURE_SERIOUS] = sSeriousNatureNameEffect,
+    [NATURE_JOLLY] = sJollyNatureNameEffect,
+    [NATURE_NAIVE] = sNaiveNatureNameEffect,
+    [NATURE_MODEST] = sModestNatureNameEffect,
+    [NATURE_MILD] = sMildNatureNameEffect,
+    [NATURE_QUIET] = sQuietNatureNameEffect,
+    [NATURE_BASHFUL] = sBashfulNatureNameEffect,
+    [NATURE_RASH] = sRashNatureNameEffect,
+    [NATURE_CALM] = sCalmNatureNameEffect,
+    [NATURE_GENTLE] = sGentleNatureNameEffect,
+    [NATURE_SASSY] = sSassyNatureNameEffect,
+    [NATURE_CAREFUL] = sCarefulNatureNameEffect,
+    [NATURE_QUIRKY] = sQuirkyNatureNameEffect,
 };

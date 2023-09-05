@@ -184,7 +184,7 @@ PalletTown_ProfessorOaksLab_Text_OakCatchMonsForDataTakeThese:: @ 818E612
     .string "catching wild POKéMON.$"
 
 PalletTown_ProfessorOaksLab_Text_ReceivedFivePokeBalls:: @ 818E6B3
-    .string "{PLAYER} received five POKé BALLS.$"
+    .string "{PLAYER} received thirty POKé BALLS.$"
 
 PalletTown_ProfessorOaksLab_Text_OakExplainCatching:: @ 818E6D0
     .string "When a wild POKéMON appears,\n"
@@ -375,3 +375,12 @@ PalletTown_ProfessorOaksLab_Text_ReceivedRunningShoesFromOak:: @ 817E970
 PalletTown_ProfessorOaksLab_Text_ExplainRunningShoes:: @ 817E9C7
     .string "Press the B Button to run.\n"
     .string "But be careful where you run!$"
+
+
+PalletTown_ProfessorOaksLab_Text_ThisWillHelpTrain::
+    .string "This will help you train\n"
+    .string "POKéMON to be stronger.$"
+    
+PalletTown_ProfessorOaksLab_Text_ReceivedEndlessCandy:: @ 819F0B2
+    .string "{PLAYER} received the\n"
+    .string "ENDLESS CANDY from PROF. OAK.$"

@@ -752,14 +752,18 @@ PalletTown_ProfessorOaksLab_EventScript_ReceiveDexScene:: @ 816961E
 	call_if_eq PalletTown_ProfessorOaksLab_EventScript_RivalExit
 	removeobject LOCALID_RIVAL
 	fadedefaultbgm
+	applymovement OBJ_EVENT_ID_PLAYER, Movement_1699AC
 	msgbox PalletTown_ProfessorOaksLab_Text_BeforeYouGo
-	message PalletTown_ProfessorOaksLab_Text_ReceivedRunningShoesFromOak
+	msgbox PalletTown_ProfessorOaksLab_Text_ReceivedRunningShoesFromOak
 	setflag FLAG_SYS_B_DASH
 	msgbox PalletTown_ProfessorOaksLab_Text_ExplainRunningShoes
 	additem ITEM_SUPER_ROD
 	msgbox PalletTown_ProfessorOaksLab_Text_ThisWillHelpFish
 	msgreceiveditem PalletTown_ProfessorOaksLab_Text_ReceivedSuperRod, ITEM_SUPER_ROD
 	setflag FLAG_GOT_SUPER_ROD
+	additem ITEM_ENDLESS_CANDY
+	msgbox PalletTown_ProfessorOaksLab_Text_ThisWillHelpTrain
+	msgreceiveditem PalletTown_ProfessorOaksLab_Text_ReceivedEndlessCandy, ITEM_ENDLESS_CANDY
 	setvar VAR_MAP_SCENE_PALLET_TOWN_PROFESSOR_OAKS_LAB, 6
 	setvar VAR_MAP_SCENE_VIRIDIAN_CITY_MART, 2
 	setvar VAR_MAP_SCENE_VIRIDIAN_CITY_OLD_MAN, 2
@@ -953,30 +957,8 @@ PalletTown_ProfessorOaksLab_Movement_OakExcitedWest:: @ 81699A5
 
 @ Unused
 Movement_1699AC:: @ 81699AC
-	walk_left
-	walk_in_place_fastest_down
-	delay_8
-	walk_in_place_fastest_right
 	delay_8
 	walk_in_place_fastest_up
-	delay_8
-	walk_in_place_fastest_left
-	delay_8
-	walk_in_place_fastest_down
-	delay_8
-	walk_right
-	walk_right
-	walk_in_place_fastest_up
-	delay_8
-	walk_in_place_fastest_left
-	delay_8
-	walk_in_place_fastest_down
-	delay_8
-	walk_in_place_fastest_right
-	delay_8
-	walk_in_place_fastest_up
-	delay_8
-	walk_left
 	step_end
 
 @ Unused

@@ -430,6 +430,12 @@ void FieldUseFunc_RareCandy(u8 taskId)
     sub_80A16D0(taskId);
 }
 
+void FieldUseFunc_MythicCandy(u8 taskid)
+{
+    gItemUseCB = ItemUseCB_MythicCandy;
+    sub_80A16D0(taskid);
+}
+
 void FieldUseFunc_EvoItem(u8 taskId)
 {
     gItemUseCB = ItemUseCB_EvolutionStone;

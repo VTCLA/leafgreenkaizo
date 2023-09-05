@@ -670,3 +670,28 @@ const u32 gFile_graphics_items_icon_palettes_powder_jar_palette[] = INCBIN_U32("
 const u32 gFile_graphics_items_icon_palettes_ruby_palette[] = INCBIN_U32("graphics/items/icon_palettes/ruby.gbapal.lz");
 const u32 gFile_graphics_items_icons_gem_sheet[] = INCBIN_U32("graphics/items/icons/gem.4bpp.lz");
 const u32 gFile_graphics_items_icon_palettes_sapphire_palette[] = INCBIN_U32("graphics/items/icon_palettes/sapphire.gbapal.lz");
+
+//start of new
+const u32 gFile_graphics_items_icons_choice_scarf_sheet[] = INCBIN_U32("graphics/items/icons/choice_scarf.4bpp.lz");
+const u32 gFile_graphics_items_icon_palettes_choice_scarf_palette[] = INCBIN_U32("graphics/items/icon_palettes/choice_scarf.gbapal.lz");
+
+const u32 gFile_graphics_items_icons_choice_specs_sheet[] = INCBIN_U32("graphics/items/icons/choice_specs.4bpp.lz");
+const u32 gFile_graphics_items_icon_palettes_choice_specs_palette[] = INCBIN_U32("graphics/items/icon_palettes/choice_specs.gbapal.lz");
+
+const u32 gFile_graphics_items_icons_expert_belt_sheet[] = INCBIN_U32("graphics/items/icons/expert_belt.4bpp.lz");
+const u32 gFile_graphics_items_icon_palettes_expert_belt_palette[] = INCBIN_U32("graphics/items/icon_palettes/expert_belt.gbapal.lz");
+
+const u32 gFile_graphics_items_icons_wise_glasses_sheet[] = INCBIN_U32("graphics/items/icons/wise_glasses.4bpp.lz");
+const u32 gFile_graphics_items_icon_palettes_wise_glasses_palette[] = INCBIN_U32("graphics/items/icon_palettes/wise_glasses.gbapal.lz");
+
+const u32 gFile_graphics_items_icons_muscle_band_sheet[] = INCBIN_U32("graphics/items/icons/muscle_band.4bpp.lz");
+const u32 gFile_graphics_items_icon_palettes_muscle_band_palette[] = INCBIN_U32("graphics/items/icon_palettes/muscle_band.gbapal.lz");
+
+const u32 gFile_graphics_items_icons_eviolite_sheet[] = INCBIN_U32("graphics/items/icons/eviolite.4bpp.lz");
+const u32 gFile_graphics_items_icon_palettes_eviolite_palette[] = INCBIN_U32("graphics/items/icon_palettes/eviolite.gbapal.lz");
+
+const u32 gFile_graphics_items_icons_focus_sash_sheet[] = INCBIN_U32("graphics/items/icons/focus_sash.4bpp.lz");
+const u32 gFile_graphics_items_icon_palettes_focus_sash_palette[] = INCBIN_U32("graphics/items/icon_palettes/focus_sash.gbapal.lz");
+
+const u32 gFile_graphics_items_icons_endless_candy_sheet[] = INCBIN_U32("graphics/items/icons/rare_candy.4bpp.lz");
+const u32 gFile_graphics_items_icon_palettes_endless_candy_palette[] = INCBIN_U32("graphics/items/icon_palettes/rare_candy.gbapal.lz");

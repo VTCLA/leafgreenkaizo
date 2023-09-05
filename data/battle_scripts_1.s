@@ -4400,6 +4400,16 @@ BattleScript_ItemHealHP_RemoveItem::
 	removeitem BS_ATTACKER
 	end2
 
+BattleScript_BerryHealHP_Ret::
+	playanimation BS_SCRIPTING, B_ANIM_ITEM_EFFECT, NULL
+	printstring STRINGID_PKMNSITEMRESTOREDHEALTH
+	waitmessage 0x40
+	orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE
+	healthbarupdate BS_SCRIPTING
+	datahpupdate BS_SCRIPTING
+	removeitem BS_SCRIPTING
+	return
+
 BattleScript_BerryPPHealEnd2::
 	playanimation BS_ATTACKER, B_ANIM_ITEM_EFFECT, NULL
 	printstring STRINGID_PKMNSITEMRESTOREDPP
@@ -4430,6 +4440,19 @@ BattleScript_HangedOnMsg::
 	waitmessage 0x40
 	return
 
+BattleScript_HangedOnMsgSash::
+	playanimation BS_TARGET, B_ANIM_HANGED_ON, NULL
+	printstring STRINGID_PKMNHUNGONWITHX
+	waitmessage 0x40
+	removeitem BS_TARGET
+	return
+
+BattleScript_HangedOnMsgSturdy::
+	playanimation BS_TARGET, B_ANIM_HANGED_ON, NULL
+	printstring STRINGID_PKMNHUNGONWITHXABILITY
+	waitmessage 0x40
+	return
+
 BattleScript_BerryConfuseHealEnd2::
 	playanimation BS_ATTACKER, B_ANIM_ITEM_EFFECT, NULL
 	printstring STRINGID_PKMNSITEMRESTOREDHEALTH
@@ -4443,6 +4466,21 @@ BattleScript_BerryConfuseHealEnd2::
 	seteffectprimary
 	removeitem BS_ATTACKER
 	end2
+
+BattleScript_BerryConfuseHealRet::
+	playanimation BS_SCRIPTING, B_ANIM_ITEM_EFFECT, NULL
+	printstring STRINGID_PKMNSITEMRESTOREDHEALTH
+	waitmessage 0x40
+	orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE
+	healthbarupdate BS_SCRIPTING
+	datahpupdate BS_SCRIPTING
+	printstring STRINGID_FORXCOMMAYZ
+	waitmessage 0x40
+	chosenstatusanimation BS_SCRIPTING, 1, STATUS2_CONFUSION
+	printstring STRINGID_PKMNWASCONFUSEDBERRY
+	waitmessage 0x40
+	removeitem BS_SCRIPTING
+	return
 
 BattleScript_BerryStatRaiseEnd2::
 	playanimation BS_ATTACKER, B_ANIM_ITEM_EFFECT, NULL

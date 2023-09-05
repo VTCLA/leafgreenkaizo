@@ -173,6 +173,7 @@ struct PokemonSummaryScreenData
         u8 ALIGNED(4) levelStrBuf[7];
         u8 ALIGNED(4) curHpStrBuf[9];
         u8 ALIGNED(4) statValueStrBufs[5][5];
+        u8 ALIGNED(4) IVStrBufs[6][5];
 
         u8 ALIGNED(4) moveCurPpStrBufs[5][11];
         u8 ALIGNED(4) moveMaxPpStrBufs[5][11];
@@ -2212,6 +2213,24 @@ static void BufferMonSkills(void)
         statValue = GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_SPEED);
         ConvertIntToDecimalStringN(sMonSummaryScreen->summary.statValueStrBufs[PSS_STAT_SPE], statValue, STR_CONV_MODE_LEFT_ALIGN, 3);
         sMonSkillsPrinterXpos->speStr = GetNumberRightAlign27(sMonSummaryScreen->summary.statValueStrBufs[PSS_STAT_SPE]);
+
+        statValue = GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_HP_IV);
+        ConvertIntToDecimalStringN(sMonSummaryScreen->summary.IVStrBufs[PSS_STAT_SPE + 1], statValue, STR_CONV_MODE_LEFT_ALIGN, 3);
+
+        statValue = GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_ATK_IV);
+        ConvertIntToDecimalStringN(sMonSummaryScreen->summary.IVStrBufs[PSS_STAT_ATK], statValue, STR_CONV_MODE_LEFT_ALIGN, 3);
+
+        statValue = GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_DEF_IV);
+        ConvertIntToDecimalStringN(sMonSummaryScreen->summary.IVStrBufs[PSS_STAT_DEF], statValue, STR_CONV_MODE_LEFT_ALIGN, 3);
+
+        statValue = GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_SPATK_IV);
+        ConvertIntToDecimalStringN(sMonSummaryScreen->summary.IVStrBufs[PSS_STAT_SPA], statValue, STR_CONV_MODE_LEFT_ALIGN, 3);
+
+        statValue = GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_SPDEF_IV);
+        ConvertIntToDecimalStringN(sMonSummaryScreen->summary.IVStrBufs[PSS_STAT_SPD], statValue, STR_CONV_MODE_LEFT_ALIGN, 3);
+
+        statValue = GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_SPEED_IV);
+        ConvertIntToDecimalStringN(sMonSummaryScreen->summary.IVStrBufs[PSS_STAT_SPE], statValue, STR_CONV_MODE_LEFT_ALIGN, 3);
     }
 
     exp = GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_EXP);
@@ -2506,6 +2525,12 @@ static void PrintSkillsPage(void)
     AddTextPrinterParameterized3(sMonSummaryScreen->windowIds[POKESUM_WIN_RIGHT_PANE], 2, 50 + sMonSkillsPrinterXpos->speStr, 74, sLevelNickTextColors[0], TEXT_SPEED_FF, sMonSummaryScreen->summary.statValueStrBufs[PSS_STAT_SPE]);
     AddTextPrinterParameterized3(sMonSummaryScreen->windowIds[POKESUM_WIN_RIGHT_PANE], 2, 15 + sMonSkillsPrinterXpos->expStr, 87, sLevelNickTextColors[0], TEXT_SPEED_FF, sMonSummaryScreen->summary.expPointsStrBuf);
     AddTextPrinterParameterized3(sMonSummaryScreen->windowIds[POKESUM_WIN_RIGHT_PANE], 2, 15 + sMonSkillsPrinterXpos->toNextLevel, 100, sLevelNickTextColors[0], TEXT_SPEED_FF, sMonSummaryScreen->summary.expToNextLevelStrBuf);
+    AddTextPrinterParameterized3(sMonSummaryScreen->windowIds[POKESUM_WIN_RIGHT_PANE], 2, 10, 4, sLevelNickTextColors[1], TEXT_SPEED_FF, sMonSummaryScreen->summary.IVStrBufs[PSS_STAT_SPE + 1]);
+    AddTextPrinterParameterized3(sMonSummaryScreen->windowIds[POKESUM_WIN_RIGHT_PANE], 2, 10, 22, sLevelNickTextColors[1], TEXT_SPEED_FF, sMonSummaryScreen->summary.IVStrBufs[PSS_STAT_ATK]);
+    AddTextPrinterParameterized3(sMonSummaryScreen->windowIds[POKESUM_WIN_RIGHT_PANE], 2, 10, 35, sLevelNickTextColors[1], TEXT_SPEED_FF, sMonSummaryScreen->summary.IVStrBufs[PSS_STAT_DEF]);
+    AddTextPrinterParameterized3(sMonSummaryScreen->windowIds[POKESUM_WIN_RIGHT_PANE], 2, 10, 48, sLevelNickTextColors[1], TEXT_SPEED_FF, sMonSummaryScreen->summary.IVStrBufs[PSS_STAT_SPA]);
+    AddTextPrinterParameterized3(sMonSummaryScreen->windowIds[POKESUM_WIN_RIGHT_PANE], 2, 10, 61, sLevelNickTextColors[1], TEXT_SPEED_FF, sMonSummaryScreen->summary.IVStrBufs[PSS_STAT_SPD]);
+    AddTextPrinterParameterized3(sMonSummaryScreen->windowIds[POKESUM_WIN_RIGHT_PANE], 2, 10, 74, sLevelNickTextColors[1], TEXT_SPEED_FF, sMonSummaryScreen->summary.IVStrBufs[PSS_STAT_SPE]);
 }
 
 #define GetMoveNamePrinterYpos(x) ((x) * 28 + 5)
@@ -2618,7 +2643,7 @@ static void PokeSum_PrintTrainerMemo_Mon_HeldByOT(void)
 
     DynamicPlaceholderTextUtil_Reset();
     nature = GetNature(&sMonSummaryScreen->currentMon);
-    DynamicPlaceholderTextUtil_SetPlaceholderPtr(0, gNatureNamePointers[nature]);
+    DynamicPlaceholderTextUtil_SetPlaceholderPtr(0, gNatureNameEffectPointers[nature]);
     level = GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_MET_LEVEL);
 
     if (level == 0)
@@ -2692,7 +2717,7 @@ static void PokeSum_PrintTrainerMemo_Mon_NotHeldByOT(void)
 
     DynamicPlaceholderTextUtil_Reset();
     nature = GetNature(&sMonSummaryScreen->currentMon);
-    DynamicPlaceholderTextUtil_SetPlaceholderPtr(0, gNatureNamePointers[nature]);
+    DynamicPlaceholderTextUtil_SetPlaceholderPtr(0, gNatureNameEffectPointers[nature]);
 
     level = GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_MET_LEVEL);
 

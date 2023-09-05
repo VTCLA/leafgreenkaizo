@@ -2224,7 +2224,7 @@ static u8 GetLevelFromMonExp(struct Pokemon *mon)
     u32 exp = GetMonData(mon, MON_DATA_EXP, NULL);
     s32 level = 1;
 
-    while (level <= GetLevelCap() && gExperienceTables[gBaseStats[species].growthRate][level] <= exp)
+    while (level <= MAX_LEVEL && gExperienceTables[gBaseStats[species].growthRate][level] <= exp)
         level++;
 
     return level - 1;
@@ -2236,7 +2236,7 @@ u8 GetLevelFromBoxMonExp(struct BoxPokemon *boxMon)
     u32 exp = GetBoxMonData(boxMon, MON_DATA_EXP, NULL);
     s32 level = 1;
 
-    while (level <= GetLevelCap() && gExperienceTables[gBaseStats[species].growthRate][level] <= exp)
+    while (level <= MAX_LEVEL && gExperienceTables[gBaseStats[species].growthRate][level] <= exp)
         level++;
 
     return level - 1;
@@ -2512,10 +2512,21 @@ s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *de
 
     if (attackerHoldEffect == HOLD_EFFECT_CHOICE_BAND)
         attack = (150 * attack) / 100;
+    if (attackerHoldEffect == HOLD_EFFECT_CHOICE_SPECS)
+        spAttack = (150 * spAttack) / 100;
+    if (attackerHoldEffect == HOLD_EFFECT_WISE_GLASSES && gBattleMoves[move].category == MOVE_CATEGORY_SPECIAL)
+        spAttack = (110 * spAttack) / 100;
+    if (attackerHoldEffect == HOLD_EFFECT_MUSCLE_BAND && gBattleMoves[move].category == MOVE_CATEGORY_PHYSICAL)
+        attack = (110 * attack) / 100;
     if (attackerHoldEffect == HOLD_EFFECT_SOUL_DEW && !(gBattleTypeFlags & (BATTLE_TYPE_BATTLE_TOWER)) && (attacker->species == SPECIES_LATIAS || attacker->species == SPECIES_LATIOS))
         spAttack = (150 * spAttack) / 100;
     if (defenderHoldEffect == HOLD_EFFECT_SOUL_DEW && !(gBattleTypeFlags & (BATTLE_TYPE_BATTLE_TOWER)) && (defender->species == SPECIES_LATIAS || defender->species == SPECIES_LATIOS))
         spDefense = (150 * spDefense) / 100;
+    if (defenderHoldEffect == HOLD_EFFECT_EVIOLITE && !(gEvolutionTable[defender->species][0].targetSpecies == SPECIES_NONE))
+    {
+        spDefense = (150 * spDefense) / 100;
+        defense = (150 * defense) / 100;
+    }
     if (attackerHoldEffect == HOLD_EFFECT_DEEP_SEA_TOOTH && attacker->species == SPECIES_CLAMPERL)
         spAttack *= 2;
     if (defenderHoldEffect == HOLD_EFFECT_DEEP_SEA_SCALE && defender->species == SPECIES_CLAMPERL)

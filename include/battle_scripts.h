@@ -198,6 +198,8 @@ extern const u8 BattleScript_ItemHealHP_End2[];
 extern const u8 BattleScript_ItemHealHP_Ret[];
 extern const u8 BattleScript_SelectingNotAllowedMoveChoiceItem[];
 extern const u8 BattleScript_HangedOnMsg[];
+extern const u8 BattleScript_HangedOnMsgSash[];
+extern const u8 BattleScript_HangedOnMsgSturdy[];
 extern const u8 BattleScript_BerryConfuseHealEnd2[];
 extern const u8 BattleScript_BerryStatRaiseEnd2[];
 extern const u8 BattleScript_BerryFocusEnergyEnd2[];
@@ -239,6 +241,8 @@ extern const u8 BattleScript_DefenderAttackUp_PPLoss[];
 extern const u8 BattleScript_DefenderSpecialAttackUp_PPLoss[];
 extern const u8 BattleScript_CursedBodyActivates[];
 extern const u8 BattleScript_GooeyActivates[];
+extern const u8 BattleScript_BerryHealHP_Ret[];
+extern const u8 BattleScript_BerryConfuseHealRet[];
 
 extern const u8 *const gBattleScriptsForMoveEffects[];
 extern const u8 *const gBattlescriptsForBallThrow[];

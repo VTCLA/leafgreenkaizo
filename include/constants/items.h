@@ -53,14 +53,14 @@
 #define ITEM_BLUE_SHARD 49
 #define ITEM_YELLOW_SHARD 50
 #define ITEM_GREEN_SHARD 51
-#define ITEM_034 52
-#define ITEM_035 53
-#define ITEM_036 54
-#define ITEM_037 55
-#define ITEM_038 56
-#define ITEM_039 57
-#define ITEM_03A 58
-#define ITEM_03B 59
+#define ITEM_CHOICE_SCARF 52  //new
+#define ITEM_CHOICE_SPECS 53  //new
+#define ITEM_EXPERT_BELT 54  //new
+#define ITEM_WISE_GLASSES 55  //new
+#define ITEM_MUSCLE_BAND 56  //new
+#define ITEM_EVIOLITE 57  //new
+#define ITEM_FOCUS_SASH 58  //new
+#define ITEM_ENDLESS_CANDY 59
 #define ITEM_03C 60
 #define ITEM_03D 61
 #define ITEM_03E 62

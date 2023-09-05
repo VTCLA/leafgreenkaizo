@@ -3876,6 +3876,22 @@ extern const u8 gFile_graphics_items_icons_gem_sheet[];
 extern const u8 gFile_graphics_items_icon_palettes_sapphire_palette[];
 extern const u8 gFile_graphics_items_icons_return_to_field_arrow_sheet[];
 extern const u8 gFile_graphics_items_icon_palettes_return_to_field_arrow_palette[];
+extern const u8 gFile_graphics_items_icons_choice_scarf_sheet[];   //start of new items
+extern const u8 gFile_graphics_items_icon_palettes_choice_scarf_palette[];
+extern const u8 gFile_graphics_items_icons_choice_specs_sheet[];
+extern const u8 gFile_graphics_items_icon_palettes_choice_specs_palette[];
+extern const u8 gFile_graphics_items_icons_expert_belt_sheet[];
+extern const u8 gFile_graphics_items_icon_palettes_expert_belt_palette[];
+extern const u8 gFile_graphics_items_icons_wise_glasses_sheet[];
+extern const u8 gFile_graphics_items_icon_palettes_wise_glasses_palette[];
+extern const u8 gFile_graphics_items_icons_muscle_band_sheet[];
+extern const u8 gFile_graphics_items_icon_palettes_muscle_band_palette[];
+extern const u8 gFile_graphics_items_icons_eviolite_sheet[];
+extern const u8 gFile_graphics_items_icon_palettes_eviolite_palette[];
+extern const u8 gFile_graphics_items_icons_focus_sash_sheet[];
+extern const u8 gFile_graphics_items_icon_palettes_focus_sash_palette[];
+extern const u8 gFile_graphics_items_icons_endless_candy_sheet[];
+extern const u8 gFile_graphics_items_icon_palettes_endless_candy_palette[];
 
 // battle_anim_utility_funcs
 extern const u32 gFile_graphics_battle_anims_masks_curse_sheet[];

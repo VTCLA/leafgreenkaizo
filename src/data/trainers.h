@@ -1224,7 +1224,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = AI_SCRIPT_CHECK_BAD_MOVE,
         .partySize = NELEMS(sParty_BugCatcherRick),
-        .party = {.NoItemDefaultMoves = sParty_BugCatcherRick}
+        .party = {.ItemDefaultMoves = sParty_BugCatcherRick}
     },
     [TRAINER_BUG_CATCHER_DOUG] = {
         .partyFlags = 0,
@@ -4968,7 +4968,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY,
         .partySize = NELEMS(sParty_LeaderBrock),
-        .party = {.NoItemCustomMoves = sParty_LeaderBrock}
+        .party = {.ItemCustomMoves = sParty_LeaderBrock}
     },
     [TRAINER_LEADER_MISTY] = {
         .partyFlags = F_TRAINER_PARTY_CUSTOM_MOVESET,

@@ -3368,6 +3368,8 @@ u8 GetWhoStrikesFirst(u8 battler1, u8 battler2, bool8 ignoreChosenMoves)
     */
     if (holdEffect == HOLD_EFFECT_MACHO_BRACE)
         speedBattler1 /= 2;
+    if (holdEffect == HOLD_EFFECT_CHOICE_SCARF)
+        speedBattler1 = (15 * speedBattler1) / 10;
     if (gBattleMons[battler1].status1 & STATUS1_PARALYSIS)
         speedBattler1 /= 4;
     if (holdEffect == HOLD_EFFECT_QUICK_CLAW && gRandomTurnNumber < (0xFFFF * holdEffectParam) / 100)
@@ -3395,6 +3397,8 @@ u8 GetWhoStrikesFirst(u8 battler1, u8 battler2, bool8 ignoreChosenMoves)
     */
     if (holdEffect == HOLD_EFFECT_MACHO_BRACE)
         speedBattler2 /= 2;
+    if (holdEffect == HOLD_EFFECT_CHOICE_SCARF)
+        speedBattler2 = (15 * speedBattler2) / 10;
     if (gBattleMons[battler2].status1 & STATUS1_PARALYSIS)
         speedBattler2 /= 4;
     if (holdEffect == HOLD_EFFECT_QUICK_CLAW && gRandomTurnNumber < (0xFFFF * holdEffectParam) / 100)

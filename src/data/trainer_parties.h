@@ -270,16 +270,24 @@ static const struct TrainerMonNoItemDefaultMoves sParty_YoungsterBen2[] = {
     },
 };
 
-static const struct TrainerMonNoItemDefaultMoves sParty_BugCatcherRick[] = {
+static const struct TrainerMonItemDefaultMoves sParty_BugCatcherRick[] = {
+    {
+        .iv = 0,
+        .lvl = 5,
+        .species = SPECIES_CHARMANDER,
+        .heldItem = ITEM_FOCUS_SASH,
+    },
     {
         .iv = 0,
         .lvl = 6,
         .species = SPECIES_WEEDLE,
+        .heldItem = ITEM_EVIOLITE
     },
     {
         .iv = 0,
         .lvl = 6,
         .species = SPECIES_CATERPIE,
+        .heldItem = ITEM_MUSCLE_BAND
     },
 };
 
@@ -3738,10 +3746,10 @@ static const struct TrainerMonItemCustomMoves sParty_RivalOaksLabCharmander[] = 
         .iv = 0,
         .lvl = 5,
         .species = SPECIES_CHARMANDER,
-        .heldItem = ITEM_NONE,
+        .heldItem = ITEM_FIGY_BERRY,
         .moves = {MOVE_SCRATCH, MOVE_NONE, MOVE_NONE, MOVE_NONE},
-        .abilitynum = 2,
-        .nature = NATURE_JOLLY,
+        .abilitynum = 0,
+        .nature = NATURE_MODEST,
     },
 };
 
@@ -5647,16 +5655,31 @@ static const struct TrainerMonItemCustomMoves sParty_EliteFourLance[] = {
 
 static const struct TrainerMonNoItemCustomMoves sParty_LeaderBrock[] = {
     {
-        .iv = 0,
-        .lvl = 12,
-        .species = SPECIES_GEODUDE,
+        .iv = 255,
+        .lvl = 13,
+        .species = SPECIES_SUDOWOODO,
+        .heldItem = ITEM_SITRUS_BERRY,
         .moves = {MOVE_TACKLE, MOVE_DEFENSE_CURL, MOVE_NONE, MOVE_NONE},
+        .abilitynum = 0,
+        .nature = NATURE_CAREFUL,
     },
     {
-        .iv = 0,
+        .iv = 255,
         .lvl = 14,
-        .species = SPECIES_ONIX,
-        .moves = {MOVE_TACKLE, MOVE_BIND, MOVE_ROCK_TOMB, MOVE_NONE},
+        .species = SPECIES_GRAVELER,
+        .heldItem = ITEM_EXPERT_BELT,
+        .moves = {MOVE_ROCK_TOMB, MOVE_STEAMROLLER, MOVE_THUNDER_PUNCH, MOVE_NONE},
+        .abilitynum = 1,
+        .nature = NATURE_JOLLY,
+    },
+    {
+        .iv = 255,
+        .lvl = 14,
+        .species = SPECIES_LILEEP,
+        .heldItem = ITEM_LEFTOVERS,
+        .moves = {MOVE_MEGA_DRAIN, MOVE_ROCK_TOMB, MOVE_NONE, MOVE_NONE},
+        .abilitynum = 2,
+        .nature = NATURE_RELAXED,
     },
 };
 

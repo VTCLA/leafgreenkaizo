@@ -60,6 +60,7 @@ bool8 IsMoveHm(u16 move);
 bool8 MonKnowsMove(struct Pokemon *mon, u16 move);
 void ItemUseCB_TMHM(u8 taskId, UNUSED TaskFunc func);
 void ItemUseCB_RareCandy(u8 taskId, TaskFunc func);
+void ItemUseCB_MythicCandy(u8 taskId, TaskFunc func);
 void ItemUseCB_SacredAsh(u8 taskId, UNUSED TaskFunc func);
 void ItemUseCB_EvolutionStone(u8 taskId, TaskFunc func);
 u8 GetItemEffectType(u16 item);
