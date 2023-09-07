@@ -3114,7 +3114,7 @@ u8 ItemBattleEffects(u8 caseID, u8 battlerId, bool8 moveTurn)
                     if (GetFlavorRelationByPersonality(gBattleMons[battlerId].personality, FLAVOR_SPICY) < 0
                      && gBattleMons[battlerId].ability != ABILITY_OWN_TEMPO)
                     {
-                        gBattleMons[battlerId].status2 &= STATUS2_CONFUSION;
+                        gBattleMons[battlerId].status2 |= STATUS2_CONFUSION;
                         BattleScriptPushCursor();
                         gBattlescriptCurrInstr = BattleScript_BerryConfuseHealRet;
                     }
@@ -3139,7 +3139,7 @@ u8 ItemBattleEffects(u8 caseID, u8 battlerId, bool8 moveTurn)
                     if (GetFlavorRelationByPersonality(gBattleMons[battlerId].personality, FLAVOR_DRY) < 0
                      && gBattleMons[battlerId].ability != ABILITY_OWN_TEMPO)
                     {
-                        gBattleMons[battlerId].status2 &= STATUS2_CONFUSION;
+                        gBattleMons[battlerId].status2 |= STATUS2_CONFUSION;
                         BattleScriptPushCursor();
                         gBattlescriptCurrInstr = BattleScript_BerryConfuseHealRet;
                     }
@@ -3164,7 +3164,7 @@ u8 ItemBattleEffects(u8 caseID, u8 battlerId, bool8 moveTurn)
                     if (GetFlavorRelationByPersonality(gBattleMons[battlerId].personality, FLAVOR_SWEET) < 0
                      && gBattleMons[battlerId].ability != ABILITY_OWN_TEMPO)
                     {
-                        gBattleMons[battlerId].status2 &= STATUS2_CONFUSION;
+                        gBattleMons[battlerId].status2 |= STATUS2_CONFUSION;
                         BattleScriptPushCursor();
                         gBattlescriptCurrInstr = BattleScript_BerryConfuseHealRet;
                     }
@@ -3189,7 +3189,7 @@ u8 ItemBattleEffects(u8 caseID, u8 battlerId, bool8 moveTurn)
                     if (GetFlavorRelationByPersonality(gBattleMons[battlerId].personality, FLAVOR_BITTER) < 0
                      && gBattleMons[battlerId].ability != ABILITY_OWN_TEMPO)
                     {
-                        gBattleMons[battlerId].status2 &= STATUS2_CONFUSION;
+                        gBattleMons[battlerId].status2 |= STATUS2_CONFUSION;
                         BattleScriptPushCursor();
                         gBattlescriptCurrInstr = BattleScript_BerryConfuseHealRet;
                     }
@@ -3214,7 +3214,7 @@ u8 ItemBattleEffects(u8 caseID, u8 battlerId, bool8 moveTurn)
                     if (GetFlavorRelationByPersonality(gBattleMons[battlerId].personality, FLAVOR_SOUR) < 0
                      && gBattleMons[battlerId].ability != ABILITY_OWN_TEMPO)
                     {
-                        gBattleMons[battlerId].status2 &= STATUS2_CONFUSION;
+                        gBattleMons[battlerId].status2 |= STATUS2_CONFUSION;
                         BattleScriptPushCursor();
                         gBattlescriptCurrInstr = BattleScript_BerryConfuseHealRet;
                     }
