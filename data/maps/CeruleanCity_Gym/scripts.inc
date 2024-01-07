@@ -69,3 +69,13 @@ CeruleanCity_Gym_EventScript_GymStatuePostVictory:: @ 816ABB2
 	msgbox CeruleanCity_Gym_Text_GymStatuePlayerWon
 	releaseall
 	end
+
+CeruleanCity_Gym_EventScript_Morgan::
+	trainerbattle_single TRAINER_SAILOR_MORGAN, CeruleanCity_Gym_Text_MorganIntro, CeruleanCity_Gym_Text_MorganDefeat
+	msgbox CeruleanCity_Gym_Text_MorganPostBattle, MSGBOX_AUTOCLOSE
+	end
+
+CeruleanCity_Gym_EventScript_Katie::
+	trainerbattle_single TRAINER_SWIMMER_FEMALE_KATIE, CeruleanCity_Gym_Text_KatieIntro, CeruleanCity_Gym_Text_KatieDefeat
+	msgbox CeruleanCity_Gym_Text_KatiePostBattle, MSGBOX_AUTOCLOSE
+	end

@@ -77,3 +77,15 @@ Route4_Text_PeopleLikeAndRespectBrock:: @ 8183D26
     .string "People like and respect him.\p"
     .string "I want to become a GYM LEADER\n"
     .string "like him.$"
+
+Route4_Text_DaisyPostBattle::
+    .string "Wow, you're so good already\n"
+    .string "I didn't stand a chance!\p"
+    .string "I'll have to get a lot stronger\n"
+    .string "to do any real adventuring.\p"
+    .string "I'm gonna get started right away!\n"
+    .string "Don't worry, I'm sure we'll see\p"
+    .string "each other again sooner or later.$"
+
+Route4_Text_DaisyDefeat::
+    .string "Oh no, my POKéMON!$"

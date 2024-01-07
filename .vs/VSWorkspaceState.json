@@ -4,11 +4,10 @@
     "\\asm",
     "\\asm\\macros",
     "\\data",
-    "\\sound",
+    "\\include",
+    "\\include\\constants",
     "\\src",
-    "\\src\\data",
-    "\\src\\data\\pokemon"
+    "\\src\\data"
   ],
-  "SelectedNode": "\\src\\data\\pokemon\\base_stats.h",
   "PreviewInSolutionExplorer": false
 }

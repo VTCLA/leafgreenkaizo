@@ -104,8 +104,22 @@ CeruleanCity_Text_PeopleHereWereRobbed:: @ 817F0F1
     .string "The people here were robbed.\p"
     .string "It's obvious that TEAM ROCKET is\n"
     .string "behind this most heinous crime!\p"
-    .string "Even our POLICE FORCE has\n"
-    .string "trouble with the ROCKETS!$"
+    .string "It's no place for amateurs like\n"
+    .string "you to be wandering around.$"
+
+CeruleanCity_Text_ThatsABadge::
+    .string "Hey that's a CASCADEBADGE!\n"
+    .string "Thank goodness you're here\p"
+    .string "The robber is still here and\n"
+    .string "I'm not strong enough to beat him.\p"
+    .string "My boss can't hear about this.\n"
+    .string "Help me and I'll get you a reward.$"
+
+CeruleanCity_Text_ThanksForHelping::
+    .string "He's gone? Thank goodness.\n"
+    .string "You really saved my bacon.\p"
+    .string "Here, take this. And if anyone\n"
+    .string "asks, I chaseded him off, OK?$"
 
 CeruleanCity_Text_SlowbroUseSonicboom:: @ 817F183
     .string "Okay! SLOWBRO!\n"

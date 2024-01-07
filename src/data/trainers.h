@@ -8906,4 +8906,40 @@ const struct Trainer gTrainers[] = {
         .partySize = NELEMS(sParty_CueBallPaxton),
         .party = {.NoItemDefaultMoves = sParty_CueBallPaxton}
     },
+    [TRAINER_DAISY_ROUTE4] = {
+        .partyFlags = F_TRAINER_PARTY_CUSTOM_MOVESET | F_TRAINER_PARTY_HELD_ITEM,
+        .trainerClass = TRAINER_CLASS_AROMA_LADY,
+        .encounterMusic_gender = TRAINER_ENCOUNTER_MUSIC_FEMALE,
+        .trainerPic = TRAINER_PIC_AROMA_LADY,
+        .trainerName = _("DAISY"),
+        .items = {},
+        .doubleBattle = FALSE,
+        .aiFlags = AI_SCRIPT_CHECK_BAD_MOVE,
+        .partySize = NELEMS(sParty_DaisyRoute4),
+        .party = {.ItemCustomMoves = sParty_DaisyRoute4}
+    },
+    [TRAINER_SAILOR_MORGAN] = {
+        .partyFlags = F_TRAINER_PARTY_CUSTOM_MOVESET | F_TRAINER_PARTY_HELD_ITEM,
+        .trainerClass = TRAINER_CLASS_SAILOR,
+        .encounterMusic_gender = TRAINER_ENCOUNTER_MUSIC_MALE,
+        .trainerPic = TRAINER_PIC_SAILOR,
+        .trainerName = _("MORGAN"),
+        .items = {},
+        .doubleBattle = FALSE,
+        .aiFlags = AI_SCRIPT_CHECK_BAD_MOVE,
+        .partySize = NELEMS(sParty_SailorMorgan),
+        .party = {.ItemCustomMoves = sParty_SailorMorgan}
+    },
+    [TRAINER_SWIMMER_FEMALE_KATIE] = {
+        .partyFlags = F_TRAINER_PARTY_CUSTOM_MOVESET | F_TRAINER_PARTY_HELD_ITEM,
+        .trainerClass = TRAINER_CLASS_AROMA_LADY,
+        .encounterMusic_gender = TRAINER_ENCOUNTER_MUSIC_SWIMMER,
+        .trainerPic = TRAINER_PIC_SWIMMER_F,
+        .trainerName = _("KATIE"),
+        .items = {},
+        .doubleBattle = FALSE,
+        .aiFlags = AI_SCRIPT_CHECK_BAD_MOVE,
+        .partySize = NELEMS(sParty_SwimmerFemaleKatie),
+        .party = {.ItemCustomMoves = sParty_SwimmerFemaleKatie}
+    },
 };

@@ -50,16 +50,13 @@ CeruleanCity_Gym_Text_DianaPostBattle:: @ 81924E4
 
 CeruleanCity_Gym_Text_LuisIntro:: @ 8192524
     .string "Splash!\p"
-    .string "I'm first up!\n"
     .string "Let's do it!$"
 
 CeruleanCity_Gym_Text_LuisDefeat:: @ 8192547
     .string "That can't be!$"
 
 CeruleanCity_Gym_Text_LuisPostBattle:: @ 8192556
-    .string "MISTY is a TRAINER who's going to\n"
-    .string "keep improving.\p"
-    .string "She won't lose to someone like you!$"
+    .string "I couldn't swim fast enough...$"
 
 CeruleanCity_Gym_Text_GymGuyAdvice:: @ 81925AC
     .string "Yo!\n"
@@ -90,3 +87,22 @@ CeruleanCity_Gym_Text_GymStatuePlayerWon:: @ 8192719
     .string "WINNING TRAINERS:\n"
     .string "{RIVAL}, {PLAYER}$"
 
+CeruleanCity_Gym_Text_MorganIntro:: @ 8192481
+    .string "I hope you're ready to get wet!$"
+
+CeruleanCity_Gym_Text_MorganDefeat:: @ 81924D0
+    .string "You washed me away!$"
+
+CeruleanCity_Gym_Text_MorganPostBattle:: @ 81924E4
+    .string "I guess you did come prepared.$"
+
+CeruleanCity_Gym_Text_KatieIntro:: @ 8192481
+    .string "Trying to sneak around the long\n"
+    .string "way? Not if I can help it!$"
+
+CeruleanCity_Gym_Text_KatieDefeat:: @ 81924D0
+    .string "I couldn't stop you!$"
+
+CeruleanCity_Gym_Text_KatiePostBattle:: @ 81924E4
+    .string "Alright, you can get past me\n"
+    .string "this time, but don't get cocky.$"

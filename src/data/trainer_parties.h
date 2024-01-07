@@ -11043,3 +11043,39 @@ static const struct TrainerMonNoItemDefaultMoves sParty_CueBallPaxton[] = {
         .species = SPECIES_MUK,
     },
 };
+
+static const struct TrainerMonItemCustomMoves sParty_DaisyRoute4[] = {
+    {
+        .iv = 0,
+        .lvl = 5,
+        .species = SPECIES_CHARMANDER,
+        .heldItem = ITEM_FIGY_BERRY,
+        .moves = {MOVE_SCRATCH, MOVE_NONE, MOVE_NONE, MOVE_NONE},
+        .abilitynum = 0,
+        .nature = NATURE_MODEST,
+    },
+};
+
+static const struct TrainerMonItemCustomMoves sParty_SailorMorgan[] = {
+    {
+        .iv = 0,
+        .lvl = 5,
+        .species = SPECIES_CHARMANDER,
+        .heldItem = ITEM_FIGY_BERRY,
+        .moves = {MOVE_SCRATCH, MOVE_NONE, MOVE_NONE, MOVE_NONE},
+        .abilitynum = 0,
+        .nature = NATURE_MODEST,
+    },
+};
+
+static const struct TrainerMonItemCustomMoves sParty_SwimmerFemaleKatie[] = {
+    {
+        .iv = 0,
+        .lvl = 5,
+        .species = SPECIES_CHARMANDER,
+        .heldItem = ITEM_FIGY_BERRY,
+        .moves = {MOVE_SCRATCH, MOVE_NONE, MOVE_NONE, MOVE_NONE},
+        .abilitynum = 0,
+        .nature = NATURE_MODEST,
+    },
+};

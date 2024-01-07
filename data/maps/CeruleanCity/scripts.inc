@@ -240,7 +240,26 @@ CeruleanCity_EventScript_GruntTrigger:: @ 81666C3
 CeruleanCity_EventScript_Policeman:: @ 81666E7
 	lock
 	faceplayer
+	compare VAR_MAP_SCENE_CERULEAN_CITY_ROCKET, 1
+	goto_if_eq CeruleanCityEventScript_ThanksForHelp
+	goto_if_set FLAG_BADGE02_GET, CeruleanCityEventScript_PolicemanHelpArrived
 	msgbox CeruleanCity_Text_PeopleHereWereRobbed
+	closemessage
+	applymovement LOCALID_POLICEMAN, Movement_FaceOriginalDirection
+	waitmovement 0
+	release
+	end
+
+CeruleanCityEventScript_PolicemanHelpArrived::
+	msgbox CeruleanCity_Text_ThatsABadge
+	closemessage
+	applymovement LOCALID_POLICEMAN, Movement_FaceOriginalDirection
+	waitmovement 0
+	release
+	end
+
+CeruleanCityEventScript_ThanksForHelp::
+	msgbox CeruleanCity_Text_ThanksForHelping
 	closemessage
 	applymovement LOCALID_POLICEMAN, Movement_FaceOriginalDirection
 	waitmovement 0
