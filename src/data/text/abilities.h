@@ -108,6 +108,7 @@ static const u8 sRegeneratorDescription[] = _("Heals upon switching out.");
 static const u8 sMagicGuardDescription[] = _("Only takes damage from attacks.");
 static const u8 sCursedBodyDescription[] = _("Disables moves when hit.");
 static const u8 sGooeyDescription[] = _("Lowers speed on contact.");
+static const u8 sSniperDescription[] = _("Powers up critical hits.");
 
 const u8 *const gAbilityDescriptionPointers[ABILITIES_COUNT] =
 {
@@ -221,6 +222,7 @@ const u8 *const gAbilityDescriptionPointers[ABILITIES_COUNT] =
     [ABILITY_MAGIC_GUARD] = sMagicGuardDescription,
     [ABILITY_CURSED_BODY] = sCursedBodyDescription,
     [ABILITY_GOOEY] = sGooeyDescription,
+    [ABILITY_SNIPER] = sSniperDescription,
 };
 
 const u8 gAbilityNames[ABILITIES_COUNT][ABILITY_NAME_LENGTH + 1] =
@@ -335,4 +337,5 @@ const u8 gAbilityNames[ABILITIES_COUNT][ABILITY_NAME_LENGTH + 1] =
     [ABILITY_MAGIC_GUARD] = _("MAGIC GUARD"),
     [ABILITY_CURSED_BODY] = _("CURSED BODY"),
     [ABILITY_GOOEY] = _("GOOEY"),
+    [ABILITY_SNIPER] = _("SNIPER"),
 };
