@@ -1,13 +1,16 @@
 {
   "ExpandedNodes": [
     "",
-    "\\asm",
-    "\\asm\\macros",
     "\\data",
+    "\\data\\maps",
+    "\\data\\maps\\CeruleanCity",
+    "\\data\\maps\\CeruleanCity_BikeShop",
+    "\\data\\maps\\MtMoon_B1F",
+    "\\data\\maps\\Route8",
+    "\\data\\maps\\VictoryRoad_2F",
     "\\include",
-    "\\include\\constants",
-    "\\src",
-    "\\src\\data"
+    "\\include\\constants"
   ],
+  "SelectedNode": "\\include\\constants\\moves.h",
   "PreviewInSolutionExplorer": false
 }

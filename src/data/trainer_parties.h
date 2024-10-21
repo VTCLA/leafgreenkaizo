@@ -554,22 +554,52 @@ static const struct TrainerMonNoItemDefaultMoves sParty_LassCrissy[] = {
 
 static const struct TrainerMonNoItemDefaultMoves sParty_LassMiriam[] = {
     {
-        .iv = 0,
-        .lvl = 11,
-        .species = SPECIES_ODDISH,
+        .iv = 255,
+        .lvl = 14,
+        .species = SPECIES_NIDORINA,
+        .heldItem = ITEM_LEFTOVERS,
+        .moves = {MOVE_TOXIC, MOVE_PROTECT, MOVE_ATTRACT, MOVE_SLUDGE},
+        .abilitynum = 0,
+        .nature = NATURE_BOLD,
     },
     {
-        .iv = 0,
-        .lvl = 11,
-        .species = SPECIES_BELLSPROUT,
+        .iv = 255,
+        .lvl = 14,
+        .species = SPECIES_NIDORINO,
+        .heldItem = ITEM_LEFTOVERS,
+        .moves = {MOVE_POISON_TAIL, MOVE_DIG, MOVE_PROTECT, MOVE_DOUBLE_AERIAL_ACE},
+        .abilitynum = 0,
+        .nature = NATURE_ADAMANT,
     },
 };
 
 static const struct TrainerMonNoItemDefaultMoves sParty_LassIris[] = {
     {
-        .iv = 0,
-        .lvl = 14,
+        .iv = 255,
+        .lvl = 13,
         .species = SPECIES_CLEFAIRY,
+        .heldItem = ITEM_SITRUS_BERRY,
+        .moves = {MOVE_METRONOME, MOVE_NONE, MOVE_NONE, MOVE_NONE}
+        .abilitynum = 0, 
+        .nature = NATURE_HASTY,
+    },
+    {
+        .iv = 255,
+        .lvl = 15,
+        .species = SPECIES_JIGGLYPUFF,
+        .heldItem = ITEM_SITRUS_BERRY, 
+        .moves = {MOVE_METRONOME, MOVE_NONE, MOVE_NONE, MOVE_NONE}
+        .abilitynum = 0, 
+        .nature = NATURE_HASTY,
+    },
+    {
+        .iv = 255,
+        .lvl = 15,
+        .species = SPECIES_SKITTY,
+        .heldItem = ITEM_SILK_SCARF,
+        .moves = {MOVE_FAKE_OUT, MOVE_METRONOME, MOVE_NONE, MOVE_NONE}
+        .abilitynum = 0, 
+        .nature = NATURE_HASTY,
     },
 };
 

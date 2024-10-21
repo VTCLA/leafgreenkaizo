@@ -1440,7 +1440,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = AI_SCRIPT_CHECK_BAD_MOVE,
         .partySize = NELEMS(sParty_LassMiriam),
-        .party = {.NoItemDefaultMoves = sParty_LassMiriam}
+        .party = {.ItemCustomMoves = sParty_LassMiriam}
     },
     [TRAINER_LASS_IRIS] = {
         .partyFlags = 0,
@@ -1452,7 +1452,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = AI_SCRIPT_CHECK_BAD_MOVE,
         .partySize = NELEMS(sParty_LassIris),
-        .party = {.NoItemDefaultMoves = sParty_LassIris}
+        .party = {.ItemCustomMoves = sParty_LassIris}
     },
     [TRAINER_LASS_RELI] = {
         .partyFlags = 0,
