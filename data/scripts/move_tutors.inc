@@ -114,32 +114,27 @@ EventScript_ExplosionTaught:: @ 81C4944
 	release
 	end
 
-Route4_EventScript_MegaPunchTutor:: @ 81C494E
+Route4_EventScript_HiddenPowerTutor:: @ 81C494E
 	lock
 	faceplayer
-	goto_if_set FLAG_TUTOR_MEGA_PUNCH, EventScript_MegaPunchTaught
-	msgbox Text_MegaPunchTeach, MSGBOX_YESNO
+	msgbox Text_HiddenPowerTeach, MSGBOX_YESNO
 	compare VAR_RESULT, NO
-	goto_if_eq EventScript_MegaPunchDeclined
-	call EventScript_CanOnlyBeLearnedOnce
-	compare VAR_RESULT, NO
-	goto_if_eq EventScript_MegaPunchDeclined
-	msgbox Text_MegaPunchWhichMon
-	setvar VAR_0x8005, MOVETUTOR_MEGA_PUNCH
+	goto_if_eq EventScript_HiddenPowerDeclined
+	msgbox Text_HiddenPowerWhichMon
+	setvar VAR_0x8005, MOVETUTOR_HIDDEN_POWER
 	call EventScript_ChooseMoveTutorMon
 	compare VAR_RESULT, FALSE
-	goto_if_eq EventScript_MegaPunchDeclined
-	setflag FLAG_TUTOR_MEGA_PUNCH
-	goto EventScript_MegaPunchTaught
+	goto_if_eq EventScript_HiddenPowerDeclined
+	goto EventScript_HiddenPowerTaught
 	end
 
-EventScript_MegaPunchDeclined:: @ 81C49A2
-	msgbox Text_MegaPunchDeclined
+EventScript_HiddenPowerDeclined:: @ 81C49A2
+	msgbox Text_HiddenPowerDeclined
 	release
 	end
 
-EventScript_MegaPunchTaught:: @ 81C49AC
-	msgbox Text_MegaPunchTaught
+EventScript_HiddenPowerTaught:: @ 81C49AC
+	msgbox Text_HiddenPowerTaught
 	release
 	end
 

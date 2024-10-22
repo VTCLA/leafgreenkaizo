@@ -104,7 +104,7 @@ Route4_Movement_PlayerFaceDaisyLeft:: @ 81683E3
 	walk_in_place_fastest_right
 	step_end
 
-Route4_Movement_PlayerFaceDaisyLeft:: @ 81683E3
+Route4_Movement_PlayerFaceDaisyRight:: @ 81683E3
 	delay_16
 	delay_16
 	delay_16

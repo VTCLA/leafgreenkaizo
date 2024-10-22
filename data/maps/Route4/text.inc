@@ -22,29 +22,25 @@ Route4_Text_RouteSign:: @ 81839B4
     .string "ROUTE 4\n"
     .string "MT. MOON - CERULEAN CITY$"
 
-Text_MegaPunchTeach:: @ 81839D5
-    .string "A punch of roaring ferocity!\p"
-    .string "Packed with destructive power!\p"
-    .string "When the chips are down,\n"
-    .string "MEGA PUNCH is the ultimate attack!\l"
-    .string "You agree, yes?\p"
-    .string "Now!\n"
-    .string "Let me teach it to your POKéMON!$"
+Text_HiddenPowerTeach:: @ 81839D5
+    .string "Keep your voice down!\p"
+    .string "I am practicing the art of\n"
+    .string "the HIDDEN POWER."
+    .string "If you would like to learn\n"
+    .string "I can teach it to your POKéMON!$"
 
-Text_MegaPunchDeclined:: @ 8183A83
+Text_HiddenPowerDeclined:: @ 8183A83
     .string "You'll be back when you understand\n"
-    .string "the worth of MEGA PUNCH.$"
+    .string "the worth of HIDDEN POWER.$"
 
-Text_MegaPunchWhichMon:: @ 8183ABF
+Text_HiddenPowerWhichMon:: @ 8183ABF
     .string "Fine!\n"
     .string "Which POKéMON will learn it?$"
 
-Text_MegaPunchTaught:: @ 8183AE2
-    .string "Now, we are comrades in the way of\n"
-    .string "punching!\p"
-    .string "You should go before you're seen\n"
-    .string "by the misguided fool who trains\l"
-    .string "only his silly kicking over there.$"
+Text_HiddenPowerTaught:: @ 8183AE2
+    .string "Now, we are comrades in the\n"
+    .string "hidden ways!\p"
+    .string "You should go before you're seen.$"
 
 Text_MegaKickTeach:: @ 8183B74
     .string "A kick of brutal ferocity!\p"
