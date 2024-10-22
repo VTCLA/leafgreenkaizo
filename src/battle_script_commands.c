@@ -9174,6 +9174,10 @@ static void atkEF_handleballthrow(void)
                         ++gBattleResults.catchAttempts[gLastUsedItem - ITEM_ULTRA_BALL];
                 }
             }
+            else
+            {
+                odds = 255;
+            }
             if (odds > 254) // mon caught
             {
                 BtlController_EmitBallThrowAnim(0, BALL_3_SHAKES_SUCCESS);
