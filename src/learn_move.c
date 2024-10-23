@@ -156,12 +156,17 @@ static void Task_InitMoveRelearnerMenu(u8 taskId);
 static void CB2_MoveRelearner_Init(void);
 static void CB2_MoveRelearner(void);
 static void MoveRelearnerStateMachine(void);
+static void Task_InitEggTutorMenu(u8 taskId);
+static void CB2_EggTutor_Init(void);
+static void CB2_EggTutor(void);
+static void EggTutorStateMachine(void);
 static void DrawTextBorderOnWindows6and7(void);
 static void PrintTeachWhichMoveToStrVar1(bool8 onInit);
 static void InitMoveRelearnerStateVariables(void);
 static void SpriteCB_ListMenuScrollIndicators(struct Sprite * sprite);
 static void SpawnListMenuScrollIndicatorSprites(void);
 static void MoveRelearnerInitListMenuBuffersEtc(void);
+static void EggTutorInitListMenuBuffersEtc(void);
 static void MoveRelearnerMenuHandleInput(void);
 static void MoveLearnerInitListMenu(void);
 static void LoadMoveInfoUI(void);
@@ -371,11 +376,28 @@ void DisplayMoveTutorMenu(void)
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB_BLACK);
 }
 
+void DisplayEggTutorMenu(void)
+{
+    ScriptContext2_Enable();
+    CreateTask(Task_InitEggTutorMenu, 10);
+    BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB_BLACK);
+}
+
 static void Task_InitMoveRelearnerMenu(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
         SetMainCallback2(CB2_MoveRelearner_Init);
+        gFieldCallback = FieldCB_ContinueScriptHandleMusic;
+        DestroyTask(taskId);
+    }
+}
+
+static void Task_InitEggTutorMenu(u8 taskId)
+{
+    if (!gPaletteFade.active)
+    {
+        SetMainCallback2(CB2_EggTutor_Init);
         gFieldCallback = FieldCB_ContinueScriptHandleMusic;
         DestroyTask(taskId);
     }
@@ -451,10 +473,66 @@ static void CB2_MoveRelearner_Resume(void)
     SetMainCallback2(CB2_MoveRelearner);
 }
 
+static void CB2_EggTutor_Init(void)
+{
+    SetGpuReg(REG_OFFSET_DISPCNT, 0);
+    ResetSpriteData();
+    FreeAllSpritePalettes();
+    ResetTasks();
+    sMoveRelearner = AllocZeroed(sizeof(struct LearnMoveGfxResources));
+    InitMoveRelearnerStateVariables();
+    sMoveRelearner->selectedPartyMember = gSpecialVar_0x8004;
+    EggTutorInitListMenuBuffersEtc();
+    SetVBlankCallback(VBlankCB_MoveRelearner);
+    MoveRelearnerLoadBgGfx();
+    SpawnListMenuScrollIndicatorSprites();
+    RunTasks();
+    AnimateSprites();
+    BuildOamBuffer();
+    UpdatePaletteFade();
+    SetMainCallback2(CB2_MoveRelearner);
+}
+
+static void CB2_EggTutor_Resume(void)
+{
+    SetGpuReg(REG_OFFSET_DISPCNT, 0);
+    ResetSpriteData();
+    FreeAllSpritePalettes();
+    ResetTasks();
+    EggTutorInitListMenuBuffersEtc();
+    sMoveRelearner->selectedMoveSlot = gSpecialVar_0x8005;
+    SetVBlankCallback(VBlankCB_MoveRelearner);
+    MoveRelearnerLoadBgGfx();
+    SpawnListMenuScrollIndicatorSprites();
+    FillPalette(RGB_BLACK, 0, 2);
+
+    RunTasks();
+    AnimateSprites();
+    BuildOamBuffer();
+    UpdatePaletteFade();
+    SetMainCallback2(CB2_MoveRelearner);
+}
+
 static void CB2_MoveRelearner(void)
 {
     if (!IsTextPrinterActive(7))
         MoveRelearnerStateMachine();
+    if (sMoveRelearner->scheduleMoveInfoUpdate)
+    {
+        PrintMoveInfoHandleCancel_CopyToVram();
+        sMoveRelearner->scheduleMoveInfoUpdate = FALSE;
+    }
+    RunTasks();
+    RunTextPrinters();
+    AnimateSprites();
+    BuildOamBuffer();
+    UpdatePaletteFade();
+}
+
+static void CB2_EggTutor(void)
+{
+    if (!IsTextPrinterActive(7))
+        EggTutorStateMachine();
     if (sMoveRelearner->scheduleMoveInfoUpdate)
     {
         PrintMoveInfoHandleCancel_CopyToVram();
@@ -676,6 +754,209 @@ static void MoveRelearnerStateMachine(void)
     }
 }
 
+static void EggTutorStateMachine(void)
+{
+    u16 move;
+
+    switch (sMoveRelearner->state)
+    {
+    case MENU_STATE_FADE_TO_BLACK:
+        BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB_BLACK);
+        ShowBg(0);
+        ShowBg(1);
+        LoadMoveInfoUI();
+        sMoveRelearner->state++;
+        DrawTextBorderOnWindows6and7();
+        PrintTeachWhichMoveToStrVar1(FALSE);
+        MoveLearnerInitListMenu();
+        sMoveRelearner->scheduleMoveInfoUpdate = TRUE;
+        break;
+    case MENU_STATE_WAIT_FOR_FADE:
+        if (!gPaletteFade.active)
+            sMoveRelearner->state = 4;
+        break;
+    case MENU_STATE_UNREACHABLE:
+        sMoveRelearner->state++;
+        break;
+    case MENU_STATE_SETUP_BATTLE_MODE:
+        PrintTeachWhichMoveToStrVar1(FALSE);
+        sMoveRelearner->scheduleMoveInfoUpdate = TRUE;
+        sMoveRelearner->state++;
+        break;
+    case MENU_STATE_IDLE_BATTLE_MODE:
+        MoveRelearnerMenuHandleInput();
+        break;
+    case MENU_STATE_PRINT_TEACH_MOVE_PROMPT:
+        CreateYesNoMenu(&gUnknown_83FFA8C, 3, 0, 2, 0x001, 0xE, 0);
+        sMoveRelearner->state++;
+        break;
+    case MENU_STATE_TEACH_MOVE_CONFIRM :
+        switch (YesNoMenuProcessInput())
+        {
+        case 0:
+            if (GiveMoveToMon(&gPlayerParty[sMoveRelearner->selectedPartyMember], sMoveRelearner->learnableMoves[sMoveRelearner->selectedIndex]) != 0xFFFF)
+            {
+                StringExpandPlaceholdersAndPrintTextOnWindow7Color2(gText_MonLearnedMove);
+                gSpecialVar_0x8004 = TRUE;
+                sMoveRelearner->state = 31;
+            }
+            else
+            {
+                sMoveRelearner->state = 16;
+            }
+            break;
+        case 1:
+        case -1:
+            sMoveRelearner->state = 3;
+            break;
+        }
+        break;
+    case MENU_STATE_PRINT_GIVE_UP_PROMPT:
+        CreateYesNoMenu(&gUnknown_83FFA8C, 3, 0, 2, 0x001, 0xE, 0);
+        sMoveRelearner->state++;
+        break;
+    case MENU_STATE_GIVE_UP_CONFIRM:
+        switch (YesNoMenuProcessInput())
+        {
+        case 0:
+            gSpecialVar_0x8004 = FALSE;
+            sMoveRelearner->state = 14;
+            break;
+        case 1:
+        case -1:
+            sMoveRelearner->state = 3;
+            break;
+        }
+        break;
+    case MENU_STATE_PRINT_TRYING_TO_LEARN_PROMPT:
+        StringExpandPlaceholdersAndPrintTextOnWindow7Color2(gText_MonIsTryingToLearnMove);
+        sMoveRelearner->state++;
+        break;
+    case MENU_STATE_WAIT_FOR_TRYING_TO_LEARN:
+        CreateYesNoMenu(&gUnknown_83FFA8C, 3, 0, 2, 0x001, 0xE, 0);
+        sMoveRelearner->state = 18;
+        break;
+    case MENU_STATE_CONFIRM_DELETE_OLD_MOVE:
+        switch (YesNoMenuProcessInput())
+        {
+        case 0:
+            StringExpandPlaceholdersAndPrintTextOnWindow7Color2(gText_WhichMoveShouldBeForgotten);
+            sMoveRelearner->state = 19;
+            break;
+        case 1:
+        case -1:
+            sMoveRelearner->state = 24;
+            break;
+        }
+        break;
+    case MENU_STATE_PRINT_STOP_TEACHING:
+        StringExpandPlaceholdersAndPrintTextOnWindow7Color2(gText_StopLearningMove);
+        sMoveRelearner->state++;
+        break;
+    case MENU_STATE_WAIT_FOR_STOP_TEACHING:
+        CreateYesNoMenu(&gUnknown_83FFA8C, 3, 0, 2, 0x001, 0xE, 0);
+        sMoveRelearner->state = 26;
+        break;
+    case MENU_STATE_CONFIRM_STOP_TEACHING:
+        switch (YesNoMenuProcessInput())
+        {
+        case 0:
+            sMoveRelearner->state = 27;
+            break;
+        case 1:
+        case -1:
+            sMoveRelearner->state = 16;
+            break;
+        }
+        break;
+    case MENU_STATE_CHOOSE_SETUP_STATE :
+        sMoveRelearner->state = 3;
+        break;
+    case MENU_STATE_PRINT_WHICH_MOVE_PROMPT:
+        sMoveRelearner->state = 20;
+        BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB_BLACK);
+        break;
+    case MENU_STATE_SHOW_MOVE_SUMMARY_SCREEN:
+        if (!gPaletteFade.active)
+        {
+            ListMenuGetScrollAndRow(sMoveRelearner->listMenuTaskId, &sMoveRelearner->listMenuScrollPos, &sMoveRelearner->listMenuScrollRow);
+            FreeAllWindowBuffers();
+            ShowSelectMovePokemonSummaryScreen(gPlayerParty, sMoveRelearner->selectedPartyMember, gPlayerPartyCount - 1, CB2_EggTutor_Resume, sMoveRelearner->learnableMoves[sMoveRelearner->selectedIndex]);
+            sMoveRelearner->state = 28;
+        }
+        break;
+    case 21:
+        sMoveRelearner->state = 14;
+        break;
+    case 22:
+        BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB_BLACK);
+        break;
+    case MENU_STATE_FADE_AND_RETURN:
+        BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 16, RGB_BLACK);
+        sMoveRelearner->state++;
+        break;
+    case MENU_STATE_RETURN_TO_FIELD:
+        if (!gPaletteFade.active)
+        {
+            FreeAllWindowBuffers();
+            Free(sMoveRelearner);
+            SetMainCallback2(CB2_ReturnToField);
+        }
+        break;
+    case MENU_STATE_FADE_FROM_SUMMARY_SCREEN:
+        BeginNormalPaletteFade(0xFFFFFFFF, 0, 16, 0, RGB_BLACK);
+        ShowBg(0);
+        ShowBg(1);
+        sMoveRelearner->state++;
+        LoadMoveInfoUI();
+        DrawTextBorderOnWindows6and7();
+        MoveLearnerInitListMenu();
+        PrintTeachWhichMoveToStrVar1(TRUE);
+        PrintMoveInfoHandleCancel_CopyToVram();
+        break;
+    case MENU_STATE_TRY_OVERWRITE_MOVE:
+        if (!gPaletteFade.active)
+        {
+            if (sMoveRelearner->selectedMoveSlot == 4)
+            {
+                sMoveRelearner->state = 24;
+            }
+            else
+            {
+                move = GetMonData(&gPlayerParty[sMoveRelearner->selectedPartyMember], MON_DATA_MOVE1 + sMoveRelearner->selectedMoveSlot);
+                StringCopy(gStringVar3, gMoveNames[move]);
+                RemoveMonPPBonus(&gPlayerParty[sMoveRelearner->selectedPartyMember], sMoveRelearner->selectedMoveSlot);
+                SetMonMoveSlot(&gPlayerParty[sMoveRelearner->selectedPartyMember], sMoveRelearner->learnableMoves[sMoveRelearner->selectedIndex], sMoveRelearner->selectedMoveSlot);
+                StringCopy(gStringVar2, gMoveNames[sMoveRelearner->learnableMoves[sMoveRelearner->selectedIndex]]);
+                StringExpandPlaceholdersAndPrintTextOnWindow7Color2(gText_1_2_and_Poof);
+                sMoveRelearner->state = 30;
+                gSpecialVar_0x8004 = TRUE;
+            }
+        }
+        break;
+    case MENU_STATE_DOUBLE_FANFARE_FORGOT_MOVE:
+        StringExpandPlaceholdersAndPrintTextOnWindow7Color2(gText_MonForgotOldMoveAndMonLearnedNewMove);
+        sMoveRelearner->state = 31;
+        PlayFanfare(MUS_LEVEL_UP);
+        break;
+    case MENU_STATE_PRINT_TEXT_THEN_FANFARE:
+        PlayFanfare(MUS_LEVEL_UP);
+        sMoveRelearner->state = 32;
+        break;
+    case MENU_STATE_WAIT_FOR_FANFARE:
+        if (IsFanfareTaskInactive())
+            sMoveRelearner->state = 33;
+        break;
+    case MENU_STATE_WAIT_FOR_A_BUTTON:
+        if (JOY_NEW(A_BUTTON))
+        {
+            PlaySE(SE_SELECT);
+            sMoveRelearner->state = 14;
+        }
+        break;
+    }
+}
+
 static void DrawTextBorderOnWindows6and7(void)
 {
     int i;
@@ -754,6 +1035,32 @@ static void MoveRelearnerInitListMenuBuffersEtc(void)
 
     sMoveRelearner->numLearnableMoves = GetMoveRelearnerMoves(&gPlayerParty[sMoveRelearner->selectedPartyMember], sMoveRelearner->learnableMoves);
     count = GetMoveRelearnerMoves(&gPlayerParty[sMoveRelearner->selectedPartyMember], sMoveRelearner->learnableMoves);
+    for (i = 0; i < sMoveRelearner->numLearnableMoves; i++)
+        StringCopy(sMoveRelearner->listMenuStrbufs[i], gMoveNames[sMoveRelearner->learnableMoves[i]]);
+    GetMonData(&gPlayerParty[sMoveRelearner->selectedPartyMember], MON_DATA_NICKNAME, nickname);
+    StringCopy10(gStringVar1, nickname);
+    StringCopy(sMoveRelearner->listMenuStrbufs[sMoveRelearner->numLearnableMoves], gFameCheckerText_Cancel);
+    sMoveRelearner->numLearnableMoves++;
+    for (i = 0; i < count; i++)
+    {
+        sMoveRelearner->listMenuItems[i].label = sMoveRelearner->listMenuStrbufs[i];
+        sMoveRelearner->listMenuItems[i].index = i;
+    }
+    sMoveRelearner->listMenuItems[i].label = gFameCheckerText_Cancel;
+    sMoveRelearner->listMenuItems[i].index = 0xFE;
+    gMultiuseListMenuTemplate = sMoveRelearnerListMenuTemplate;
+    gMultiuseListMenuTemplate.items = sMoveRelearner->listMenuItems;
+    gMultiuseListMenuTemplate.totalItems = count + 1;
+}
+
+static void EggTutorInitListMenuBuffersEtc(void)
+{
+    int i;
+    s32 count;
+    u8 nickname[11];
+
+    sMoveRelearner->numLearnableMoves = GetEggTutorMoves(&gPlayerParty[sMoveRelearner->selectedPartyMember], sMoveRelearner->learnableMoves);
+    count = GetEggTutorMoves(&gPlayerParty[sMoveRelearner->selectedPartyMember], sMoveRelearner->learnableMoves);
     for (i = 0; i < sMoveRelearner->numLearnableMoves; i++)
         StringCopy(sMoveRelearner->listMenuStrbufs[i], gMoveNames[sMoveRelearner->learnableMoves[i]]);
     GetMonData(&gPlayerParty[sMoveRelearner->selectedPartyMember], MON_DATA_NICKNAME, nickname);

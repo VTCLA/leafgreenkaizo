@@ -1192,6 +1192,8 @@ static void HandleChooseMonSelection(u8 taskId, s8 *slotPtr)
             gSpecialVar_0x8004 = *slotPtr;
             if (gPartyMenu.menuType == PARTY_MENU_TYPE_MOVE_RELEARNER)
                 gSpecialVar_0x8005 = GetNumberOfRelearnableMoves(&gPlayerParty[*slotPtr]);
+            if (gPartyMenu.menuType == PARTY_MENU_TYPE_EGG_TUTOR)
+                gSpecialVar_0x8005 = GetNumberOfEggTutorableMoves(&gPlayerParty[*slotPtr]);
             Task_ClosePartyMenu(taskId);
             break;
         case PARTY_ACTION_MINIGAME:

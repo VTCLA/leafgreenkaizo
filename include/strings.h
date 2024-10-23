@@ -836,6 +836,8 @@ extern const u8 gText_FourIsland[];
 extern const u8 gText_FiveIsland[];
 extern const u8 gText_SixIsland[];
 extern const u8 gText_SevenIsland[];
+extern const u8 gText_Relearn[];
+extern const u8 gText_TutorMove[];
 
 // trade
 extern const u8 gText_IsThisTradeOkay[];

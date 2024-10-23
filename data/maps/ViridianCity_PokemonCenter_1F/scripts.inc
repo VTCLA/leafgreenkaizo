@@ -25,3 +25,107 @@ ViridianCity_PokemonCenter_1F_EventScript_Gentleman:: @ 816A2E1
 ViridianCity_PokemonCenter_1F_EventScript_Youngster:: @ 816A2EA
 	msgbox ViridianCity_PokemonCenter_1F_Text_PokeCentersHealMons, MSGBOX_NPC
 	end
+
+ViridianCity_PokemonCenter_1F_EventScript_HelperNPC::
+	msgbox ViridianCity_PokemonCenter_1F_EventScript_HowMayIHelp
+	multichoice 0, 0, MULTICHOICE_POKECENTER_HELPER_MENU, FALSE
+	switch VAR_RESULT
+	case 0, ViridianCity_PokemonCenter_1F_EventScript_MoveRelearner
+	case 1, ViridianCity_PokemonCenter_1F_EventScript_EggTutor
+	end
+
+ViridianCity_PokemonCenter_1F_EventScript_MoveRelearner:: @ 8171619
+	goto_if_questlog EventScript_ReleaseEnd
+	special QuestLog_CutRecording
+	lock
+	faceplayer
+	msgbox ViridianCity_PokemonCenter_1F_Text_ReTeachMonMove
+	goto ViridianCity_PokemonCenter_1F_EventScript_ChooseMonToTutor
+	end
+
+ViridianCity_PokemonCenter_1F_EventScript_ChooseMonToTutor:: @ 81716BE
+	msgbox ViridianCity_PokemonCenter_1F_Text_TutorWhichMon
+	special SelectMoveTutorMon
+	waitstate
+	compare VAR_0x8004, PARTY_SIZE
+	goto_if_ge ViridianCity_PokemonCenter_1F_EventScript_EndTutorMove
+	special IsSelectedMonEgg
+	compare VAR_RESULT, TRUE
+	goto_if_eq ViridianCity_PokemonCenter_1F_EventScript_CantTutorEgg
+	compare VAR_0x8005, 0
+	goto_if_eq ViridianCity_PokemonCenter_1F_EventScript_NoMoveToTutorMon
+	goto ViridianCity_PokemonCenter_1F_EventScript_ChooseMoveToTeach
+	end
+
+ViridianCity_PokemonCenter_1F_EventScript_ChooseMoveToTeach:: @ 81716F4
+	msgbox ViridianCity_PokemonCenter_1F_Text_TeachWhichMove
+	special DisplayMoveTutorMenu
+	waitstate
+	goto ViridianCity_PokemonCenter_1F_EventScript_EndTutorMove
+	end
+
+ViridianCity_PokemonCenter_1F_EventScript_EggTutor:: @ 8171619
+	goto_if_questlog EventScript_ReleaseEnd
+	special QuestLog_CutRecording
+	lock
+	faceplayer
+	msgbox ViridianCity_PokemonCenter_1F_Text_TeachMonMoveForScale
+	checkitem ITEM_RARE_CANDY, 1
+	compare VAR_RESULT, TRUE
+	goto_if_eq ViridianCity_PokemonCenter_1F_EventScript_AskTutorMon
+	goto ViridianCity_PokemonCenter_1F_EventScript_NeedScales
+	end
+
+ViridianCity_PokemonCenter_1F_EventScript_AskTutorMon:: @ 81716A5
+	msgbox ViridianCity_PokemonCenter_1F_Text_WantMeToTeachMove, MSGBOX_YESNO
+	compare VAR_RESULT, NO
+	goto_if_eq ViridianCity_PokemonCenter_1F_EventScript_EndTutorMove
+	goto ViridianCity_PokemonCenter_1F_EventScript_ChooseMonToEggTutor
+	end
+
+ViridianCity_PokemonCenter_1F_EventScript_ChooseMonToEggTutor:: @ 81716BE
+	msgbox ViridianCity_PokemonCenter_1F_Text_TutorWhichMon
+	special SelectEggTutorMon
+	waitstate
+	compare VAR_0x8004, PARTY_SIZE
+	goto_if_ge ViridianCity_PokemonCenter_1F_EventScript_EndTutorMove
+	special IsSelectedMonEgg
+	compare VAR_RESULT, TRUE
+	goto_if_eq ViridianCity_PokemonCenter_1F_EventScript_CantTutorEgg
+	compare VAR_0x8005, 0
+	goto_if_eq ViridianCity_PokemonCenter_1F_EventScript_NoMoveToTutorMon
+	goto ViridianCity_PokemonCenter_1F_EventScript_ChooseEggMoveToTeach
+	end
+
+ViridianCity_PokemonCenter_1F_EventScript_ChooseEggMoveToTeach:: @ 81716F4
+	msgbox ViridianCity_PokemonCenter_1F_Text_TeachWhichMove
+	special DisplayEggTutorMenu
+	waitstate
+	compare VAR_0x8004, 0
+	goto_if_eq ViridianCity_PokemonCenter_1F_EventScript_EndTutorMove
+	removeitem ITEM_RARE_CANDY, 1
+	textcolor 3
+	msgbox ViridianCity_PokemonCenter_1F_Text_HandedOverScale
+	call EventScript_RestorePrevTextColor
+	goto ViridianCity_PokemonCenter_1F_EventScript_EndTutorMove
+	end
+
+ViridianCity_PokemonCenter_1F_EventScript_NoMoveToTutorMon:: @ 8171782
+	msgbox ViridianCity_PokemonCenter_1F_Text_NoMoveICanTeachThatMon
+	goto ViridianCity_PokemonCenter_1F_EventScript_ChooseMonToTutor
+	end
+
+ViridianCity_PokemonCenter_1F_EventScript_CantTutorEgg:: @ 8171790
+	msgbox ViridianCity_PokemonCenter_1F_Text_CantTeachAnEgg
+	goto ViridianCity_PokemonCenter_1F_EventScript_ChooseMonToTutor
+	end
+
+ViridianCity_PokemonCenter_1F_EventScript_EndTutorMove:: @ 817179E
+	msgbox ViridianCity_PokemonCenter_1F_Text_ComeAgain
+	release
+	end
+
+ViridianCity_PokemonCenter_1F_EventScript_NeedScales:: @ 817179E
+	msgbox ViridianCity_PokemonCenter_1F_Text_NotEnoughScales
+	release
+	end

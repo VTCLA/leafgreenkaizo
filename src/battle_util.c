@@ -3076,7 +3076,7 @@ u8 ItemBattleEffects(u8 caseID, u8 battlerId, bool8 moveTurn)
             }
             switch (battlerHoldEffect)
             {case HOLD_EFFECT_RESTORE_HP:
-                if (gBattleMons[battlerId].hp <= gBattleMons[battlerId].maxHP / 2)
+                if (gBattleMons[battlerId].hp <= gBattleMons[battlerId].maxHP / 2 && gBattleMons[battlerId].hp)
                 {
                     gBattleMoveDamage = battlerHoldEffectParam;
                     if (gBattleMons[battlerId].hp + battlerHoldEffectParam > gBattleMons[battlerId].maxHP)
@@ -3088,7 +3088,7 @@ u8 ItemBattleEffects(u8 caseID, u8 battlerId, bool8 moveTurn)
                 }
                 break;
             case HOLD_EFFECT_RESTORE_PCT_HP:
-                if (gBattleMons[battlerId].hp <= gBattleMons[battlerId].maxHP / 2)
+                if (gBattleMons[battlerId].hp <= gBattleMons[battlerId].maxHP / 2 && gBattleMons[battlerId].hp)
                     {
                         gBattleMoveDamage = gBattleMons[battlerId].maxHP / battlerHoldEffectParam;
                         if (gBattleMoveDamage == 0)
@@ -3102,7 +3102,7 @@ u8 ItemBattleEffects(u8 caseID, u8 battlerId, bool8 moveTurn)
                     }
                     break;
             case HOLD_EFFECT_CONFUSE_SPICY:
-                if (gBattleMons[battlerId].hp <= gBattleMons[battlerId].maxHP / 4)
+                if (gBattleMons[battlerId].hp <= gBattleMons[battlerId].maxHP / 4 && gBattleMons[battlerId].hp)
                 {
                     PREPARE_FLAVOR_BUFFER(gBattleTextBuff1, FLAVOR_SPICY);
                     gBattleMoveDamage = gBattleMons[battlerId].maxHP / battlerHoldEffectParam;
@@ -3127,7 +3127,7 @@ u8 ItemBattleEffects(u8 caseID, u8 battlerId, bool8 moveTurn)
                 }
                 break;
             case HOLD_EFFECT_CONFUSE_DRY:
-                if (gBattleMons[battlerId].hp <= gBattleMons[battlerId].maxHP / 4)
+                if (gBattleMons[battlerId].hp <= gBattleMons[battlerId].maxHP / 4 && gBattleMons[battlerId].hp)
                 {
                     PREPARE_FLAVOR_BUFFER(gBattleTextBuff1, FLAVOR_DRY);
                     gBattleMoveDamage = gBattleMons[battlerId].maxHP / battlerHoldEffectParam;
@@ -3152,7 +3152,7 @@ u8 ItemBattleEffects(u8 caseID, u8 battlerId, bool8 moveTurn)
                 }
                 break;
             case HOLD_EFFECT_CONFUSE_SWEET:
-                if (gBattleMons[battlerId].hp <= gBattleMons[battlerId].maxHP / 4)
+                if (gBattleMons[battlerId].hp <= gBattleMons[battlerId].maxHP / 4 && gBattleMons[battlerId].hp)
                 {
                     PREPARE_FLAVOR_BUFFER(gBattleTextBuff1, FLAVOR_SWEET);
                     gBattleMoveDamage = gBattleMons[battlerId].maxHP / battlerHoldEffectParam;
@@ -3177,7 +3177,7 @@ u8 ItemBattleEffects(u8 caseID, u8 battlerId, bool8 moveTurn)
                 }
                 break;
             case HOLD_EFFECT_CONFUSE_BITTER:
-                if (gBattleMons[battlerId].hp <= gBattleMons[battlerId].maxHP / 4)
+                if (gBattleMons[battlerId].hp <= gBattleMons[battlerId].maxHP / 4 && gBattleMons[battlerId].hp)
                 {
                     PREPARE_FLAVOR_BUFFER(gBattleTextBuff1, FLAVOR_BITTER);
                     gBattleMoveDamage = gBattleMons[battlerId].maxHP / battlerHoldEffectParam;
@@ -3202,7 +3202,7 @@ u8 ItemBattleEffects(u8 caseID, u8 battlerId, bool8 moveTurn)
                 }
                 break;
             case HOLD_EFFECT_CONFUSE_SOUR:
-                if (gBattleMons[battlerId].hp <= gBattleMons[battlerId].maxHP / 4)
+                if (gBattleMons[battlerId].hp <= gBattleMons[battlerId].maxHP / 4 && gBattleMons[battlerId].hp)
                 {
                     PREPARE_FLAVOR_BUFFER(gBattleTextBuff1, FLAVOR_SOUR);
                     gBattleMoveDamage = gBattleMons[battlerId].maxHP / battlerHoldEffectParam;

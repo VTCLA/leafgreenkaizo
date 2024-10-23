@@ -233,8 +233,8 @@ gSpecials:: @ 815FD60
 	def_special BufferMoveDeleterNicknameAndMove
 	def_special GetNumMovesSelectedMonHas
 	def_special DisplayMoveTutorMenu
-	def_special NullFieldSpecial  @ Hoenn Cycling Road specials
-	def_special NullFieldSpecial
+	def_special SelectEggTutorMon  @ Hoenn Cycling Road specials
+	def_special DisplayEggTutorMenu
 	def_special GetPlayerAvatarBike
 	def_special NullFieldSpecial
 	def_special NullFieldSpecial

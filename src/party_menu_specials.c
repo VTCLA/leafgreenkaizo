@@ -31,6 +31,16 @@ void SelectMoveTutorMon(void)
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 0x10, RGB_BLACK);
 }
 
+void SelectEggTutorMon(void)
+{
+    u8 taskId;
+
+    ScriptContext2_Enable();
+    taskId = CreateTask(sub_80BF97C, 10);
+    gTasks[taskId].data[0] = PARTY_MENU_TYPE_EGG_TUTOR;
+    BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 0x10, RGB_BLACK);
+}
+
 static void sub_80BF97C(u8 taskId)
 {
     if (!gPaletteFade.active)

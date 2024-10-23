@@ -2161,3 +2161,105 @@ static void EggHatchPrintMessage(u8 windowId, u8* string, u8 x, u8 y, u8 speed)
     sEggHatchData->textColor[2] = 6;
     AddTextPrinterParameterized4(windowId, 3, x, y, 1, 1, sEggHatchData->textColor, speed, string);
 }
+
+u8 GetNumberOfEggTutorableMoves(struct Pokemon *mon)
+{
+    u16 learnedMoves[4];
+    u16 moves[20];
+    u16 eggMoveIdx;
+    u8 numEggMoves;
+    u16 species;
+    u16 i;
+    int j;
+
+    numEggMoves = 0;
+    eggMoveIdx = 0;
+    species = GetMonData(mon, MON_DATA_SPECIES, NULL);
+
+    for (i = 0; i < 4; i++)
+        learnedMoves[i] = GetMonData(mon, MON_DATA_MOVE1 + i, NULL);
+
+    for (i = 0; i < NELEMS(gEggMoves) - 1; i++)
+    {
+        if (gEggMoves[i] == species + EGG_MOVES_SPECIES_OFFSET)
+        {
+            eggMoveIdx = i + 1;
+            break;
+        }
+    }
+
+    if (eggMoveIdx == 0)
+        return numEggMoves;
+
+    for (i = 0; i < 10; i++)
+    {
+        if (gEggMoves[eggMoveIdx + i] > EGG_MOVES_SPECIES_OFFSET)
+        {
+            // TODO: the curly braces around this if statement are required for a matching build.
+            break;
+        }
+
+        for (j = 0; j < 4 && learnedMoves[j] != gEggMoves[eggMoveIdx + i]; j++)
+            ;
+
+        if (j == 4)
+        {
+            moves[numEggMoves] = gEggMoves[eggMoveIdx + i];
+            numEggMoves++;
+        }
+    }
+
+    return numEggMoves;
+}
+
+
+
+u8 GetEggTutorMoves(struct Pokemon *mon, u16 *moves)
+{
+    u16 learnedMoves[4];
+    u16 eggMoveIdx;
+    u8 numEggMoves;
+    u16 species;
+    u16 i;
+    int j;
+
+    numEggMoves = 0;
+    eggMoveIdx = 0;
+    species = GetMonData(mon, MON_DATA_SPECIES, NULL);
+
+    for (i = 0; i < 4; i++)
+        learnedMoves[i] = GetMonData(mon, MON_DATA_MOVE1 + i, NULL);
+
+    for (i = 0; i < NELEMS(gEggMoves) - 1; i++)
+    {
+        if (gEggMoves[i] == species + EGG_MOVES_SPECIES_OFFSET)
+        {
+            eggMoveIdx = i + 1;
+            break;
+        }
+    }
+
+    if (eggMoveIdx == 0)
+        return numEggMoves;
+
+    for (i = 0; i < 10; i++)
+    {
+        if (gEggMoves[eggMoveIdx + i] > EGG_MOVES_SPECIES_OFFSET)
+        {
+            // TODO: the curly braces around this if statement are required for a matching build.
+            break;
+        }
+
+        for (j = 0; j < 4 && learnedMoves[j] != gEggMoves[eggMoveIdx + i]; j++)
+            ;
+
+        if (j == 4)
+        {
+            moves[numEggMoves] = gEggMoves[eggMoveIdx + i];
+            numEggMoves++;
+        }
+    }
+
+    return numEggMoves;
+}
+
