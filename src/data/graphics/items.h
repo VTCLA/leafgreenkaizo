@@ -747,3 +747,8 @@ const u32 gFile_graphics_items_icon_palettes_babiri_berry_palette[] = INCBIN_U32
 const u32 gFile_graphics_items_icons_roseli_berry_sheet[] = INCBIN_U32("graphics/items/icons/roseli_berry.4bpp.lz");
 const u32 gFile_graphics_items_icon_palettes_roseli_berry_palette[] = INCBIN_U32("graphics/items/icon_palettes/roseli_berry.gbapal.lz");
 
+const u32 gFile_graphics_items_icons_life_orb_sheet[] = INCBIN_U32("graphics/items/icons/life_orb.4bpp.lz");
+const u32 gFile_graphics_items_icon_palettes_life_orb_palette[] = INCBIN_U32("graphics/items/icon_palettes/life_orb.gbapal.lz");
+
+const u32 gFile_graphics_items_icons_weaknesspolicy_sheet[] = INCBIN_U32("graphics/items/icons/weakness_policy.4bpp.lz");
+const u32 gFile_graphics_items_icon_palettes_weaknesspolicy_palette[] = INCBIN_U32("graphics/items/icon_palettes/weakness_policy.gbapal.lz");

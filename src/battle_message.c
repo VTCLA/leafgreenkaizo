@@ -152,6 +152,7 @@ const u8 gBattleText_MistShroud[] = _("{B_ATK_PREFIX2} became\nshrouded in MIST!
 static const u8 sText_PkmnProtectedByMist[] = _("{B_SCR_ACTIVE_NAME_WITH_PREFIX} is protected\nby MIST!");
 const u8 gBattleText_GetPumped[] = _("{B_ATK_NAME_WITH_PREFIX} is getting\npumped!");
 static const u8 sText_PkmnHitWithRecoil[] = _("{B_ATK_NAME_WITH_PREFIX} is hit\nwith recoil!");
+static const u8 sText_PkmnHurtByLifeOrb[] = _("{B_ATK_NAME_WITH_PREFIX} was hurt\nby its Life Orb!");
 static const u8 sText_PkmnProtectedItself2[] = _("{B_ATK_NAME_WITH_PREFIX} protected\nitself!");
 static const u8 sText_PkmnBuffetedBySandstorm[] = _("{B_ATK_NAME_WITH_PREFIX} is buffeted\nby the sandstorm!");
 static const u8 sText_PkmnPeltedByHail[] = _("{B_ATK_NAME_WITH_PREFIX} is pelted\nby HAIL!");
@@ -503,6 +504,8 @@ static const u8 sText_PkmnsItemRestoredPP[] = _("{B_SCR_ACTIVE_NAME_WITH_PREFIX}
 static const u8 sText_PkmnsItemRestoredStatus[] = _("{B_SCR_ACTIVE_NAME_WITH_PREFIX}'s {B_LAST_ITEM}\nrestored its status!");
 static const u8 sText_PkmnsItemRestoredHPALittle[] = _("{B_SCR_ACTIVE_NAME_WITH_PREFIX}'s {B_LAST_ITEM}\nrestored its HP a little!");
 static const u8 sText_PkmnsItemWeakenedDamage[] = _("{B_LAST_ITEM} weakened the damage\nto {B_SCR_ACTIVE_NAME_WITH_PREFIX}!");
+static const u8 sText_PkmnsWeaknessPolicy[] = _("WEAKNESS POLICY sharply raised\n{B_SCR_ACTIVE_NAME_WITH_PREFIX}'s ATTACK!");
+static const u8 sText_PkmnsWeaknessPolicy2[] = _("WEAKNESS POLICY sharply raised\n{B_SCR_ACTIVE_NAME_WITH_PREFIX}'s SP. ATK!");
 static const u8 sText_ItemAllowsOnlyYMove[] = _("{B_LAST_ITEM}'s effect allows only\n{B_CURRENT_MOVE} to be used!\p");
 static const u8 sText_PkmnHungOnWithX[] = _("{B_DEF_NAME_WITH_PREFIX} hung on\nusing its {B_LAST_ITEM}!");
 static const u8 sText_PkmnHungOnWithXAbility[] = _("{B_DEF_NAME_WITH_PREFIX} hung on\nthanks to {B_DEF_ABILITY}!");
@@ -904,6 +907,9 @@ const u8 *const gBattleStringsTable[] = {
     [STRINGID_PKMNHUNGONWITHXABILITY - 12]        = sText_PkmnHungOnWithXAbility,
     [STRINGID_PKMNWASCONFUSEDBERRY - 12]          = sText_PkmnWasConfusedBerry,
     [STRINGID_PKMNSITEMWEAKENEDDMG - 12]          = sText_PkmnsItemWeakenedDamage,
+    [STRINGID_PKMNHURTBYLIFEORB - 12]             = sText_PkmnHurtByLifeOrb,
+    [STRINGID_PKMNSWEAKNESSPOLICY - 12]           = sText_PkmnsWeaknessPolicy,
+    [STRINGID_PKMNSWEAKNESSPOLICY2 - 12]          = sText_PkmnsWeaknessPolicy2,
 };
 
 const u16 gMissStringIds[] = {

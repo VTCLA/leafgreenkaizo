@@ -244,6 +244,8 @@ extern const u8 BattleScript_GooeyActivates[];
 extern const u8 BattleScript_BerryHealHP_Ret[];
 extern const u8 BattleScript_BerryConfuseHealRet[];
 extern const u8 BattleScript_BerryResistRet[];
+extern const u8 BattleScript_LifeOrb[];
+extern const u8 BattleScript_WeaknessPolicy[];
 
 extern const u8 *const gBattleScriptsForMoveEffects[];
 extern const u8 *const gBattlescriptsForBallThrow[];

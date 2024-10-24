@@ -3926,6 +3926,10 @@ extern const u8 gFile_graphics_items_icons_babiri_berry_sheet[];
 extern const u8 gFile_graphics_items_icon_palettes_babiri_berry_palette[];
 extern const u8 gFile_graphics_items_icons_roseli_berry_sheet[];
 extern const u8 gFile_graphics_items_icon_palettes_roseli_berry_palette[];
+extern const u8 gFile_graphics_items_icons_life_orb_sheet[];
+extern const u8 gFile_graphics_items_icon_palettes_life_orb_palette[];
+extern const u8 gFile_graphics_items_icons_weaknesspolicy_sheet[];
+extern const u8 gFile_graphics_items_icon_palettes_weaknesspolicy_palette[];
 
 // battle_anim_utility_funcs
 extern const u32 gFile_graphics_battle_anims_masks_curse_sheet[];

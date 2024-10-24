@@ -4489,6 +4489,24 @@ BattleScript_BerryResistRet::
 	removeitem BS_SCRIPTING
 	return
 
+BattleScript_LifeOrb::
+	orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE | HITMARKER_PASSIVE_DAMAGE
+	healthbarupdate BS_ATTACKER
+	datahpupdate BS_ATTACKER
+	printstring STRINGID_PKMNHURTBYLIFEORB
+	waitmessage 0x40
+	tryfaintmon BS_ATTACKER, 0, NULL
+	return
+
+BattleScript_WeaknessPolicy::
+	playanimation BS_SCRIPTING, B_ANIM_STATS_CHANGE, sB_ANIM_ARG1
+	printstring STRINGID_PKMNSWEAKNESSPOLICY
+	waitmessage 0x40
+	printstring STRINGID_PKMNSWEAKNESSPOLICY2
+	waitmessage 0x40
+	removeitem BS_SCRIPTING
+	return
+
 BattleScript_BerryStatRaiseEnd2::
 	playanimation BS_ATTACKER, B_ANIM_ITEM_EFFECT, NULL
 	statbuffchange STAT_CHANGE_BS_PTR | MOVE_EFFECT_AFFECTS_USER, BattleScript_BerryStatRaiseDoStatUp

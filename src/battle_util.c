@@ -3080,11 +3080,34 @@ u8 ItemBattleEffects(u8 caseID, u8 battlerId, bool8 moveTurn)
             {
             case HOLD_EFFECT_RESIST_BERRY:
                 if (battlerId == gBattlerTarget && (gMoveResultFlags & MOVE_RESULT_SUPER_EFFECTIVE)
-                 && ItemId_GetHoldEffectParam(gBattleMons[gBattlerTarget].item) == moveType)
+                 && ItemId_GetHoldEffectParam(gBattleMons[gBattlerTarget].item) == moveType && gBattleMons[battlerId].hp)
                 {
                     BattleScriptPushCursor();
                     gBattlescriptCurrInstr = BattleScript_BerryResistRet;
                     effect = ITEM_EFFECT_OTHER;
+                }
+                break;
+            case HOLD_EFFECT_WEAKNESSPOLICY:
+                if (battlerId == gBattlerTarget && TARGET_TURN_DAMAGED && (gMoveResultFlags & MOVE_RESULT_SUPER_EFFECTIVE)
+                 && (gBattleMons[battlerId].statStages[STAT_SPATK] < 12 || gBattleMons[battlerId].statStages[STAT_ATK] < 12)
+                 && gBattleMons[battlerId].hp)
+                {
+                    for (i = 0; i < 2; ++i)
+                    {
+                        if (gBattleMons[battlerId].statStages[STAT_ATK] < 12)
+                        {
+                            ++gBattleMons[battlerId].statStages[STAT_ATK];
+                        }
+                        if (gBattleMons[battlerId].statStages[STAT_SPATK] < 12)
+                        {
+                            ++gBattleMons[battlerId].statStages[STAT_SPATK];
+                        }
+                    }
+                    gBattleScripting.animArg1 = 0xE + STAT_SPATK;
+                    gBattleScripting.animArg2 = 0;
+                    BattleScriptPushCursor();
+                    gBattlescriptCurrInstr = BattleScript_WeaknessPolicy;
+                    effect = ITEM_STATS_CHANGE;
                 }
                 break;
             case HOLD_EFFECT_RESTORE_HP:
@@ -3405,6 +3428,25 @@ u8 ItemBattleEffects(u8 caseID, u8 battlerId, bool8 moveTurn)
                     gSpecialStatuses[gBattlerTarget].dmg = 0;
                     BattleScriptPushCursor();
                     gBattlescriptCurrInstr = BattleScript_ItemHealHP_Ret;
+                    ++effect;
+                }
+                break;
+            case HOLD_EFFECT_LIFE_ORB:
+                if (!(gMoveResultFlags & MOVE_RESULT_NO_EFFECT)
+                 && TARGET_TURN_DAMAGED
+                 && gBattlerAttacker != gBattlerTarget
+                 && gBattleMons[gBattlerAttacker].hp != 0)
+                {
+                    gLastUsedItem = atkItem;
+                    gPotentialItemEffectBattler = gBattlerAttacker;
+                    gBattleScripting.battler = gBattlerAttacker;
+                    gBattleMoveDamage = gBattleMons[battlerId].maxHP / 10;
+                    if (gBattleMoveDamage == 0)
+                        gBattleMoveDamage = 1;
+                    if (gBattleMoveDamage > gBattleMons[battlerId].hp)
+                        gBattleMoveDamage = gBattleMons[battlerId].hp;
+                    BattleScriptPushCursor();
+                    gBattlescriptCurrInstr = BattleScript_LifeOrb;
                     ++effect;
                 }
                 break;
