@@ -4482,6 +4482,13 @@ BattleScript_BerryConfuseHealRet::
 	removeitem BS_SCRIPTING
 	return
 
+BattleScript_BerryResistRet::
+	playanimation BS_SCRIPTING, B_ANIM_ITEM_EFFECT, NULL
+	printstring STRINGID_PKMNSITEMWEAKENEDDMG
+	waitmessage 0x40
+	removeitem BS_SCRIPTING
+	return
+
 BattleScript_BerryStatRaiseEnd2::
 	playanimation BS_ATTACKER, B_ANIM_ITEM_EFFECT, NULL
 	statbuffchange STAT_CHANGE_BS_PTR | MOVE_EFFECT_AFFECTS_USER, BattleScript_BerryStatRaiseDoStatUp

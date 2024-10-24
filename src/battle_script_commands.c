@@ -1390,6 +1390,9 @@ static void atk06_typecalc(void)
         gBattleMoveDamage = gBattleMoveDamage * 3;
         gBattleMoveDamage = gBattleMoveDamage / 4;
     }
+    if ((gMoveResultFlags & MOVE_RESULT_SUPER_EFFECTIVE) && ItemId_GetHoldEffect(gBattleMons[gBattlerTarget].item) == HOLD_EFFECT_RESIST_BERRY
+     && ItemId_GetHoldEffectParam(gBattleMons[gBattlerTarget].item) == moveType)
+        gBattleMoveDamage /= 2;
     if ((ItemId_GetHoldEffect(gBattleMons[gBattlerAttacker].item) == HOLD_EFFECT_EXPERT_BELT) && (gMoveResultFlags & MOVE_RESULT_SUPER_EFFECTIVE))
         gBattleMoveDamage = (gBattleMoveDamage * 120) / 100;
     if (gBattleMons[gBattlerTarget].ability == ABILITY_WONDER_GUARD && AttacksThisTurn(gBattlerAttacker, gCurrentMove) == 2

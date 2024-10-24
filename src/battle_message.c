@@ -502,6 +502,7 @@ static const u8 sText_PkmnsItemRestoredHealth[] = _("{B_SCR_ACTIVE_NAME_WITH_PRE
 static const u8 sText_PkmnsItemRestoredPP[] = _("{B_SCR_ACTIVE_NAME_WITH_PREFIX}'s {B_LAST_ITEM}\nrestored {B_BUFF1}'s PP!");
 static const u8 sText_PkmnsItemRestoredStatus[] = _("{B_SCR_ACTIVE_NAME_WITH_PREFIX}'s {B_LAST_ITEM}\nrestored its status!");
 static const u8 sText_PkmnsItemRestoredHPALittle[] = _("{B_SCR_ACTIVE_NAME_WITH_PREFIX}'s {B_LAST_ITEM}\nrestored its HP a little!");
+static const u8 sText_PkmnsItemWeakenedDamage[] = _("{B_LAST_ITEM} weakened the damage\nto {B_SCR_ACTIVE_NAME_WITH_PREFIX}!");
 static const u8 sText_ItemAllowsOnlyYMove[] = _("{B_LAST_ITEM}'s effect allows only\n{B_CURRENT_MOVE} to be used!\p");
 static const u8 sText_PkmnHungOnWithX[] = _("{B_DEF_NAME_WITH_PREFIX} hung on\nusing its {B_LAST_ITEM}!");
 static const u8 sText_PkmnHungOnWithXAbility[] = _("{B_DEF_NAME_WITH_PREFIX} hung on\nthanks to {B_DEF_ABILITY}!");
@@ -902,6 +903,7 @@ const u8 *const gBattleStringsTable[] = {
     [STRINGID_PKMNSXACTIVATED - 12]               = sText_PkmnsXActivated,
     [STRINGID_PKMNHUNGONWITHXABILITY - 12]        = sText_PkmnHungOnWithXAbility,
     [STRINGID_PKMNWASCONFUSEDBERRY - 12]          = sText_PkmnWasConfusedBerry,
+    [STRINGID_PKMNSITEMWEAKENEDDMG - 12]          = sText_PkmnsItemWeakenedDamage,
 };
 
 const u16 gMissStringIds[] = {

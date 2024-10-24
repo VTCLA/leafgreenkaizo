@@ -2595,6 +2595,8 @@ u8 ItemBattleEffects(u8 caseID, u8 battlerId, bool8 moveTurn)
     u8 battlerHoldEffect, atkHoldEffect, defHoldEffect;
     u8 battlerHoldEffectParam, atkHoldEffectParam, defHoldEffectParam;
     u16 atkItem, defItem;
+    u8 moveType;
+    GET_MOVE_TYPE(gCurrentMove, moveType);
 
     gLastUsedItem = gBattleMons[battlerId].item;
     if (gLastUsedItem == ITEM_ENIGMA_BERRY)
@@ -3075,7 +3077,17 @@ u8 ItemBattleEffects(u8 caseID, u8 battlerId, bool8 moveTurn)
                 battlerHoldEffectParam = ItemId_GetHoldEffectParam(gLastUsedItem);
             }
             switch (battlerHoldEffect)
-            {case HOLD_EFFECT_RESTORE_HP:
+            {
+            case HOLD_EFFECT_RESIST_BERRY:
+                if (battlerId == gBattlerTarget && (gMoveResultFlags & MOVE_RESULT_SUPER_EFFECTIVE)
+                 && ItemId_GetHoldEffectParam(gBattleMons[gBattlerTarget].item) == moveType)
+                {
+                    BattleScriptPushCursor();
+                    gBattlescriptCurrInstr = BattleScript_BerryResistRet;
+                    effect = ITEM_EFFECT_OTHER;
+                }
+                break;
+            case HOLD_EFFECT_RESTORE_HP:
                 if (gBattleMons[battlerId].hp <= gBattleMons[battlerId].maxHP / 2 && gBattleMons[battlerId].hp)
                 {
                     gBattleMoveDamage = battlerHoldEffectParam;
