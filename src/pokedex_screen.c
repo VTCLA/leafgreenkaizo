@@ -2225,6 +2225,10 @@ s8 DexScreen_GetSetPokedexFlag(u16 nationalDexNo, u8 caseId, bool8 indexIsSpecie
     if (indexIsSpecies)
         nationalDexNo = SpeciesToNationalPokedexNum(nationalDexNo);
 
+    //prevents 
+    if (nationalDexNo > SPECIES_OLD_UNOWN_Z)
+        nationalDexNo = SPECIES_OLD_UNOWN_Z;
+
     nationalDexNo--;
     index = nationalDexNo / 8;
     bit = nationalDexNo % 8;

@@ -752,3 +752,57 @@ const u32 gFile_graphics_items_icon_palettes_life_orb_palette[] = INCBIN_U32("gr
 
 const u32 gFile_graphics_items_icons_weaknesspolicy_sheet[] = INCBIN_U32("graphics/items/icons/weakness_policy.4bpp.lz");
 const u32 gFile_graphics_items_icon_palettes_weaknesspolicy_palette[] = INCBIN_U32("graphics/items/icon_palettes/weakness_policy.gbapal.lz");
+
+const u32 gFile_graphics_items_icons_normal_gem_sheet[] = INCBIN_U32("graphics/items/icons/normal_gem.4bpp.lz");
+const u32 gFile_graphics_items_icon_palettes_normal_gem_palette[] = INCBIN_U32("graphics/items/icon_palettes/normal_gem.gbapal.lz");
+
+const u32 gFile_graphics_items_icons_fighting_gem_sheet[] = INCBIN_U32("graphics/items/icons/fighting_gem.4bpp.lz");
+const u32 gFile_graphics_items_icon_palettes_fighting_gem_palette[] = INCBIN_U32("graphics/items/icon_palettes/fighting_gem.gbapal.lz");
+
+const u32 gFile_graphics_items_icons_flying_gem_sheet[] = INCBIN_U32("graphics/items/icons/flying_gem.4bpp.lz");
+const u32 gFile_graphics_items_icon_palettes_flying_gem_palette[] = INCBIN_U32("graphics/items/icon_palettes/flying_gem.gbapal.lz");
+
+const u32 gFile_graphics_items_icons_ground_gem_sheet[] = INCBIN_U32("graphics/items/icons/ground_gem.4bpp.lz");
+const u32 gFile_graphics_items_icon_palettes_ground_gem_palette[] = INCBIN_U32("graphics/items/icon_palettes/ground_gem.gbapal.lz");
+
+const u32 gFile_graphics_items_icons_poison_gem_sheet[] = INCBIN_U32("graphics/items/icons/poison_gem.4bpp.lz");
+const u32 gFile_graphics_items_icon_palettes_poison_gem_palette[] = INCBIN_U32("graphics/items/icon_palettes/poison_gem.gbapal.lz");
+
+const u32 gFile_graphics_items_icons_rock_gem_sheet[] = INCBIN_U32("graphics/items/icons/rock_gem.4bpp.lz");
+const u32 gFile_graphics_items_icon_palettes_rock_gem_palette[] = INCBIN_U32("graphics/items/icon_palettes/rock_gem.gbapal.lz");
+
+const u32 gFile_graphics_items_icons_bug_gem_sheet[] = INCBIN_U32("graphics/items/icons/bug_gem.4bpp.lz");
+const u32 gFile_graphics_items_icon_palettes_bug_gem_palette[] = INCBIN_U32("graphics/items/icon_palettes/bug_gem.gbapal.lz");
+
+const u32 gFile_graphics_items_icons_steel_gem_sheet[] = INCBIN_U32("graphics/items/icons/steel_gem.4bpp.lz");
+const u32 gFile_graphics_items_icon_palettes_steel_gem_palette[] = INCBIN_U32("graphics/items/icon_palettes/steel_gem.gbapal.lz");
+
+const u32 gFile_graphics_items_icons_ghost_gem_sheet[] = INCBIN_U32("graphics/items/icons/ghost_gem.4bpp.lz");
+const u32 gFile_graphics_items_icon_palettes_ghost_gem_palette[] = INCBIN_U32("graphics/items/icon_palettes/ghost_gem.gbapal.lz");
+
+const u32 gFile_graphics_items_icons_fire_gem_sheet[] = INCBIN_U32("graphics/items/icons/fire_gem.4bpp.lz");
+const u32 gFile_graphics_items_icon_palettes_fire_gem_palette[] = INCBIN_U32("graphics/items/icon_palettes/fire_gem.gbapal.lz");
+
+const u32 gFile_graphics_items_icons_water_gem_sheet[] = INCBIN_U32("graphics/items/icons/water_gem.4bpp.lz");
+const u32 gFile_graphics_items_icon_palettes_water_gem_palette[] = INCBIN_U32("graphics/items/icon_palettes/water_gem.gbapal.lz");
+
+const u32 gFile_graphics_items_icons_grass_gem_sheet[] = INCBIN_U32("graphics/items/icons/grass_gem.4bpp.lz");
+const u32 gFile_graphics_items_icon_palettes_grass_gem_palette[] = INCBIN_U32("graphics/items/icon_palettes/grass_gem.gbapal.lz");
+
+const u32 gFile_graphics_items_icons_electric_gem_sheet[] = INCBIN_U32("graphics/items/icons/electric_gem.4bpp.lz");
+const u32 gFile_graphics_items_icon_palettes_electric_gem_palette[] = INCBIN_U32("graphics/items/icon_palettes/electric_gem.gbapal.lz");
+
+const u32 gFile_graphics_items_icons_psychic_gem_sheet[] = INCBIN_U32("graphics/items/icons/psychic_gem.4bpp.lz");
+const u32 gFile_graphics_items_icon_palettes_psychic_gem_palette[] = INCBIN_U32("graphics/items/icon_palettes/psychic_gem.gbapal.lz");
+
+const u32 gFile_graphics_items_icons_ice_gem_sheet[] = INCBIN_U32("graphics/items/icons/ice_gem.4bpp.lz");
+const u32 gFile_graphics_items_icon_palettes_ice_gem_palette[] = INCBIN_U32("graphics/items/icon_palettes/ice_gem.gbapal.lz");
+
+const u32 gFile_graphics_items_icons_dragon_gem_sheet[] = INCBIN_U32("graphics/items/icons/dragon_gem.4bpp.lz");
+const u32 gFile_graphics_items_icon_palettes_dragon_gem_palette[] = INCBIN_U32("graphics/items/icon_palettes/dragon_gem.gbapal.lz");
+
+const u32 gFile_graphics_items_icons_dark_gem_sheet[] = INCBIN_U32("graphics/items/icons/dark_gem.4bpp.lz");
+const u32 gFile_graphics_items_icon_palettes_dark_gem_palette[] = INCBIN_U32("graphics/items/icon_palettes/dark_gem.gbapal.lz");
+
+const u32 gFile_graphics_items_icons_fairy_gem_sheet[] = INCBIN_U32("graphics/items/icons/fairy_gem.4bpp.lz");
+const u32 gFile_graphics_items_icon_palettes_fairy_gem_palette[] = INCBIN_U32("graphics/items/icon_palettes/fairy_gem.gbapal.lz");

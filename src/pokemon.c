@@ -2498,6 +2498,9 @@ s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *de
             spDefense = (110 * spDefense) / 100;
     }
     */
+    
+    if (type == TYPE_NORMAL && attacker->ability == ABILITY_PIXILATE)
+        type = TYPE_FAIRY;
 
     for (i = 0; i < NELEMS(sHoldEffectToType); i++)
     {
@@ -2510,6 +2513,8 @@ s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *de
         }
     }
 
+    if (attackerHoldEffect == HOLD_EFFECT_GEM && attackerHoldEffectParam == type)
+        gBattleMovePower = (130 * gBattleMovePower) / 100;
     if (attackerHoldEffect == HOLD_EFFECT_CHOICE_BAND)
         attack = (150 * attack) / 100;
     if (attackerHoldEffect == HOLD_EFFECT_CHOICE_SPECS)

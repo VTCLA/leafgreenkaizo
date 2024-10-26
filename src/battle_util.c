@@ -2598,6 +2598,9 @@ u8 ItemBattleEffects(u8 caseID, u8 battlerId, bool8 moveTurn)
     u8 moveType;
     GET_MOVE_TYPE(gCurrentMove, moveType);
 
+    if (moveType == TYPE_NORMAL && gBattleMons[gBattlerAttacker].ability == ABILITY_PIXILATE)
+        moveType = TYPE_FAIRY;
+
     gLastUsedItem = gBattleMons[battlerId].item;
     if (gLastUsedItem == ITEM_ENIGMA_BERRY)
     {
@@ -3087,6 +3090,15 @@ u8 ItemBattleEffects(u8 caseID, u8 battlerId, bool8 moveTurn)
                     effect = ITEM_EFFECT_OTHER;
                 }
                 break;
+            case HOLD_EFFECT_GEM:
+                if (battlerId == gBattlerAttacker && TARGET_TURN_DAMAGED && gMultiHitCounter == 0
+                 && ItemId_GetHoldEffectParam(gBattleMons[gBattlerAttacker].item) == moveType)
+                {
+                    BattleScriptPushCursor();
+                    gBattlescriptCurrInstr = BattleScript_Gem;
+                    effect = ITEM_EFFECT_OTHER;
+                }
+                break;
             case HOLD_EFFECT_WEAKNESSPOLICY:
                 if (battlerId == gBattlerTarget && TARGET_TURN_DAMAGED && (gMoveResultFlags & MOVE_RESULT_SUPER_EFFECTIVE)
                  && (gBattleMons[battlerId].statStages[STAT_SPATK] < 12 || gBattleMons[battlerId].statStages[STAT_ATK] < 12)
@@ -3435,7 +3447,9 @@ u8 ItemBattleEffects(u8 caseID, u8 battlerId, bool8 moveTurn)
                 if (!(gMoveResultFlags & MOVE_RESULT_NO_EFFECT)
                  && TARGET_TURN_DAMAGED
                  && gBattlerAttacker != gBattlerTarget
-                 && gBattleMons[gBattlerAttacker].hp != 0)
+                 && gBattleMons[gBattlerAttacker].hp != 0
+                 && !(gBattleMons[gBattlerAttacker].ability == ABILITY_SHEER_FORCE && gBattleMoves[gCurrentMove].secondaryEffectChance != 0
+                    && gBattleMoves[gCurrentMove].secondaryEffectChance != 100))
                 {
                     gLastUsedItem = atkItem;
                     gPotentialItemEffectBattler = gBattlerAttacker;

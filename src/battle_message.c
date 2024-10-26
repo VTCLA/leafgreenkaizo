@@ -506,6 +506,7 @@ static const u8 sText_PkmnsItemRestoredHPALittle[] = _("{B_SCR_ACTIVE_NAME_WITH_
 static const u8 sText_PkmnsItemWeakenedDamage[] = _("{B_LAST_ITEM} weakened the damage\nto {B_SCR_ACTIVE_NAME_WITH_PREFIX}!");
 static const u8 sText_PkmnsWeaknessPolicy[] = _("WEAKNESS POLICY sharply raised\n{B_SCR_ACTIVE_NAME_WITH_PREFIX}'s ATTACK!");
 static const u8 sText_PkmnsWeaknessPolicy2[] = _("WEAKNESS POLICY sharply raised\n{B_SCR_ACTIVE_NAME_WITH_PREFIX}'s SP. ATK!");
+static const u8 sText_PkmnsGemBoosted[] = _("{B_LAST_ITEM} strengthened\n{B_SCR_ACTIVE_NAME_WITH_PREFIX}'s power!");
 static const u8 sText_ItemAllowsOnlyYMove[] = _("{B_LAST_ITEM}'s effect allows only\n{B_CURRENT_MOVE} to be used!\p");
 static const u8 sText_PkmnHungOnWithX[] = _("{B_DEF_NAME_WITH_PREFIX} hung on\nusing its {B_LAST_ITEM}!");
 static const u8 sText_PkmnHungOnWithXAbility[] = _("{B_DEF_NAME_WITH_PREFIX} hung on\nthanks to {B_DEF_ABILITY}!");
@@ -910,6 +911,7 @@ const u8 *const gBattleStringsTable[] = {
     [STRINGID_PKMNHURTBYLIFEORB - 12]             = sText_PkmnHurtByLifeOrb,
     [STRINGID_PKMNSWEAKNESSPOLICY - 12]           = sText_PkmnsWeaknessPolicy,
     [STRINGID_PKMNSWEAKNESSPOLICY2 - 12]          = sText_PkmnsWeaknessPolicy2,
+    [STRINGID_PKMNSGEMBOOSTED - 12]               = sText_PkmnsGemBoosted,
 };
 
 const u16 gMissStringIds[] = {
