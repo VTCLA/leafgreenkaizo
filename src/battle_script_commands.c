@@ -305,6 +305,7 @@ static void atkF4_subattackerhpbydmg(void);
 static void atkF5_removeattackerstatus1(void);
 static void atkF6_finishaction(void);
 static void atkF7_finishturn(void);
+static void atkF8_jumpifholdeffect(void);
 
 void (* const gBattleScriptingCommandsTable[])(void) =
 {
@@ -556,6 +557,7 @@ void (* const gBattleScriptingCommandsTable[])(void) =
     atkF5_removeattackerstatus1,
     atkF6_finishaction,
     atkF7_finishturn,
+    atkF8_jumpifholdeffect,
 };
 
 struct StatFractions
@@ -2179,7 +2181,8 @@ void SetMoveEffect(bool8 primary, u8 certain)
         ++gBattlescriptCurrInstr;
         return;
     }
-    if (gBattleMons[gEffectBattler].ability == ABILITY_SHIELD_DUST 
+    if ((gBattleMons[gEffectBattler].ability == ABILITY_SHIELD_DUST
+        || ItemId_GetHoldEffect(gBattleMons[gBattlerTarget].item) == HOLD_EFFECT_COVERT_CLOAK) 
      && !(gHitMarker & HITMARKER_IGNORE_SAFEGUARD)
      && !primary
      && gBattleCommunication[MOVE_EFFECT_BYTE] <= 9)
@@ -3029,6 +3032,69 @@ static void atk1E_jumpifability(void)
             gLastUsedAbility = ability;
             gBattlescriptCurrInstr = jumpPtr;
             RecordAbilityBattle(battlerId, gLastUsedAbility);
+            gBattleScripting.battlerWithAbility = battlerId;
+        }
+        else
+            gBattlescriptCurrInstr += 7;
+    }
+}
+
+static void atkF8_jumpifholdeffect(void)
+{
+    u8 battlerId = 0;
+    u8 side = GetBattlerSide(gBattlerAttacker);
+    u8 holdEffect = gBattlescriptCurrInstr[2];
+    int i;
+    const u8 *jumpPtr = T2_READ_PTR(gBattlescriptCurrInstr + 3);
+
+    if (gBattlescriptCurrInstr[1] == BS_ATTACKER_SIDE)
+    {
+       for (i = 0; i < gBattlersCount; ++i)
+       {
+           if (GetBattlerSide(i) == side && ItemId_GetHoldEffect(gBattleMons[i].item) == holdEffect)
+           {
+               gLastUsedItem = gBattleMons[i].item;
+               battlerId = i + 1;
+           }
+        }
+           if (battlerId)
+           {
+               gLastUsedItem = gBattleMons[battlerId - 1].item;
+               gBattlescriptCurrInstr = jumpPtr;
+               RecordItemEffectBattle(battlerId - 1, gLastUsedItem);
+               gBattleScripting.battlerWithAbility = battlerId - 1;
+            }
+        else
+            gBattlescriptCurrInstr += 7;
+    }
+    else if (gBattlescriptCurrInstr[1] == BS_NOT_ATTACKER_SIDE)
+    {
+        for (i = 0; i < gBattlersCount; ++i)
+        {
+            if (GetBattlerSide(i) != side && ItemId_GetHoldEffect(gBattleMons[i].item) == holdEffect)
+            {
+                gLastUsedItem = gBattleMons[i].item;
+                battlerId = i + 1;
+            }
+        }
+        if (battlerId)
+        {
+            gLastUsedItem = gBattleMons[battlerId - 1].item;
+            gBattlescriptCurrInstr = jumpPtr;
+            RecordItemEffectBattle(battlerId - 1, gLastUsedItem);
+            gBattleScripting.battlerWithAbility = battlerId - 1;
+        }
+        else
+            gBattlescriptCurrInstr += 7;
+    }
+    else
+    {
+        battlerId = GetBattlerForBattleScript(gBattlescriptCurrInstr[1]);
+        if (ItemId_GetHoldEffect(gBattleMons[battlerId].item) == holdEffect)
+        {
+            gLastUsedItem = gBattleMons[battlerId].item;
+            gBattlescriptCurrInstr = jumpPtr;
+            RecordItemEffectBattle(battlerId, gLastUsedItem);
             gBattleScripting.battlerWithAbility = battlerId;
         }
         else
@@ -3966,6 +4032,7 @@ static void atk48_playstatchangeanimation(void)
                 }
                 else if (!gSideTimers[GET_BATTLER_SIDE(gActiveBattler)].mistTimer
                         && gBattleMons[gActiveBattler].ability != ABILITY_CLEAR_BODY
+                        && ItemId_GetHoldEffect(gBattleMons[gActiveBattler].item) != HOLD_EFFECT_CLEAR_AMULET
                         && gBattleMons[gActiveBattler].ability != ABILITY_WHITE_SMOKE
                         && !(gBattleMons[gActiveBattler].ability == ABILITY_KEEN_EYE && currStat == STAT_ACC)
                         && !(gBattleMons[gActiveBattler].ability == ABILITY_HYPER_CUTTER && currStat == STAT_ATK))
@@ -6524,7 +6591,8 @@ static u8 ChangeStatBuffs(s8 statValue, u8 statId, u8 flags, const u8 *BS_ptr)
             return STAT_CHANGE_DIDNT_WORK;
         }
         else if ((gBattleMons[gActiveBattler].ability == ABILITY_CLEAR_BODY
-                  || gBattleMons[gActiveBattler].ability == ABILITY_WHITE_SMOKE)
+                  || gBattleMons[gActiveBattler].ability == ABILITY_WHITE_SMOKE
+                  || ItemId_GetHoldEffect(gBattleMons[gActiveBattler].item) == HOLD_EFFECT_CLEAR_AMULET)
               && !certain
               && gCurrentMove != MOVE_CURSE)
         {
@@ -6536,12 +6604,25 @@ static u8 ChangeStatBuffs(s8 statValue, u8 statId, u8 flags, const u8 *BS_ptr)
                 }
                 else
                 {
-                    BattleScriptPush(BS_ptr);
-                    gBattleScripting.battler = gActiveBattler;
-                    gBattlescriptCurrInstr = BattleScript_AbilityNoStatLoss;
-                    gLastUsedAbility = gBattleMons[gActiveBattler].ability;
-                    RecordAbilityBattle(gActiveBattler, gLastUsedAbility);
-                    gSpecialStatuses[gActiveBattler].statLowered = 1;
+                    if (gBattleMons[gActiveBattler].ability == ABILITY_CLEAR_BODY
+                     || gBattleMons[gActiveBattler].ability == ABILITY_WHITE_SMOKE)
+                    {
+                        BattleScriptPush(BS_ptr);
+                        gBattleScripting.battler = gActiveBattler;
+                        gBattlescriptCurrInstr = BattleScript_AbilityNoStatLoss;
+                        gLastUsedAbility = gBattleMons[gActiveBattler].ability;
+                        RecordAbilityBattle(gActiveBattler, gLastUsedAbility);
+                        gSpecialStatuses[gActiveBattler].statLowered = 1;
+                    }
+                    else
+                    {
+                        BattleScriptPush(BS_ptr);
+                        gBattleScripting.battler = gActiveBattler;
+                        gBattlescriptCurrInstr = BattleScript_ItemNoStatLoss;
+                        gLastUsedItem = gBattleMons[gActiveBattler].item;
+                        RecordItemEffectBattle(gActiveBattler, gLastUsedItem);
+                        gSpecialStatuses[gActiveBattler].statLowered = 1;
+                    }
                 }
             }
             return STAT_CHANGE_DIDNT_WORK;
@@ -6572,7 +6653,8 @@ static u8 ChangeStatBuffs(s8 statValue, u8 statId, u8 flags, const u8 *BS_ptr)
             }
             return STAT_CHANGE_DIDNT_WORK;
         }
-        else if (gBattleMons[gActiveBattler].ability == ABILITY_SHIELD_DUST && !flags)
+        else if ((gBattleMons[gActiveBattler].ability == ABILITY_SHIELD_DUST 
+         || ItemId_GetHoldEffect(gBattleMons[gBattlerTarget].item) == HOLD_EFFECT_COVERT_CLOAK) && !flags)
         {
             return STAT_CHANGE_DIDNT_WORK;
         }

@@ -806,3 +806,9 @@ const u32 gFile_graphics_items_icon_palettes_dark_gem_palette[] = INCBIN_U32("gr
 
 const u32 gFile_graphics_items_icons_fairy_gem_sheet[] = INCBIN_U32("graphics/items/icons/fairy_gem.4bpp.lz");
 const u32 gFile_graphics_items_icon_palettes_fairy_gem_palette[] = INCBIN_U32("graphics/items/icon_palettes/fairy_gem.gbapal.lz");
+
+const u32 gFile_graphics_items_icons_covert_cloak_sheet[] = INCBIN_U32("graphics/items/icons/covert_cloak.4bpp.lz");
+const u32 gFile_graphics_items_icon_palettes_covert_cloak_palette[] = INCBIN_U32("graphics/items/icon_palettes/covert_cloak.gbapal.lz");
+
+const u32 gFile_graphics_items_icons_clear_amulet_sheet[] = INCBIN_U32("graphics/items/icons/clear_amulet.4bpp.lz");
+const u32 gFile_graphics_items_icon_palettes_clear_amulet_palette[] = INCBIN_U32("graphics/items/icon_palettes/clear_amulet.gbapal.lz");

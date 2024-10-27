@@ -2217,7 +2217,11 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u8 ability, u8 special, u16 moveA
                  && gBattleMons[gBattlerAttacker].statStages[STAT_SPEED] > 0
                  && !gProtectStructs[gBattlerAttacker].confusionSelfDmg
                  && TARGET_TURN_DAMAGED
-                 && (gBattleMoves[moveArg].flags & FLAG_MAKES_CONTACT))
+                 && (gBattleMoves[moveArg].flags & FLAG_MAKES_CONTACT)
+                 && !gSideTimers[GET_BATTLER_SIDE(gBattlerAttacker)].mistTimer
+                 && gBattleMons[gBattlerAttacker].ability != ABILITY_CLEAR_BODY
+                 && ItemId_GetHoldEffect(gBattleMons[gBattlerAttacker].item) != HOLD_EFFECT_CLEAR_AMULET
+                 && gBattleMons[gBattlerAttacker].ability != ABILITY_WHITE_SMOKE)
                 {
                     gBattleCommunication[MOVE_EFFECT_BYTE] = MOVE_EFFECT_AFFECTS_USER | MOVE_EFFECT_SPD_MINUS_1;
                     BattleScriptPushCursor();

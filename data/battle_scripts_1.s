@@ -4078,6 +4078,7 @@ BattleScript_IntimidateActivationAnimLoop::
 	jumpifability BS_TARGET, ABILITY_CLEAR_BODY, BattleScript_IntimidateAbilityFail
 	jumpifability BS_TARGET, ABILITY_HYPER_CUTTER, BattleScript_IntimidateAbilityFail
 	jumpifability BS_TARGET, ABILITY_WHITE_SMOKE, BattleScript_IntimidateAbilityFail
+	jumpifholdeffect BS_TARGET, 78, BattleScript_IntimidateItemFail
 	statbuffchange STAT_CHANGE_BS_PTR | STAT_CHANGE_NOT_PROTECT_AFFECTED, BattleScript_IntimidateFail
 	jumpifbyte CMP_GREATER_THAN, cMULTISTRING_CHOOSER, 1, BattleScript_IntimidateFail
 	setgraphicalstatchangevalues
@@ -4094,6 +4095,12 @@ BattleScript_IntimidateEnd::
 BattleScript_IntimidateAbilityFail::
 	pause 0x20
 	printstring STRINGID_PREVENTEDFROMWORKING
+	waitmessage 0x40
+	goto BattleScript_IntimidateFail
+
+BattleScript_IntimidateItemFail::
+	pause 0x20
+	printstring STRINGID_PREVENTEDBYITEM
 	waitmessage 0x40
 	goto BattleScript_IntimidateFail
 
@@ -4166,6 +4173,12 @@ BattleScript_AbilityPreventsPhasingOut::
 BattleScript_AbilityNoStatLoss::
 	pause 0x20
 	printstring STRINGID_PKMNPREVENTSSTATLOSSWITH
+	waitmessage 0x40
+	return
+
+BattleScript_ItemNoStatLoss::
+	pause 0x20
+	printstring STRINGID_PKMNITEMPREVENTSSTATLOSS
 	waitmessage 0x40
 	return
 

@@ -1242,6 +1242,13 @@
 	.byte 0xf7
 	.endm
 
+	.macro jumpifholdeffect param0:req, ability:req, ptr:req
+	.byte 0xf8
+	.byte \param0
+	.byte \ability
+	.4byte \ptr
+	.endm
+
 @ various command changed to more readable macros
 	.macro cancelmultiturnmoves battler:req
 	various \battler, VARIOUS_CANCEL_MULTI_TURN_MOVES
