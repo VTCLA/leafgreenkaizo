@@ -3452,6 +3452,7 @@ u8 ItemBattleEffects(u8 caseID, u8 battlerId, bool8 moveTurn)
                  && TARGET_TURN_DAMAGED
                  && gBattlerAttacker != gBattlerTarget
                  && gBattleMons[gBattlerAttacker].hp != 0
+                 && !gProtectStructs[gBattlerAttacker].confusionSelfDmg
                  && !(gBattleMons[gBattlerAttacker].ability == ABILITY_SHEER_FORCE && gBattleMoves[gCurrentMove].secondaryEffectChance != 0
                     && gBattleMoves[gCurrentMove].secondaryEffectChance != 100))
                 {
@@ -3466,6 +3467,25 @@ u8 ItemBattleEffects(u8 caseID, u8 battlerId, bool8 moveTurn)
                     BattleScriptPushCursor();
                     gBattlescriptCurrInstr = BattleScript_LifeOrb;
                     ++effect;
+                }
+                break;
+            }
+            switch (defHoldEffect)
+            {
+            case HOLD_EFFECT_ROCKY_HELMET:
+                if (TARGET_TURN_DAMAGED && gBattleMons[gBattlerAttacker].hp
+                 && (gBattleMoves[gCurrentMove].flags & FLAG_MAKES_CONTACT) && !(gMoveResultFlags & MOVE_RESULT_NO_EFFECT)
+                 && !gProtectStructs[gBattlerAttacker].confusionSelfDmg)
+                {
+                    gLastUsedItem = defItem;
+                    gPotentialItemEffectBattler = gBattlerTarget;
+                    gBattleScripting.battler = gBattlerAttacker;
+                    gBattleMoveDamage = gBattleMons[gBattlerAttacker].maxHP / 6;
+                    if (gBattleMoveDamage == 0)
+                        gBattleMoveDamage = 1;
+                    BattleScriptPushCursor();
+                    gBattlescriptCurrInstr = BattleScript_RockyHelmetActivates;
+                    effect = ITEM_HP_CHANGE;
                 }
                 break;
             }

@@ -812,3 +812,6 @@ const u32 gFile_graphics_items_icon_palettes_covert_cloak_palette[] = INCBIN_U32
 
 const u32 gFile_graphics_items_icons_clear_amulet_sheet[] = INCBIN_U32("graphics/items/icons/clear_amulet.4bpp.lz");
 const u32 gFile_graphics_items_icon_palettes_clear_amulet_palette[] = INCBIN_U32("graphics/items/icon_palettes/clear_amulet.gbapal.lz");
+
+const u32 gFile_graphics_items_icons_rocky_helmet_sheet[] = INCBIN_U32("graphics/items/icons/rocky_helmet.4bpp.lz");
+const u32 gFile_graphics_items_icon_palettes_rocky_helmet_palette[] = INCBIN_U32("graphics/items/icon_palettes/rocky_helmet.gbapal.lz");

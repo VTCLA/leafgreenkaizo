@@ -3970,6 +3970,9 @@ extern const u8 gFile_graphics_items_icons_covert_cloak_sheet[];
 extern const u8 gFile_graphics_items_icon_palettes_covert_cloak_palette[];
 extern const u8 gFile_graphics_items_icons_clear_amulet_sheet[];
 extern const u8 gFile_graphics_items_icon_palettes_clear_amulet_palette[];
+extern const u8 gFile_graphics_items_icons_rocky_helmet_sheet[];
+extern const u8 gFile_graphics_items_icon_palettes_rocky_helmet_palette[];
+
 
 // battle_anim_utility_funcs
 extern const u32 gFile_graphics_battle_anims_masks_curse_sheet[];

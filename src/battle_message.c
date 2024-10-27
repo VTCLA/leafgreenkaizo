@@ -280,6 +280,7 @@ static const u8 sText_PkmnCutsAttackWith[] = _("{B_SCR_ACTIVE_NAME_WITH_PREFIX}'
 static const u8 sText_PkmnPreventsStatLossWith[] = _("{B_SCR_ACTIVE_NAME_WITH_PREFIX}'s {B_SCR_ACTIVE_ABILITY}\nprevents stat loss!");
 static const u8 sText_PkmnItemPreventsStatLoss[] = _("{B_SCR_ACTIVE_NAME_WITH_PREFIX}'s {B_LAST_ITEM}\nprevents stat loss!");
 static const u8 sText_PkmnHurtsWith[] = _("{B_DEF_NAME_WITH_PREFIX}'s {B_DEF_ABILITY}\nhurt {B_ATK_NAME_WITH_PREFIX}!");
+static const u8 sText_PkmnHurtsWithItem[] = _("{B_DEF_NAME_WITH_PREFIX}'s {B_LAST_ITEM}\nhurt {B_ATK_NAME_WITH_PREFIX}!");
 static const u8 sText_PkmnTraced[] = _("{B_SCR_ACTIVE_NAME_WITH_PREFIX} TRACED\n{B_BUFF1}'s {B_BUFF2}!");
 static const u8 sText_PkmnsXPreventsBurns[] = _("{B_EFF_NAME_WITH_PREFIX}'s {B_EFF_ABILITY}\nprevents burns!");
 static const u8 sText_PkmnsXBlocksY[] = _("{B_DEF_NAME_WITH_PREFIX}'s {B_DEF_ABILITY}\nblocks {B_CURRENT_MOVE}!");
@@ -916,6 +917,7 @@ const u8 *const gBattleStringsTable[] = {
     [STRINGID_PKMNSGEMBOOSTED - 12]               = sText_PkmnsGemBoosted,
     [STRINGID_PREVENTEDBYITEM - 12]               = sText_PreventedByItem,
     [STRINGID_PKMNITEMPREVENTSSTATLOSS - 12]      = sText_PkmnItemPreventsStatLoss,
+    [STRINGID_PKMNHURTSWITHITEM - 12]             = sText_PkmnHurtsWithItem,
 };
 
 const u16 gMissStringIds[] = {
