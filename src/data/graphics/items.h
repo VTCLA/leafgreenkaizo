@@ -818,3 +818,6 @@ const u32 gFile_graphics_items_icon_palettes_rocky_helmet_palette[] = INCBIN_U32
 
 const u32 gFile_graphics_items_icons_loaded_dice_sheet[] = INCBIN_U32("graphics/items/icons/loaded_dice.4bpp.lz");
 const u32 gFile_graphics_items_icon_palettes_loaded_dice_palette[] = INCBIN_U32("graphics/items/icon_palettes/loaded_dice.gbapal.lz");
+
+const u32 gFile_graphics_items_icons_light_clay_sheet[] = INCBIN_U32("graphics/items/icons/light_clay.4bpp.lz");
+const u32 gFile_graphics_items_icon_palettes_light_clay_palette[] = INCBIN_U32("graphics/items/icon_palettes/light_clay.gbapal.lz");
