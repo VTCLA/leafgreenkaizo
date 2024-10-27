@@ -815,3 +815,6 @@ const u32 gFile_graphics_items_icon_palettes_clear_amulet_palette[] = INCBIN_U32
 
 const u32 gFile_graphics_items_icons_rocky_helmet_sheet[] = INCBIN_U32("graphics/items/icons/rocky_helmet.4bpp.lz");
 const u32 gFile_graphics_items_icon_palettes_rocky_helmet_palette[] = INCBIN_U32("graphics/items/icon_palettes/rocky_helmet.gbapal.lz");
+
+const u32 gFile_graphics_items_icons_loaded_dice_sheet[] = INCBIN_U32("graphics/items/icons/loaded_dice.4bpp.lz");
+const u32 gFile_graphics_items_icon_palettes_loaded_dice_palette[] = INCBIN_U32("graphics/items/icon_palettes/loaded_dice.gbapal.lz");

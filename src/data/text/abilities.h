@@ -109,6 +109,7 @@ static const u8 sMagicGuardDescription[] = _("Only takes damage from attacks.");
 static const u8 sCursedBodyDescription[] = _("Disables moves when hit.");
 static const u8 sGooeyDescription[] = _("Lowers speed on contact.");
 static const u8 sSniperDescription[] = _("Powers up critical hits.");
+static const u8 sSkillLinkDescription[] = _("Multihit moves hit maximum times.");
 
 const u8 *const gAbilityDescriptionPointers[ABILITIES_COUNT] =
 {
@@ -223,6 +224,7 @@ const u8 *const gAbilityDescriptionPointers[ABILITIES_COUNT] =
     [ABILITY_CURSED_BODY] = sCursedBodyDescription,
     [ABILITY_GOOEY] = sGooeyDescription,
     [ABILITY_SNIPER] = sSniperDescription,
+    [ABILITY_SKILL_LINK] = sSkillLinkDescription,
 };
 
 const u8 gAbilityNames[ABILITIES_COUNT][ABILITY_NAME_LENGTH + 1] =
@@ -338,4 +340,5 @@ const u8 gAbilityNames[ABILITIES_COUNT][ABILITY_NAME_LENGTH + 1] =
     [ABILITY_CURSED_BODY] = _("CURSED BODY"),
     [ABILITY_GOOEY] = _("GOOEY"),
     [ABILITY_SNIPER] = _("SNIPER"),
+    [ABILITY_SKILL_LINK] = _("SKILL LINK"),
 };

@@ -3972,6 +3972,8 @@ extern const u8 gFile_graphics_items_icons_clear_amulet_sheet[];
 extern const u8 gFile_graphics_items_icon_palettes_clear_amulet_palette[];
 extern const u8 gFile_graphics_items_icons_rocky_helmet_sheet[];
 extern const u8 gFile_graphics_items_icon_palettes_rocky_helmet_palette[];
+extern const u8 gFile_graphics_items_icons_loaded_dice_sheet[];
+extern const u8 gFile_graphics_items_icon_palettes_loaded_dice_palette[];
 
 
 // battle_anim_utility_funcs
