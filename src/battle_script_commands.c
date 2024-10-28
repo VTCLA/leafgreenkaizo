@@ -1071,7 +1071,7 @@ static void atk01_accuracycheck(void)
     }
     else
     {
-        u8 type, moveAcc, holdEffect, param;
+        u8 type, moveAcc, holdEffectDef, holdEffectAtk, paramDef, paramAtk, i, j;
         s8 buff;
         u16 calc;
 
@@ -1108,20 +1108,48 @@ static void atk01_accuracycheck(void)
             calc = (calc * 80) / 100; // 1.2 sand veil loss
         if (gBattleMons[gBattlerAttacker].ability == ABILITY_HUSTLE && IS_MOVE_PHYSICAL(move))
             calc = (calc * 80) / 100; // 1.2 hustle loss
-        if (gBattleMons[gBattlerTarget].item == ITEM_ENIGMA_BERRY)
+        if (gBattleMons[gBattlerAttacker].item == ITEM_ENIGMA_BERRY)
         {
-            holdEffect = gEnigmaBerries[gBattlerTarget].holdEffect;
-            param = gEnigmaBerries[gBattlerTarget].holdEffectParam;
+            holdEffectAtk = gEnigmaBerries[gBattlerAttacker].holdEffect;
+            paramAtk = gEnigmaBerries[gBattlerAttacker].holdEffectParam;
         }
         else
         {
-            holdEffect = ItemId_GetHoldEffect(gBattleMons[gBattlerTarget].item);
-            param = ItemId_GetHoldEffectParam(gBattleMons[gBattlerTarget].item);
+            holdEffectAtk = ItemId_GetHoldEffect(gBattleMons[gBattlerAttacker].item);
+            paramAtk = ItemId_GetHoldEffectParam(gBattleMons[gBattlerAttacker].item);
+        }
+        if (gBattleMons[gBattlerTarget].item == ITEM_ENIGMA_BERRY)
+        {
+            holdEffectDef = gEnigmaBerries[gBattlerTarget].holdEffect;
+            paramDef = gEnigmaBerries[gBattlerTarget].holdEffectParam;
+        }
+        else
+        {
+            holdEffectDef = ItemId_GetHoldEffect(gBattleMons[gBattlerTarget].item);
+            paramDef = ItemId_GetHoldEffectParam(gBattleMons[gBattlerTarget].item);
         }
         gPotentialItemEffectBattler = gBattlerTarget;
 
-        if (holdEffect == HOLD_EFFECT_EVASION_UP)
-            calc = (calc * (100 - param)) / 100;
+        if (holdEffectDef == HOLD_EFFECT_EVASION_UP)
+            calc = (calc * (100 - paramDef)) / 100;
+        if (holdEffectAtk == HOLD_EFFECT_ACC_UP)
+            calc = (calc * (100 + paramAtk)) / 100;
+        if (holdEffectAtk == HOLD_EFFECT_ZOOM_LENS)
+        {
+            for (i = 0; i < gBattlersCount; ++i)
+            {
+                if (gBattlerByTurnOrder[i] == gBattlerTarget)
+                    buff = i;
+            }
+            for (j = 0; j < gBattlersCount; ++j)
+            {
+                if (gBattlerByTurnOrder[j] == gBattlerAttacker && buff < j)
+                    buff = 0;
+            }
+            if (buff == 0 && gActionsByTurnOrder[gBattlerTarget] == B_ACTION_USE_MOVE)
+                calc = (calc * (100 + paramAtk)) / 100;
+        }
+
         // final calculation
         if ((Random() % 100 + 1) > calc)
         {

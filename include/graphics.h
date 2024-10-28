@@ -3982,6 +3982,10 @@ extern const u8 gFile_graphics_items_icons_toxic_orb_sheet[];
 extern const u8 gFile_graphics_items_icon_palettes_toxic_orb_palette[];
 extern const u8 gFile_graphics_items_icons_assault_vest_sheet[];
 extern const u8 gFile_graphics_items_icon_palettes_assault_vest_palette[];
+extern const u8 gFile_graphics_items_icons_wide_lens_sheet[];
+extern const u8 gFile_graphics_items_icon_palettes_wide_lens_palette[];
+extern const u8 gFile_graphics_items_icons_zoom_lens_sheet[];
+extern const u8 gFile_graphics_items_icon_palettes_zoom_lens_palette[];
 
 
 // battle_anim_utility_funcs

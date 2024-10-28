@@ -88,5 +88,7 @@
 #define HOLD_EFFECT_FLAME_ORB      84
 #define HOLD_EFFECT_TOXIC_ORB      85
 #define HOLD_EFFECT_ASSAULT_VEST   86
+#define HOLD_EFFECT_ACC_UP         87
+#define HOLD_EFFECT_ZOOM_LENS      88
 
 #endif // GUARD_HOLD_EFFECTS_H

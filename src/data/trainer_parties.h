@@ -3774,10 +3774,10 @@ static const struct TrainerMonNoItemDefaultMoves sParty_RivalOaksLabBulbasaur[] 
 static const struct TrainerMonItemCustomMoves sParty_RivalOaksLabCharmander[] = {
     {
         .iv = 0,
-        .lvl = 5,
+        .lvl = 1,
         .species = SPECIES_CHARMANDER,
-        .heldItem = ITEM_ASSAULT_VEST,
-        .moves = {MOVE_REFLECT, MOVE_NONE, MOVE_NONE, MOVE_NONE},
+        .heldItem = ITEM_ZOOM_LENS,
+        .moves = {MOVE_SEISMIC_TOSS, MOVE_NONE, MOVE_NONE, MOVE_NONE},
         .abilitynum = 0,
         .nature = NATURE_MODEST,
     },

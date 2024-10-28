@@ -830,3 +830,9 @@ const u32 gFile_graphics_items_icon_palettes_toxic_orb_palette[] = INCBIN_U32("g
 
 const u32 gFile_graphics_items_icons_assault_vest_sheet[] = INCBIN_U32("graphics/items/icons/assault_vest.4bpp.lz");
 const u32 gFile_graphics_items_icon_palettes_assault_vest_palette[] = INCBIN_U32("graphics/items/icon_palettes/assault_vest.gbapal.lz");
+
+const u32 gFile_graphics_items_icons_wide_lens_sheet[] = INCBIN_U32("graphics/items/icons/wide_lens.4bpp.lz");
+const u32 gFile_graphics_items_icon_palettes_wide_lens_palette[] = INCBIN_U32("graphics/items/icon_palettes/wide_lens.gbapal.lz");
+
+const u32 gFile_graphics_items_icons_zoom_lens_sheet[] = INCBIN_U32("graphics/items/icons/zoom_lens.4bpp.lz");
+const u32 gFile_graphics_items_icon_palettes_zoom_lens_palette[] = INCBIN_U32("graphics/items/icon_palettes/zoom_lens.gbapal.lz");
