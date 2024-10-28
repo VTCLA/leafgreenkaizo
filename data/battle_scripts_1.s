@@ -4464,6 +4464,15 @@ BattleScript_SelectingNotAllowedMoveChoiceItem::
 	printselectionstring STRINGID_ITEMALLOWSONLYYMOVE
 	endselectionscript
 
+BattleScript_SelectingNotAllowedMoveAssaultVest::
+	printselectionstring STRINGID_PKMNCANTUSEMOVEITEM
+	endselectionscript
+
+BattleScript_MoveUsedIsAssaultVested::
+	printstring STRINGID_PKMNCANTUSEMOVEITEM
+	waitmessage 0x40
+	goto BattleScript_MoveEnd
+
 BattleScript_HangedOnMsg::
 	playanimation BS_TARGET, B_ANIM_HANGED_ON, NULL
 	printstring STRINGID_PKMNHUNGONWITHX

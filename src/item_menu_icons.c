@@ -419,7 +419,7 @@ static const void *const sItemIconGfxPtrs[][2] = {
     {gFile_graphics_items_icons_light_clay_sheet, gFile_graphics_items_icon_palettes_light_clay_palette},
     {gFile_graphics_items_icons_flame_orb_sheet, gFile_graphics_items_icon_palettes_flame_orb_palette},
     {gFile_graphics_items_icons_toxic_orb_sheet, gFile_graphics_items_icon_palettes_toxic_orb_palette},
-    {gFile_graphics_items_icons_question_mark_sheet, gFile_graphics_items_icon_palettes_question_mark_palette},
+    {gFile_graphics_items_icons_assault_vest_sheet, gFile_graphics_items_icon_palettes_assault_vest_palette},
     {gFile_graphics_items_icons_question_mark_sheet, gFile_graphics_items_icon_palettes_question_mark_palette},
     {gFile_graphics_items_icons_scarf_sheet, gFile_graphics_items_icon_palettes_red_scarf_palette},
     {gFile_graphics_items_icons_scarf_sheet, gFile_graphics_items_icon_palettes_blue_scarf_palette},

@@ -262,6 +262,7 @@ static const u8 sText_PkmnHasNoMovesLeft[] = _("{B_ACTIVE_NAME_WITH_PREFIX} has 
 static const u8 sText_PkmnMoveIsDisabled[] = _("{B_ACTIVE_NAME_WITH_PREFIX}'s {B_CURRENT_MOVE}\nis disabled!\p");
 static const u8 sText_PkmnCantUseMoveTorment[] = _("{B_ACTIVE_NAME_WITH_PREFIX} can't use the same\nmove in a row due to the TORMENT!\p");
 static const u8 sText_PkmnCantUseMoveTaunt[] = _("{B_ACTIVE_NAME_WITH_PREFIX} can't use\n{B_CURRENT_MOVE} after the TAUNT!\p");
+static const u8 sText_PkmnCantUseMoveItem[] = _("{B_LAST_ITEM}'s effect prevents\n{B_CURRENT_MOVE} from being used!\p");
 static const u8 sText_PkmnCantUseMoveSealed[] = _("{B_ACTIVE_NAME_WITH_PREFIX} can't use the\nsealed {B_CURRENT_MOVE}!\p");
 static const u8 sText_PkmnMadeItRain[] = _("{B_SCR_ACTIVE_NAME_WITH_PREFIX}'s {B_SCR_ACTIVE_ABILITY}\nmade it rain!");
 static const u8 sText_PkmnRaisedSpeed[] = _("{B_SCR_ACTIVE_NAME_WITH_PREFIX}'s {B_SCR_ACTIVE_ABILITY}\nraised its SPEED!");
@@ -918,6 +919,7 @@ const u8 *const gBattleStringsTable[] = {
     [STRINGID_PREVENTEDBYITEM - 12]               = sText_PreventedByItem,
     [STRINGID_PKMNITEMPREVENTSSTATLOSS - 12]      = sText_PkmnItemPreventsStatLoss,
     [STRINGID_PKMNHURTSWITHITEM - 12]             = sText_PkmnHurtsWithItem,
+    [STRINGID_PKMNCANTUSEMOVEITEM - 12]           = sText_PkmnCantUseMoveItem,
 };
 
 const u16 gMissStringIds[] = {

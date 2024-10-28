@@ -827,3 +827,6 @@ const u32 gFile_graphics_items_icon_palettes_flame_orb_palette[] = INCBIN_U32("g
 
 const u32 gFile_graphics_items_icons_toxic_orb_sheet[] = INCBIN_U32("graphics/items/icons/toxic_orb.4bpp.lz");
 const u32 gFile_graphics_items_icon_palettes_toxic_orb_palette[] = INCBIN_U32("graphics/items/icon_palettes/toxic_orb.gbapal.lz");
+
+const u32 gFile_graphics_items_icons_assault_vest_sheet[] = INCBIN_U32("graphics/items/icons/assault_vest.4bpp.lz");
+const u32 gFile_graphics_items_icon_palettes_assault_vest_palette[] = INCBIN_U32("graphics/items/icon_palettes/assault_vest.gbapal.lz");

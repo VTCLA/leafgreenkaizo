@@ -324,6 +324,13 @@ u8 TrySetCantSelectMoveBattleScript(void)
         gSelectionBattleScripts[gActiveBattler] = BattleScript_SelectingNotAllowedMoveChoiceItem;
         ++limitations;
     }
+    if (holdEffect == HOLD_EFFECT_ASSAULT_VEST && !gBattleMoves[move].power)
+    {
+        gCurrentMove = move;
+        gLastUsedItem = gBattleMons[gActiveBattler].item;
+        gSelectionBattleScripts[gActiveBattler] = BattleScript_SelectingNotAllowedMoveAssaultVest;
+        ++limitations;
+    }
     if (!gBattleMons[gActiveBattler].pp[gBattleBufferB[gActiveBattler][2]])
     {
         gSelectionBattleScripts[gActiveBattler] = BattleScript_SelectingMoveWithNoPP;
@@ -362,6 +369,8 @@ u8 CheckMoveLimitations(u8 battlerId, u8 unusableMoves, u8 check)
             unusableMoves |= gBitTable[i];
         if (((holdEffect == HOLD_EFFECT_CHOICE_BAND) || (holdEffect == HOLD_EFFECT_CHOICE_SCARF) || (holdEffect == HOLD_EFFECT_CHOICE_SPECS))
          && *choicedMove != 0 && *choicedMove != 0xFFFF && *choicedMove != gBattleMons[battlerId].moves[i])
+            unusableMoves |= gBitTable[i];
+        if (holdEffect == HOLD_EFFECT_ASSAULT_VEST && gBattleMoves[gBattleMons[battlerId].moves[i]].power == 0)
             unusableMoves |= gBitTable[i];
     }
     return unusableMoves;
@@ -1365,6 +1374,14 @@ u8 AtkCanceller_UnableToUseMove(void)
                 gProtectStructs[gBattlerAttacker].usedTauntedMove = 1;
                 CancelMultiTurnMoves(gBattlerAttacker);
                 gBattlescriptCurrInstr = BattleScript_MoveUsedIsTaunted;
+                gHitMarker |= HITMARKER_UNABLE_TO_USE_MOVE;
+                effect = 1;
+            }
+            if (ItemId_GetHoldEffect(gBattleMons[gBattlerAttacker].item == HOLD_EFFECT_ASSAULT_VEST) && gBattleMoves[gCurrentMove].power == 0)
+            {
+                gProtectStructs[gBattlerAttacker].usedTauntedMove = 1;
+                CancelMultiTurnMoves(gBattlerAttacker);
+                gBattlescriptCurrInstr = BattleScript_MoveUsedIsAssaultVested;
                 gHitMarker |= HITMARKER_UNABLE_TO_USE_MOVE;
                 effect = 1;
             }

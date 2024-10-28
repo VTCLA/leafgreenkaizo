@@ -3980,6 +3980,8 @@ extern const u8 gFile_graphics_items_icons_flame_orb_sheet[];
 extern const u8 gFile_graphics_items_icon_palettes_flame_orb_palette[];
 extern const u8 gFile_graphics_items_icons_toxic_orb_sheet[];
 extern const u8 gFile_graphics_items_icon_palettes_toxic_orb_palette[];
+extern const u8 gFile_graphics_items_icons_assault_vest_sheet[];
+extern const u8 gFile_graphics_items_icon_palettes_assault_vest_palette[];
 
 
 // battle_anim_utility_funcs

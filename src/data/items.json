@@ -4033,12 +4033,12 @@
       "secondaryId": 0
     },
     {
-      "english": "????????",
-      "itemId": "ITEM_NONE",
-      "price": 0,
-      "holdEffect": "HOLD_EFFECT_NONE",
+      "english": "ASSAULT VEST",
+      "itemId": "ITEM_ASSAULT_VEST",
+      "price": 100,
+      "holdEffect": "HOLD_EFFECT_ASSAULT_VEST",
       "holdEffectParam": 0,
-      "description_english": "?????",
+      "description_english": "An item to be held by a POKéMON.\\nBoosts SP. DEF but disables\\nthe use of status moves.",
       "importance": 0,
       "exitsBagOnUse": 0,
       "pocket": "POCKET_ITEMS",
