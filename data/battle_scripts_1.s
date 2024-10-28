@@ -4277,6 +4277,10 @@ BattleScript_ApplySecondaryEffect::
 	seteffectsecondary
 	return
 
+BattleScript_ApplySecondaryEffectEnd2::
+	call BattleScript_ApplySecondaryEffect
+	end2
+
 BattleScript_SynchronizeActivates::
 	waitstate
 	seteffectprimary

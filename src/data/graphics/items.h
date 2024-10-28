@@ -821,3 +821,9 @@ const u32 gFile_graphics_items_icon_palettes_loaded_dice_palette[] = INCBIN_U32(
 
 const u32 gFile_graphics_items_icons_light_clay_sheet[] = INCBIN_U32("graphics/items/icons/light_clay.4bpp.lz");
 const u32 gFile_graphics_items_icon_palettes_light_clay_palette[] = INCBIN_U32("graphics/items/icon_palettes/light_clay.gbapal.lz");
+
+const u32 gFile_graphics_items_icons_flame_orb_sheet[] = INCBIN_U32("graphics/items/icons/flame_orb.4bpp.lz");
+const u32 gFile_graphics_items_icon_palettes_flame_orb_palette[] = INCBIN_U32("graphics/items/icon_palettes/flame_orb.gbapal.lz");
+
+const u32 gFile_graphics_items_icons_toxic_orb_sheet[] = INCBIN_U32("graphics/items/icons/toxic_orb.4bpp.lz");
+const u32 gFile_graphics_items_icon_palettes_toxic_orb_palette[] = INCBIN_U32("graphics/items/icon_palettes/toxic_orb.gbapal.lz");

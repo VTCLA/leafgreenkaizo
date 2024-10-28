@@ -3976,6 +3976,10 @@ extern const u8 gFile_graphics_items_icons_loaded_dice_sheet[];
 extern const u8 gFile_graphics_items_icon_palettes_loaded_dice_palette[];
 extern const u8 gFile_graphics_items_icons_light_clay_sheet[];
 extern const u8 gFile_graphics_items_icon_palettes_light_clay_palette[];
+extern const u8 gFile_graphics_items_icons_flame_orb_sheet[];
+extern const u8 gFile_graphics_items_icon_palettes_flame_orb_palette[];
+extern const u8 gFile_graphics_items_icons_toxic_orb_sheet[];
+extern const u8 gFile_graphics_items_icon_palettes_toxic_orb_palette[];
 
 
 // battle_anim_utility_funcs

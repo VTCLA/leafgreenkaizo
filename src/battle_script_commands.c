@@ -2414,7 +2414,10 @@ void SetMoveEffect(bool8 primary, u8 certain)
             MarkBattlerForControllerExec(gActiveBattler);
             if (gHitMarker & HITMARKER_IGNORE_SAFEGUARD)
             {
-                gBattleCommunication[MULTISTRING_CHOOSER] = 1;
+                if (gLastUsedItem == ITEM_FLAME_ORB || gLastUsedItem == ITEM_TOXIC_ORB)
+                    gBattleCommunication[MULTISTRING_CHOOSER] = 0;
+                else
+                    gBattleCommunication[MULTISTRING_CHOOSER] = 1;
                 gHitMarker &= ~(HITMARKER_IGNORE_SAFEGUARD);
             }
             else

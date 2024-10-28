@@ -3047,6 +3047,26 @@ u8 ItemBattleEffects(u8 caseID, u8 battlerId, bool8 moveTurn)
                     effect = ITEM_EFFECT_OTHER;
                 }
                 break;
+            case HOLD_EFFECT_FLAME_ORB:
+                if (moveTurn)
+                {
+                    gBattleCommunication[MOVE_EFFECT_BYTE] = MOVE_EFFECT_AFFECTS_USER | MOVE_EFFECT_BURN;
+                    BattleScriptExecute(BattleScript_ApplySecondaryEffectEnd2);
+                    gHitMarker |= HITMARKER_IGNORE_SAFEGUARD;
+                    effect = ITEM_STATUS_CHANGE;
+                    RecordItemEffectBattle(battlerId, battlerHoldEffect);
+                }
+                break;
+            case HOLD_EFFECT_TOXIC_ORB:
+                if (moveTurn)
+                {
+                    gBattleCommunication[MOVE_EFFECT_BYTE] = MOVE_EFFECT_AFFECTS_USER | MOVE_EFFECT_TOXIC;
+                    BattleScriptExecute(BattleScript_ApplySecondaryEffectEnd2);
+                    gHitMarker |= HITMARKER_IGNORE_SAFEGUARD;
+                    effect = ITEM_STATUS_CHANGE;
+                    RecordItemEffectBattle(battlerId, battlerHoldEffect);
+                }
+                break;
             }
             if (effect)
             {
