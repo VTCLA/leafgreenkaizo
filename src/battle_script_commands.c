@@ -2415,6 +2415,17 @@ void SetMoveEffect(bool8 primary, u8 certain)
                 else
                     break;
             }
+            if (IS_BATTLER_OF_TYPE(gEffectBattler, TYPE_ELECTRIC)
+             && (gHitMarker & HITMARKER_IGNORE_SAFEGUARD)
+             && (primary == TRUE || certain == MOVE_EFFECT_CERTAIN))
+            {
+                BattleScriptPush(gBattlescriptCurrInstr + 1);
+                gBattlescriptCurrInstr = BattleScript_PRLZPrevention;
+                gBattleCommunication[MULTISTRING_CHOOSER] = 2;
+                return;
+            }
+            if (IS_BATTLER_OF_TYPE(gEffectBattler, TYPE_ELECTRIC))
+                break;
             if (gBattleMons[gEffectBattler].status1)
                 break;
             statusChanged = TRUE;

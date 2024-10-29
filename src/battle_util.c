@@ -691,6 +691,7 @@ enum
     ENDTURN_CHARGE,
     ENDTURN_TAUNT,
     ENDTURN_YAWN,
+    ENDTURN_ROOST,
     ENDTURN_ITEMS2,
     ENDTURN_BATTLER_COUNT
 };
@@ -1039,6 +1040,10 @@ u8 DoBattlerEndTurnEffects(void)
                         ++effect;
                     }
                 }
+                ++gBattleStruct->turnEffectsTracker;
+                break;
+            case ENDTURN_ROOST:
+                gStatuses3[gActiveBattler] &= ~STATUS3_ROOST;
                 ++gBattleStruct->turnEffectsTracker;
                 break;
             case ENDTURN_BATTLER_COUNT:  // done

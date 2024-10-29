@@ -2952,7 +2952,7 @@ u8 IsRunningFromBattleImpossible(void)
         }
         if (side != GetBattlerSide(i)
          && ((gBattleMons[gActiveBattler].ability != ABILITY_LEVITATE
-         && (!IS_BATTLER_OF_TYPE(gActiveBattler, TYPE_FLYING) || (gStatuses3[gActiveBattler] & STATUS3_ROOST)))
+         && !IS_BATTLER_OF_TYPE(gActiveBattler, TYPE_FLYING))
          || ItemId_GetHoldEffect(gBattleMons[gActiveBattler].item) == HOLD_EFFECT_IRON_BALL
          || (gStatuses3[gActiveBattler] & STATUS3_ROOTED))
          && !IS_BATTLER_OF_TYPE(gActiveBattler, TYPE_GHOST)
@@ -3132,7 +3132,7 @@ static void HandleTurnActionSelectionState(void)
                            && gBattleMons[gActiveBattler].ability != ABILITY_SHADOW_TAG
                            && !IS_BATTLER_OF_TYPE(gActiveBattler, TYPE_GHOST))
                           || ((i = ABILITY_ON_OPPOSING_FIELD(gActiveBattler, ABILITY_ARENA_TRAP))
-                              && (((!IS_BATTLER_OF_TYPE(gActiveBattler, TYPE_FLYING) || (gStatuses3[gActiveBattler] & STATUS3_ROOST))
+                              && ((!IS_BATTLER_OF_TYPE(gActiveBattler, TYPE_FLYING)
                               && gBattleMons[gActiveBattler].ability != ABILITY_LEVITATE)
                                || ItemId_GetHoldEffect(gBattleMons[gActiveBattler].item) == HOLD_EFFECT_IRON_BALL
                                || (gStatuses3[gActiveBattler] & STATUS3_ROOTED))
