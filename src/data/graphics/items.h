@@ -836,3 +836,12 @@ const u32 gFile_graphics_items_icon_palettes_wide_lens_palette[] = INCBIN_U32("g
 
 const u32 gFile_graphics_items_icons_zoom_lens_sheet[] = INCBIN_U32("graphics/items/icons/zoom_lens.4bpp.lz");
 const u32 gFile_graphics_items_icon_palettes_zoom_lens_palette[] = INCBIN_U32("graphics/items/icon_palettes/zoom_lens.gbapal.lz");
+
+const u32 gFile_graphics_items_icons_fairy_feather_sheet[] = INCBIN_U32("graphics/items/icons/fairy_feather.4bpp.lz");
+const u32 gFile_graphics_items_icon_palettes_fairy_feather_palette[] = INCBIN_U32("graphics/items/icon_palettes/fairy_feather.gbapal.lz");
+
+const u32 gFile_graphics_items_icons_shed_shell_sheet[] = INCBIN_U32("graphics/items/icons/shed_shell.4bpp.lz");
+const u32 gFile_graphics_items_icon_palettes_shed_shell_palette[] = INCBIN_U32("graphics/items/icon_palettes/shed_shell.gbapal.lz");
+
+const u32 gFile_graphics_items_icons_iron_ball_sheet[] = INCBIN_U32("graphics/items/icons/iron_ball.4bpp.lz");
+const u32 gFile_graphics_items_icon_palettes_iron_ball_palette[] = INCBIN_U32("graphics/items/icon_palettes/iron_ball.gbapal.lz");

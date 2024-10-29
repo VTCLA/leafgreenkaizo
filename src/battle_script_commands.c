@@ -1340,6 +1340,7 @@ void ModulateDmgByType(u8 multiplier)
 static void atk06_typecalc(void)
 {
     s32 i = 0;
+    u8 type1 = gBattleMons[gBattlerTarget].type1, type2 = gBattleMons[gBattlerTarget].type2;
     u8 moveType;
 
     if (gCurrentMove == MOVE_STRUGGLE)
@@ -1372,7 +1373,16 @@ static void atk06_typecalc(void)
         }
     }
 
-    if (gBattleMons[gBattlerTarget].ability == ABILITY_LEVITATE && moveType == TYPE_GROUND)
+    if (type2 == TYPE_FLYING && (gStatuses3[gBattlerTarget] & STATUS3_ROOST))
+        type2 = type1;
+    if (type2 == TYPE_FLYING && moveType == TYPE_GROUND
+     && (ItemId_GetHoldEffect(gBattleMons[gBattlerTarget].item) == HOLD_EFFECT_IRON_BALL
+     || (gStatuses3[gBattlerTarget] & STATUS3_ROOTED)))
+        type2 = type1;
+    if (gBattleMons[gBattlerTarget].ability == ABILITY_LEVITATE 
+     && ItemId_GetHoldEffect(gBattleMons[gBattlerTarget].item) != HOLD_EFFECT_IRON_BALL
+     && !(gStatuses3[gBattlerTarget] & STATUS3_ROOTED)
+     && moveType == TYPE_GROUND)
     {
         gLastUsedAbility = gBattleMons[gBattlerTarget].ability;
         gMoveResultFlags |= (MOVE_RESULT_MISSED | MOVE_RESULT_DOESNT_AFFECT_FOE);
@@ -1395,13 +1405,13 @@ static void atk06_typecalc(void)
             else if (TYPE_EFFECT_ATK_TYPE(i) == moveType)
             {
                 // check type1
-                if (TYPE_EFFECT_DEF_TYPE(i) == gBattleMons[gBattlerTarget].type1 &&
+                if (TYPE_EFFECT_DEF_TYPE(i) == type1 &&
                  !(gBattleMons[gBattlerAttacker].ability == ABILITY_SCRAPPY
                  && (moveType == TYPE_NORMAL || moveType == TYPE_FIGHTING)
                  && gBattleMons[gBattlerTarget].type1 == TYPE_GHOST))
                     ModulateDmgByType(TYPE_EFFECT_MULTIPLIER(i));
                 // check type2
-                if (TYPE_EFFECT_DEF_TYPE(i) == gBattleMons[gBattlerTarget].type2 &&
+                if (TYPE_EFFECT_DEF_TYPE(i) == type2 &&
                  gBattleMons[gBattlerTarget].type1 != gBattleMons[gBattlerTarget].type2 &&
                  !(gBattleMons[gBattlerAttacker].ability == ABILITY_SCRAPPY
                  && (moveType == TYPE_NORMAL || moveType == TYPE_FIGHTING)
@@ -1450,7 +1460,10 @@ static void CheckWonderGuardAndLevitate(void)
     if (gCurrentMove == MOVE_STRUGGLE || !gBattleMoves[gCurrentMove].power)
         return;
     GET_MOVE_TYPE(gCurrentMove, moveType);
-    if (gBattleMons[gBattlerTarget].ability == ABILITY_LEVITATE && moveType == TYPE_GROUND)
+    if (gBattleMons[gBattlerTarget].ability == ABILITY_LEVITATE
+     && ItemId_GetHoldEffect(gBattleMons[gBattlerTarget].item) != HOLD_EFFECT_IRON_BALL
+     && !(gStatuses3[gBattlerTarget] & STATUS3_ROOTED)
+     && moveType == TYPE_GROUND)
     {
         gLastUsedAbility = ABILITY_LEVITATE;
         gBattleCommunication[6] = moveType;
@@ -1548,6 +1561,7 @@ u8 TypeCalc(u16 move, u8 attacker, u8 defender)
 {
     s32 i = 0;
     u8 flags = 0;
+    u8 type1 = gBattleMons[defender].type1, type2 = gBattleMons[defender].type2;
     u8 moveType;
 
     if (move == MOVE_STRUGGLE)
@@ -1556,11 +1570,25 @@ u8 TypeCalc(u16 move, u8 attacker, u8 defender)
     // check stab
     if (IS_BATTLER_OF_TYPE(attacker, moveType))
     {
-        gBattleMoveDamage = gBattleMoveDamage * 15;
-        gBattleMoveDamage = gBattleMoveDamage / 10;
+        if (gBattleMons[attacker].ability == ABILITY_ADAPTABILITY)
+            gBattleMoveDamage = gBattleMoveDamage * 2;
+        else
+        {
+            gBattleMoveDamage = gBattleMoveDamage * 15;
+            gBattleMoveDamage = gBattleMoveDamage / 10;
+        }
     }
-
-    if (gBattleMons[defender].ability == ABILITY_LEVITATE && moveType == TYPE_GROUND)
+    
+    if (type2 == TYPE_FLYING && (gStatuses3[defender] & STATUS3_ROOST))
+        type2 = type1;
+    if (type2 == TYPE_FLYING && moveType == TYPE_GROUND
+     && (ItemId_GetHoldEffect(gBattleMons[defender].item) == HOLD_EFFECT_IRON_BALL
+     || (gStatuses3[defender] & STATUS3_ROOTED)))
+        type2 = type1;
+    if (gBattleMons[defender].ability == ABILITY_LEVITATE
+     && ItemId_GetHoldEffect(gBattleMons[defender].item) != HOLD_EFFECT_IRON_BALL
+     && !(gStatuses3[defender] & STATUS3_ROOTED)
+     && moveType == TYPE_GROUND)
     {
         flags |= (MOVE_RESULT_MISSED | MOVE_RESULT_DOESNT_AFFECT_FOE);
     }
@@ -1579,11 +1607,16 @@ u8 TypeCalc(u16 move, u8 attacker, u8 defender)
             else if (TYPE_EFFECT_ATK_TYPE(i) == moveType)
             {
                 // check type1
-                if (TYPE_EFFECT_DEF_TYPE(i) == gBattleMons[defender].type1)
+                if (TYPE_EFFECT_DEF_TYPE(i) == type1 &&
+                     !(gBattleMons[gBattlerAttacker].ability == ABILITY_SCRAPPY
+                     && (moveType == TYPE_NORMAL || moveType == TYPE_FIGHTING)
+                     && gBattleMons[gBattlerTarget].type1 == TYPE_GHOST))
                     ModulateDmgByType2(TYPE_EFFECT_MULTIPLIER(i), move, &flags);
                 // check type2
-                if (TYPE_EFFECT_DEF_TYPE(i) == gBattleMons[defender].type2 &&
-                    gBattleMons[defender].type1 != gBattleMons[defender].type2)
+                if (TYPE_EFFECT_DEF_TYPE(i) == type2 && gBattleMons[defender].type1 != gBattleMons[defender].type2
+                    && !(gBattleMons[gBattlerAttacker].ability == ABILITY_SCRAPPY
+                    && (moveType == TYPE_NORMAL || moveType == TYPE_FIGHTING)
+                    && gBattleMons[gBattlerTarget].type1 == TYPE_GHOST))
                     ModulateDmgByType2(TYPE_EFFECT_MULTIPLIER(i), move, &flags);
             }
             i += 3;
@@ -1608,7 +1641,9 @@ u8 AI_TypeCalc(u16 move, u16 targetSpecies, u8 targetAbility)
     if (move == MOVE_STRUGGLE)
         return 0;
     moveType = gBattleMoves[move].type;
-    if (targetAbility == ABILITY_LEVITATE && moveType == TYPE_GROUND)
+    if (targetAbility == ABILITY_LEVITATE
+     && ItemId_GetHoldEffect(gBattleMons[gBattlerTarget].item) != HOLD_EFFECT_IRON_BALL
+     && !(gStatuses3[gBattlerTarget] & STATUS3_ROOTED) && moveType == TYPE_GROUND)
     {
         flags = MOVE_RESULT_MISSED | MOVE_RESULT_DOESNT_AFFECT_FOE;
     }
@@ -4421,9 +4456,18 @@ static void atk4A_typecalc2(void)
 {
     u8 flags = 0;
     s32 i = 0;
+    u8 type1 = gBattleMons[gBattlerTarget].type1, type2 = gBattleMons[gBattlerTarget].type2;
     u8 moveType = gBattleMoves[gCurrentMove].type;
 
-    if (gBattleMons[gBattlerTarget].ability == ABILITY_LEVITATE && moveType == TYPE_GROUND)
+    if (type2 == TYPE_FLYING && (gStatuses3[gBattlerTarget] & STATUS3_ROOST))
+        type2 = type1;
+    if (type2 == TYPE_FLYING && moveType == TYPE_GROUND
+     && (ItemId_GetHoldEffect(gBattleMons[gBattlerTarget].item) == HOLD_EFFECT_IRON_BALL
+     || (gStatuses3[gBattlerTarget] & STATUS3_ROOTED)))
+        type2 = type1;
+    if (gBattleMons[gBattlerTarget].ability == ABILITY_LEVITATE && moveType == TYPE_GROUND
+        && (ItemId_GetHoldEffect(gBattleMons[gBattlerTarget].item) == HOLD_EFFECT_IRON_BALL
+        || (gStatuses3[gBattlerTarget] & STATUS3_ROOTED)))
     {
         gLastUsedAbility = gBattleMons[gBattlerTarget].ability;
         gMoveResultFlags |= (MOVE_RESULT_MISSED | MOVE_RESULT_DOESNT_AFFECT_FOE);
@@ -5007,8 +5051,9 @@ static void atk52_switchineffects(void)
     if (!(gSideStatuses[GetBattlerSide(gActiveBattler)] & SIDE_STATUS_SPIKES_DAMAGED)
      && (gSideStatuses[GetBattlerSide(gActiveBattler)] & SIDE_STATUS_SPIKES)
      && gBattleMons[gActiveBattler].ability != ABILITY_MAGIC_GUARD
-     && !IS_BATTLER_OF_TYPE(gActiveBattler, TYPE_FLYING)
+     && ((!IS_BATTLER_OF_TYPE(gActiveBattler, TYPE_FLYING)
      && gBattleMons[gActiveBattler].ability != ABILITY_LEVITATE)
+     || ItemId_GetHoldEffect(gBattleMons[gActiveBattler].item) == HOLD_EFFECT_IRON_BALL))
     {
         u8 spikesDmg;
 

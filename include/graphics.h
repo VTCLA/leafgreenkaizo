@@ -3986,6 +3986,12 @@ extern const u8 gFile_graphics_items_icons_wide_lens_sheet[];
 extern const u8 gFile_graphics_items_icon_palettes_wide_lens_palette[];
 extern const u8 gFile_graphics_items_icons_zoom_lens_sheet[];
 extern const u8 gFile_graphics_items_icon_palettes_zoom_lens_palette[];
+extern const u8 gFile_graphics_items_icons_fairy_feather_sheet[];
+extern const u8 gFile_graphics_items_icon_palettes_fairy_feather_palette[];
+extern const u8 gFile_graphics_items_icons_shed_shell_sheet[];
+extern const u8 gFile_graphics_items_icon_palettes_shed_shell_palette[];
+extern const u8 gFile_graphics_items_icons_iron_ball_sheet[];
+extern const u8 gFile_graphics_items_icon_palettes_iron_ball_palette[];
 
 
 // battle_anim_utility_funcs

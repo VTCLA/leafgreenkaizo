@@ -2941,7 +2941,9 @@ u8 IsRunningFromBattleImpossible(void)
     for (i = 0; i < gBattlersCount; ++i)
     {
         if (side != GetBattlerSide(i)
-         && gBattleMons[i].ability == ABILITY_SHADOW_TAG)
+         && gBattleMons[i].ability == ABILITY_SHADOW_TAG
+         && gBattleMons[gActiveBattler].ability != ABILITY_SHADOW_TAG
+         && !IS_BATTLER_OF_TYPE(gActiveBattler, TYPE_GHOST))
         {
             gBattleScripting.battler = i;
             gLastUsedAbility = gBattleMons[i].ability;
@@ -2949,8 +2951,11 @@ u8 IsRunningFromBattleImpossible(void)
             return BATTLE_RUN_FAILURE;
         }
         if (side != GetBattlerSide(i)
-         && gBattleMons[gActiveBattler].ability != ABILITY_LEVITATE
-         && !IS_BATTLER_OF_TYPE(gActiveBattler, TYPE_FLYING)
+         && ((gBattleMons[gActiveBattler].ability != ABILITY_LEVITATE
+         && (!IS_BATTLER_OF_TYPE(gActiveBattler, TYPE_FLYING) || (gStatuses3[gActiveBattler] & STATUS3_ROOST)))
+         || ItemId_GetHoldEffect(gBattleMons[gActiveBattler].item) == HOLD_EFFECT_IRON_BALL
+         || (gStatuses3[gActiveBattler] & STATUS3_ROOTED))
+         && !IS_BATTLER_OF_TYPE(gActiveBattler, TYPE_GHOST)
          && gBattleMons[i].ability == ABILITY_ARENA_TRAP)
         {
             gBattleScripting.battler = i;
@@ -3122,12 +3127,18 @@ static void HandleTurnActionSelectionState(void)
                     {
                         BtlController_EmitChoosePokemon(0, PARTY_ACTION_CANT_SWITCH, 6, ABILITY_NONE, gBattleStruct->battlerPartyOrders[gActiveBattler]);
                     }
-                    else if ((i = ABILITY_ON_OPPOSING_FIELD(gActiveBattler, ABILITY_SHADOW_TAG))
+                    else if ( ItemId_GetHoldEffect(gBattleMons[gActiveBattler].item) != HOLD_EFFECT_SHED_SHELL
+                         && (((i = ABILITY_ON_OPPOSING_FIELD(gActiveBattler, ABILITY_SHADOW_TAG))
+                           && gBattleMons[gActiveBattler].ability != ABILITY_SHADOW_TAG
+                           && !IS_BATTLER_OF_TYPE(gActiveBattler, TYPE_GHOST))
                           || ((i = ABILITY_ON_OPPOSING_FIELD(gActiveBattler, ABILITY_ARENA_TRAP))
-                              && !IS_BATTLER_OF_TYPE(gActiveBattler, TYPE_FLYING)
+                              && (((!IS_BATTLER_OF_TYPE(gActiveBattler, TYPE_FLYING) || (gStatuses3[gActiveBattler] & STATUS3_ROOST))
                               && gBattleMons[gActiveBattler].ability != ABILITY_LEVITATE)
+                               || ItemId_GetHoldEffect(gBattleMons[gActiveBattler].item) == HOLD_EFFECT_IRON_BALL
+                               || (gStatuses3[gActiveBattler] & STATUS3_ROOTED))
+                              && !IS_BATTLER_OF_TYPE(gActiveBattler, TYPE_GHOST))
                           || ((i = AbilityBattleEffects(ABILITYEFFECT_CHECK_FIELD_EXCEPT_BATTLER, gActiveBattler, ABILITY_MAGNET_PULL, 0, 0))
-                              && IS_BATTLER_OF_TYPE(gActiveBattler, TYPE_STEEL)))
+                              && IS_BATTLER_OF_TYPE(gActiveBattler, TYPE_STEEL))))
                     {
                         BtlController_EmitChoosePokemon(0, ((i - 1) << 4) | PARTY_ACTION_ABILITY_PREVENTS, 6, gLastUsedAbility, gBattleStruct->battlerPartyOrders[gActiveBattler]);
                     }
@@ -3368,6 +3379,8 @@ u8 GetWhoStrikesFirst(u8 battler1, u8 battler2, bool8 ignoreChosenMoves)
     */
     if (holdEffect == HOLD_EFFECT_MACHO_BRACE)
         speedBattler1 /= 2;
+    if (holdEffect == HOLD_EFFECT_IRON_BALL)
+        speedBattler1 /= 2;
     if (holdEffect == HOLD_EFFECT_CHOICE_SCARF)
         speedBattler1 = (15 * speedBattler1) / 10;
     if (gBattleMons[battler1].status1 & STATUS1_PARALYSIS)
@@ -3396,6 +3409,8 @@ u8 GetWhoStrikesFirst(u8 battler1, u8 battler2, bool8 ignoreChosenMoves)
         speedBattler2 = (speedBattler2 * 110) / 100;
     */
     if (holdEffect == HOLD_EFFECT_MACHO_BRACE)
+        speedBattler2 /= 2;
+    if (holdEffect == HOLD_EFFECT_IRON_BALL)
         speedBattler2 /= 2;
     if (holdEffect == HOLD_EFFECT_CHOICE_SCARF)
         speedBattler2 = (15 * speedBattler2) / 10;
