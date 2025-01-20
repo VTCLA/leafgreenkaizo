@@ -67,7 +67,7 @@ static void HandleEndTurn_FinishBattle(void);
 static void CB2_InitBattleInternal(void);
 static void CB2_PreInitMultiBattle(void);
 static void CB2_HandleStartMultiBattle(void);
-static u8 CreateNPCTrainerParty(struct Pokemon *party, u16 trainerNum);
+static u8 CreateNPCTrainerParty(struct Pokemon *party, u16 trainerNum, bool32 firstTrainer);
 static void CB2_HandleStartBattle(void);
 static void TryCorrectShedinjaLanguage(struct Pokemon *mon);
 static void BattleMainCB1(void);
@@ -97,6 +97,7 @@ static void BattleIntroPrintOpponentSendsOut(void);
 static void BattleIntroPrintPlayerSendsOut(void);
 static void BattleIntroRecordMonsToDex(void);
 static void BattleIntroOpponentSendsOutMonAnimation(void);
+static void BattleIntroOpponentSendsOutMonAnimation2(void);
 static void BattleIntroPlayerSendsOutMonAnimation(void);
 static void TryDoEventsBeforeFirstTurn(void);
 static void HandleTurnActionSelectionState(void);
@@ -709,7 +710,9 @@ static void CB2_InitBattleInternal(void)
         SetMainCallback2(CB2_HandleStartBattle);
     if (!(gBattleTypeFlags & BATTLE_TYPE_LINK))
     {
-        CreateNPCTrainerParty(&gEnemyParty[0], gTrainerBattleOpponent_A);
+        CreateNPCTrainerParty(&gEnemyParty[0], gTrainerBattleOpponent_A, TRUE);
+        if (gBattleTypeFlags & BATTLE_TYPE_TWO_OPPONENTS)
+            CreateNPCTrainerParty(&gEnemyParty[PARTY_SIZE / 2], gTrainerBattleOpponent_B, FALSE);
         SetWildMonHeldItem();
     }
     gMain.inBattle = TRUE;
@@ -1529,20 +1532,35 @@ static void SpriteCB_UnusedDebugSprite_Step(struct Sprite *sprite)
     }
 }
 
-static u8 CreateNPCTrainerParty(struct Pokemon *party, u16 trainerNum)
+static u8 CreateNPCTrainerParty(struct Pokemon *party, u16 trainerNum, bool32 firstTrainer)
 {
     u32 nameHash = 0;
     u32 personalityValue;
     u8 fixedIV;
     s32 i, j;
+    u8 monsCount;
 
     if (trainerNum == TRAINER_SECRET_BASE)
         return 0;
     if (gBattleTypeFlags & BATTLE_TYPE_TRAINER
      && !(gBattleTypeFlags & (BATTLE_TYPE_BATTLE_TOWER | BATTLE_TYPE_EREADER_TRAINER | BATTLE_TYPE_TRAINER_TOWER)))
     {
-        ZeroEnemyPartyMons();
-        for (i = 0; i < gTrainers[trainerNum].partySize; ++i)
+        if (firstTrainer == TRUE)
+            ZeroEnemyPartyMons();
+
+        if (gBattleTypeFlags & BATTLE_TYPE_TWO_OPPONENTS)
+        {
+            if (gTrainers[trainerNum].partySize > PARTY_SIZE / 2)
+                monsCount = PARTY_SIZE / 2;
+            else
+                monsCount = gTrainers[trainerNum].partySize;
+        }
+        else
+        {
+            monsCount = gTrainers[trainerNum].partySize;
+        }
+
+        for (i = 0; i < monsCount; ++i)
         {
 
             if (gTrainers[trainerNum].doubleBattle == TRUE)
@@ -2529,6 +2547,12 @@ static void BattleIntroDrawTrainersOrMonsSprites(void)
                     BtlController_EmitDrawTrainerPic(0);
                     MarkBattlerForControllerExec(gActiveBattler);
                 }
+                if ((gBattleTypeFlags & BATTLE_TYPE_TWO_OPPONENTS)
+                 && GetBattlerPosition(gActiveBattler) == B_POSITION_OPPONENT_RIGHT)
+                {
+                    BtlController_EmitDrawTrainerPic(0);
+                    MarkBattlerForControllerExec(gActiveBattler);
+                }
                 if (GetBattlerSide(gActiveBattler) == B_SIDE_OPPONENT
                  && !(gBattleTypeFlags & (BATTLE_TYPE_EREADER_TRAINER
                                        | BATTLE_TYPE_POKEDUDE
@@ -2560,7 +2584,7 @@ static void BattleIntroDrawTrainersOrMonsSprites(void)
                     MarkBattlerForControllerExec(gActiveBattler);
                 }
             }
-            if (gBattleTypeFlags & BATTLE_TYPE_MULTI
+            if (gBattleTypeFlags & (BATTLE_TYPE_MULTI)
              && (GetBattlerPosition(gActiveBattler) == B_POSITION_PLAYER_RIGHT || GetBattlerPosition(gActiveBattler) == B_POSITION_OPPONENT_RIGHT))
             {
                 BtlController_EmitDrawTrainerPic(0);
@@ -2685,10 +2709,29 @@ static void BattleIntroOpponentSendsOutMonAnimation(void)
                 BtlController_EmitIntroTrainerBallThrow(0);
                 MarkBattlerForControllerExec(gActiveBattler);
             }
-            if (gBattleTypeFlags & BATTLE_TYPE_MULTI && GetBattlerPosition(gActiveBattler) == B_POSITION_OPPONENT_RIGHT)
+            if (gBattleTypeFlags & (BATTLE_TYPE_MULTI/* | BATTLE_TYPE_TWO_OPPONENTS*/) && GetBattlerPosition(gActiveBattler) == B_POSITION_OPPONENT_RIGHT)
             {
                 BtlController_EmitIntroTrainerBallThrow(0);
                 MarkBattlerForControllerExec(gActiveBattler);
+            }
+        }
+        gBattleMainFunc = BattleIntroOpponentSendsOutMonAnimation2;
+    }
+}
+
+static void BattleIntroOpponentSendsOutMonAnimation2(void)
+{
+    if (!gBattleControllerExecFlags)
+    {
+        if (gBattleTypeFlags & BATTLE_TYPE_TWO_OPPONENTS)
+        {
+            for (gActiveBattler = 0; gActiveBattler < gBattlersCount; ++gActiveBattler)
+            {
+                if (GetBattlerPosition(gActiveBattler) == B_POSITION_OPPONENT_RIGHT)
+                {
+                    BtlController_EmitIntroTrainerBallThrow(0);
+                    MarkBattlerForControllerExec(gActiveBattler);
+                }
             }
         }
         gBattleMainFunc = BattleIntroRecordMonsToDex;

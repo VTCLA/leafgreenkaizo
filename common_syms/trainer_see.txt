@@ -1,0 +1,4 @@
+gWhichTrainerToFaceAfterBattle
+gApproachingTrainers
+gNoOfApproachingTrainers
+gTrainerApproachedPlayer

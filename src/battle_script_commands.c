@@ -306,6 +306,7 @@ static void atkF5_removeattackerstatus1(void);
 static void atkF6_finishaction(void);
 static void atkF7_finishturn(void);
 static void atkF8_jumpifholdeffect(void);
+static void atkF9_trainerslideout(void);
 
 void (* const gBattleScriptingCommandsTable[])(void) =
 {
@@ -558,6 +559,7 @@ void (* const gBattleScriptingCommandsTable[])(void) =
     atkF6_finishaction,
     atkF7_finishturn,
     atkF8_jumpifholdeffect,
+    atkF9_trainerslideout,
 };
 
 struct StatFractions
@@ -4655,7 +4657,8 @@ static void atk4F_jumpifcantswitch(void)
     struct Pokemon *party;
 
     gActiveBattler = GetBattlerForBattleScript(gBattlescriptCurrInstr[1] & ~(ATK4F_DONT_CHECK_STATUSES));
-    if (!(gBattlescriptCurrInstr[1] & ATK4F_DONT_CHECK_STATUSES)
+    if (!(gBattlescriptCurrInstr[1] & ATK4F_DONT_CHECK_STATUSES) && (gBattleMons[gActiveBattler].type1 != TYPE_GHOST)
+     && (gBattleMons[gActiveBattler].type2 != TYPE_GHOST)
      && ((gBattleMons[gActiveBattler].status2 & (STATUS2_WRAPPED | STATUS2_ESCAPE_PREVENTION))
         || (gStatuses3[gActiveBattler] & STATUS3_ROOTED)))
     {
@@ -4672,6 +4675,27 @@ static void atk4F_jumpifcantswitch(void)
         if (GetLinkTrainerFlankId(GetBattlerMultiplayerId(gActiveBattler)) == TRUE)
             i = 3;
         for (lastMonId = i + 3; i < lastMonId; ++i)
+        {
+            if (GetMonData(&party[i], MON_DATA_SPECIES) != SPECIES_NONE
+             && !GetMonData(&party[i], MON_DATA_IS_EGG)
+             && GetMonData(&party[i], MON_DATA_HP) != 0
+             && gBattlerPartyIndexes[gActiveBattler] != i)
+                break;
+        }
+        if (i == lastMonId)
+            gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 2);
+        else
+            gBattlescriptCurrInstr += 6;
+    }
+    else if (gBattleTypeFlags & BATTLE_TYPE_TWO_OPPONENTS && GetBattlerSide(gActiveBattler) == B_SIDE_OPPONENT)
+    {
+        party = gEnemyParty;
+
+        lastMonId = 0;
+        if (GetBattlerPosition(gActiveBattler) == B_POSITION_OPPONENT_RIGHT)
+            lastMonId = PARTY_SIZE / 2;
+
+        for (i = 0; i < lastMonId + (PARTY_SIZE / 2); i++)
         {
             if (GetMonData(&party[i], MON_DATA_SPECIES) != SPECIES_NONE
              && !GetMonData(&party[i], MON_DATA_IS_EGG)
@@ -5128,6 +5152,17 @@ static void atk53_trainerslidein(void)
     else
         gActiveBattler = GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT);
     BtlController_EmitTrainerSlide(0);
+    MarkBattlerForControllerExec(gActiveBattler);
+    gBattlescriptCurrInstr += 2;
+}
+
+static void atkF9_trainerslideout(void)
+{
+    if (!gBattlescriptCurrInstr[1])
+        gActiveBattler = GetBattlerAtPosition(B_POSITION_PLAYER_LEFT);
+    else
+        gActiveBattler = GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT);
+    BtlController_EmitTrainerSlideBack(0);
     MarkBattlerForControllerExec(gActiveBattler);
     gBattlescriptCurrInstr += 2;
 }
@@ -6908,6 +6943,20 @@ static void atk8F_forcerandomswitch(void)
             valid = 0;
             val = 0;
             if (GetLinkTrainerFlankId(GetBattlerMultiplayerId(gBattlerTarget)) == 1)
+                val = 3;
+            for (i = val; i < val + 3; ++i)
+            {
+                if (GetMonData(&party[i], MON_DATA_SPECIES) != SPECIES_NONE
+                 && !GetMonData(&party[i], MON_DATA_IS_EGG)
+                 && GetMonData(&party[i], MON_DATA_HP) != 0)
+                    ++valid;
+            }
+        }
+        if (gBattleTypeFlags & BATTLE_TYPE_TWO_OPPONENTS && GetBattlerSide(gActiveBattler) == B_SIDE_OPPONENT)
+        {
+            valid = 0;
+            val = 0;
+            if (gBattlerTarget == B_POSITION_OPPONENT_RIGHT)
                 val = 3;
             for (i = val; i < val + 3; ++i)
             {

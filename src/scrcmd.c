@@ -30,6 +30,7 @@
 #include "battle_setup.h"
 #include "shop.h"
 #include "slot_machine.h"
+#include "trainer_see.h"
 #include "field_effect.h"
 #include "fieldmap.h"
 #include "field_door.h"
@@ -2216,6 +2217,29 @@ bool8 ScrCmd_removecoins(struct ScriptContext * ctx)
     else
         gSpecialVar_Result = 1;
     return FALSE;
+}
+
+bool8 ScrCmd_selectapproachingtrainer(struct ScriptContext *ctx)
+{
+    gSelectedObjectEvent = GetCurrentApproachingTrainerObjectEventId();
+    return FALSE;
+}
+
+bool8 ScrCmd_lockfortrainer(struct ScriptContext *ctx)
+{
+    if (IsUpdateLinkStateCBActive())
+    {
+        return FALSE;
+    }
+    else
+    {
+        if (gObjectEvents[gSelectedObjectEvent].active)
+        {
+            FreezeForApproachingTrainers();
+            SetupNativeScript(ctx, NativeScript_WaitPlayerAndNPCStopMoving);
+        }
+        return TRUE;
+    }
 }
 
 bool8 ScrCmd_signmsg(struct ScriptContext * ctx)

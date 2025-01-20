@@ -6,6 +6,7 @@
 #include "quest_log.h"
 #include "script.h"
 #include "task.h"
+#include "trainer_see.h"
 #include "util.h"
 #include "constants/battle_setup.h"
 #include "constants/event_object_movement.h"
@@ -15,7 +16,7 @@
 typedef u8 (*TrainerApproachFunc)(struct ObjectEvent *, s16, s16, s16);
 typedef bool8 (*TrainerSeeFunc)(u8, struct Task *, struct ObjectEvent *);
 
-static bool8 CheckTrainer(u8 trainerObjId);
+static u8 CheckTrainer(u8 trainerObjId);
 static u8 GetTrainerApproachDistance(struct ObjectEvent * trainerObj);
 static u8 GetTrainerApproachDistanceSouth(struct ObjectEvent * trainerObj, s16 range, s16 x, s16 y);
 static u8 GetTrainerApproachDistanceNorth(struct ObjectEvent * trainerObj, s16 range, s16 x, s16 y);
@@ -42,6 +43,15 @@ static bool8 TrainerSeeFunc_OffscreenAboveTrainerCameraObjMoveDown(u8 taskId, st
 static void Task_DestroyTrainerApproachTask(u8 taskId);
 static void SpriteCB_TrainerIcons(struct Sprite * sprite);
 static void SetIconSpriteData(struct Sprite *sprite, u16 fldEffId, u8 spriteAnimNum);
+
+// IWRAM common
+u16 gWhichTrainerToFaceAfterBattle;
+struct ApproachingTrainer gApproachingTrainers[2];
+u8 gNoOfApproachingTrainers;
+bool8 gTrainerApproachedPlayer;
+
+// EWRAM
+EWRAM_DATA u8 gApproachingTrainerId = 0;
 
 static const u16 sGfx_Emoticons[] = INCBIN_U16("graphics/misc/emoticons.4bpp");
 
@@ -91,31 +101,81 @@ bool8 CheckForTrainersWantingBattle(void)
     if (sub_8111C2C() == TRUE)
         return FALSE;
 
+    gNoOfApproachingTrainers = 0;
+    gApproachingTrainerId = 0;
+
     for (i = 0; i < OBJECT_EVENTS_COUNT; i++)
     {
-        if (gObjectEvents[i].active
-         && (gObjectEvents[i].trainerType == TRAINER_TYPE_NORMAL
-          || gObjectEvents[i].trainerType == TRAINER_TYPE_BURIED)
-         && CheckTrainer(i))
-            return TRUE;
+        u8 numTrainers;
+
+        if (!gObjectEvents[i].active)
+            continue;
+        if (gObjectEvents[i].trainerType != TRAINER_TYPE_NORMAL && gObjectEvents[i].trainerType != TRAINER_TYPE_BURIED)
+            continue;
+
+        numTrainers = CheckTrainer(i);
+        if (numTrainers == 2)
+            break;
+
+        if (numTrainers == 0)
+            continue;
+
+        if (gNoOfApproachingTrainers > 1)
+            break;
+        if (GetMonsStateToDoubles()) // one trainer found and cant have a double battle
+            break;
+    }
+
+    if (gNoOfApproachingTrainers == 1)
+    {
+        ResetTrainerOpponentIds();
+        ConfigureAndSetUpOneTrainerBattle(gApproachingTrainers[gNoOfApproachingTrainers - 1].objectEventId,
+                                          gApproachingTrainers[gNoOfApproachingTrainers - 1].trainerScriptPtr);
+        return TRUE;
+    }
+    else if (gNoOfApproachingTrainers == 2)
+    {
+        ResetTrainerOpponentIds();
+        for (i = 0; i < gNoOfApproachingTrainers; i++, gApproachingTrainerId++)
+        {
+            ConfigureTwoTrainersBattle(gApproachingTrainers[i].objectEventId,
+                                       gApproachingTrainers[i].trainerScriptPtr);
+        }
+        SetUpTwoTrainersBattle();
+        gApproachingTrainerId = 0;
+        return TRUE;
+    }
+    else
+    {
+        gTrainerApproachedPlayer = FALSE;
+        return FALSE;
     }
     return FALSE;
 }
 
-static bool8 CheckTrainer(u8 trainerObjId)
+static u8 CheckTrainer(u8 trainerObjId)
 {
     const u8 *script = GetObjectEventScriptPointerByObjectEventId(trainerObjId);
+    u8 numTrainers = 1;
     u8 approachDistance;
     if (GetTrainerFlagFromScriptPointer(script))
-        return FALSE;
+        return 0;
     approachDistance = GetTrainerApproachDistance(&gObjectEvents[trainerObjId]);
     if (approachDistance != 0)
     {
-        if (script[1] == TRAINER_BATTLE_DOUBLE && GetMonsStateToDoubles())
-            return FALSE;
-        ConfigureAndSetUpOneTrainerBattle(trainerObjId, script);
+        if (script[1] == TRAINER_BATTLE_DOUBLE || script[1] == TRAINER_BATTLE_CONTINUE_SCRIPT_DOUBLE)
+        {
+            if (GetMonsStateToDoubles())
+                return 0;
+            numTrainers = 2;
+        }
+        gApproachingTrainers[gNoOfApproachingTrainers].objectEventId = trainerObjId;
+        gApproachingTrainers[gNoOfApproachingTrainers].trainerScriptPtr = script;
+        gApproachingTrainers[gNoOfApproachingTrainers].radius = approachDistance;
         TrainerApproachPlayer(&gObjectEvents[trainerObjId], approachDistance - 1);
-        return TRUE;
+        gNoOfApproachingTrainers++;
+
+        return numTrainers;
     }
     return FALSE;
 }
@@ -245,8 +305,11 @@ static u8 CheckPathBetweenTrainerAndPlayer(struct ObjectEvent *trainerObj, u8 ap
 
 static void TrainerApproachPlayer(struct ObjectEvent * trainerObj, u8 approachDistance)
 {
+    struct Task * task;
+
     u8 taskId = CreateTask(Task_RunTrainerSeeFuncList, 80);
-    struct Task * task = &gTasks[taskId];
+    gApproachingTrainers[gNoOfApproachingTrainers].taskId = taskId;
+    task = &gTasks[gApproachingTrainers[gNoOfApproachingTrainers].taskId];
     task->tTrainerObjHi = ((uintptr_t)trainerObj) >> 16;
     task->tTrainerObjLo = (uintptr_t)trainerObj;
     task->tTrainerRange = approachDistance;
@@ -254,7 +317,14 @@ static void TrainerApproachPlayer(struct ObjectEvent * trainerObj, u8 approachDi
 
 static void StartTrainerApproachWithFollowupTask(TaskFunc taskFunc)
 {
-    u8 taskId = FindTaskIdByFunc(Task_RunTrainerSeeFuncList);
+    u8 taskId;
+    
+
+    if (gApproachingTrainerId == 0)
+        taskId = gApproachingTrainers[0].taskId;
+    else
+        taskId = gApproachingTrainers[1].taskId;
+
     SetTaskFuncWithFollowupFunc(taskId, Task_RunTrainerSeeFuncList, taskFunc);
     gTasks[taskId].tFuncId = 1;
     Task_RunTrainerSeeFuncList(taskId);
@@ -553,6 +623,29 @@ static void Task_DestroyTrainerApproachTask(u8 taskId)
     EnableBothScriptContexts();
 }
 
+bool8 TryPrepareSecondApproachingTrainer(void)
+{
+    if (gNoOfApproachingTrainers == 2)
+    {
+        if (gApproachingTrainerId == 0)
+        {
+            gApproachingTrainerId++;
+            UnfreezeObjectEvents();
+            FreezeObjectEventsExceptOne(gApproachingTrainers[1].objectEventId);
+            return TRUE;
+        }
+        else
+        {
+            gApproachingTrainerId = 0;
+            return FALSE;
+        }
+    }
+    else
+    {
+        return FALSE;
+    }
+}
+
 // Trainer See Excl Mark Field Effect
 
 #define sLocalId    data[0]
@@ -747,3 +840,21 @@ static void SpriteCB_TrainerIcons(struct Sprite *sprite)
 #undef sData3
 #undef sData4
 #undef sFldEffId
+
+u8 GetCurrentApproachingTrainerObjectEventId(void)
+{
+    if (gApproachingTrainerId == 0)
+        return gApproachingTrainers[0].objectEventId;
+    else
+        return gApproachingTrainers[1].objectEventId;
+}
+
+u8 GetChosenApproachingTrainerObjectEventId(u8 arrayId)
+{
+    if (arrayId >= ARRAY_COUNT(gApproachingTrainers))
+        return 0;
+    else if (arrayId == 0)
+        return gApproachingTrainers[0].objectEventId;
+    else
+        return gApproachingTrainers[1].objectEventId;
+}

@@ -312,7 +312,12 @@ static const struct TrainerMonNoItemDefaultMoves sParty_BugCatcherDoug[] = {
 static const struct TrainerMonNoItemDefaultMoves sParty_BugCatcherSammy[] = {
     {
         .iv = 0,
-        .lvl = 9,
+        .lvl = 3,
+        .species = SPECIES_WEEDLE,
+    },
+    {
+        .iv = 0,
+        .lvl = 3,
         .species = SPECIES_WEEDLE,
     },
 };
@@ -3778,15 +3783,6 @@ static const struct TrainerMonItemCustomMoves sParty_RivalOaksLabCharmander[] = 
         .species = SPECIES_CHARMANDER,
         .heldItem = ITEM_ZOOM_LENS,
         .moves = {MOVE_SEISMIC_TOSS, MOVE_NONE, MOVE_NONE, MOVE_NONE},
-        .abilitynum = 0,
-        .nature = NATURE_MODEST,
-    },
-    {
-        .iv = 0,
-        .lvl = 5,
-        .species = SPECIES_CHARMANDER,
-        .heldItem = ITEM_BLACK_BELT,
-        .moves = {MOVE_REFLECT, MOVE_NONE, MOVE_NONE, MOVE_NONE},
         .abilitynum = 0,
         .nature = NATURE_MODEST,
     },

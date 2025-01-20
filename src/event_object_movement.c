@@ -8812,6 +8812,18 @@ void FreezeObjectEventsExceptOne(u8 noFreeze)
     }
 }
 
+void FreezeObjectEventsExceptTwo(u8 objectEventId1, u8 objectEventId2)
+{
+    u8 i;
+
+    for(i = 0; i < OBJECT_EVENTS_COUNT; i++)
+    {
+        if(i != objectEventId1 && i != objectEventId2 &&
+            gObjectEvents[i].active && i != gPlayerAvatar.objectEventId)
+                FreezeObjectEvent(&gObjectEvents[i]);
+    }
+}
+
 void UnfreezeObjectEvent(struct ObjectEvent * objectEvent)
 {
     if (objectEvent->active && objectEvent->frozen)

@@ -14,8 +14,11 @@ void StartGroudonKyogreBattle(void);
 void StartRegiBattle(void);
 u8 BattleSetup_GetTerrainId(void);
 u8 BattleSetup_GetBattleTowerBattleTransition(void);
+void ResetTrainerOpponentIds(void);
 const u8 *BattleSetup_ConfigureTrainerBattle(const u8 *data);
 void ConfigureAndSetUpOneTrainerBattle(u8 trainerEventObjId, const u8 *trainerScript);
+void ConfigureTwoTrainersBattle(u8 trainerObjEventId, const u8 *trainerScript);
+void SetUpTwoTrainersBattle(void);
 bool32 GetTrainerFlagFromScriptPointer(const u8 *data);
 void SetUpTrainerMovement(void);
 u8 GetTrainerBattleMode(void);
@@ -32,6 +35,7 @@ const u8 *BattleSetup_GetTrainerPostBattleScript(void);
 void ShowTrainerCantBattleSpeech(void);
 void PlayTrainerEncounterMusic(void);
 const u8 *GetTrainerALoseText(void);
+const u8 *GetTrainerBLoseText(void);
 const u8 *GetTrainerWonSpeech(void);
 
 #endif // GUARD_BATTLE_SETUP_H

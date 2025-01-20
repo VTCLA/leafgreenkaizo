@@ -33,6 +33,7 @@
 	.include "src/title_screen.o"
 	.include "src/field_weather.o"
 	.include "src/battle_setup.o"
+	.include "src/trainer_see.o"
 	.include "src/wild_encounter.o"
 	.include "src/field_effect.o"
 	.include "src/scanline_effect.o"

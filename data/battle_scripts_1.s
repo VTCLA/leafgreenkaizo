@@ -2931,10 +2931,22 @@ BattleScript_LinkBattleFaintedMonEnd::
 	end2
 
 BattleScript_LocalTrainerBattleWon::
+	jumpifbattletype BATTLE_TYPE_TWO_OPPONENTS, BattleScript_LocalTwoTrainersDefeated
 	printstring STRINGID_PLAYERDEFEATEDTRAINER1
+	goto BattleScript_LocalBattleWonLoseTexts
+BattleScript_LocalTwoTrainersDefeated::
+	printstring STRINGID_TWOENEMIESDEFEATED
+BattleScript_LocalBattleWonLoseTexts::
 	trainerslidein BS_ATTACKER
 	waitstate
 	printstring STRINGID_TRAINER1LOSETEXT
+	jumpifnotbattletype BATTLE_TYPE_TWO_OPPONENTS, BattleScript_LocalBattleWonReward
+	trainerslideout B_POSITION_OPPONENT_LEFT
+	waitstate
+	trainerslidein BS_FAINTED
+	waitstate
+	printstring STRINGID_TRAINER2LOSETEXT
+BattleScript_LocalBattleWonReward::
 	getmoneyreward BattleScript_LocalTrainerBattleWonGotMoney
 BattleScript_LocalTrainerBattleWonGotMoney::
 	printstring STRINGID_PLAYERGOTMONEY

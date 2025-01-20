@@ -1560,6 +1560,24 @@ bool8 HasNoMonsToSwitch(u8 battler, u8 partyIdBattlerOn1, u8 partyIdBattlerOn2)
             }
             return (i == flankId * 3 + 3);
         }
+        else if ((gBattleTypeFlags & BATTLE_TYPE_TWO_OPPONENTS) && GetBattlerSide(battler) == B_SIDE_OPPONENT)
+        {
+            party = gEnemyParty;
+
+            if (battler == 1)
+                playerId = 0;
+            else
+                playerId = 3;
+
+            for (i = playerId; i < playerId + 3; i++)
+            {
+                if (GetMonData(&party[i], MON_DATA_HP) != 0
+                 && GetMonData(&party[i], MON_DATA_SPECIES) != SPECIES_NONE
+                 && GetMonData(&party[i], MON_DATA_SPECIES) != SPECIES_EGG)
+                    break;
+            }
+            return (i == playerId + 3);
+        }
         else
         {
             if (GetBattlerSide(battler) == B_SIDE_OPPONENT)

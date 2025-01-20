@@ -117,6 +117,9 @@ EventScript_DoTrainerBattle:: @ 81A4FC7
 	waitmessage
 	waitbuttonpress
 	goto_if_questlog EventScript_EndQuestLogBattle
+	specialvar VAR_RESULT TryPrepareSecondApproachingTrainer
+	compare VAR_RESULT, FALSE
+	goto_if_ne EventScript_DoTrainerBattleFromApproach
 	battlebegin
 	specialvar VAR_RESULT, GetTrainerBattleMode
 	compare VAR_RESULT, TRAINER_BATTLE_SINGLE

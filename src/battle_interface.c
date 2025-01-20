@@ -1173,7 +1173,7 @@ u8 CreatePartyStatusSummarySprites(u8 battlerId, struct HpAndStatus *partyInfo, 
     {
         for (i = 0; i < PARTY_SIZE; i++)
         {
-            if (gBattleTypeFlags & BATTLE_TYPE_MULTI)
+            if (gBattleTypeFlags & (BATTLE_TYPE_MULTI | BATTLE_TYPE_TWO_OPPONENTS))
             {
                 if (partyInfo[i].hp == 0xFFFF) // empty slot or an egg
                 {

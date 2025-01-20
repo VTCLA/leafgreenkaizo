@@ -43,13 +43,14 @@ static void ExpandBattleTextBuffPlaceholders(const u8 *src, u8 *dst);
 
 static const u8 sText_Empty1[] = _("");
 static const u8 sText_Trainer1LoseText[] = _("{B_TRAINER1_LOSE_TEXT}");
+static const u8 sText_Trainer2LoseText[] = _("{B_TRAINER2_LOSE_TEXT}");
 static const u8 sText_Trainer2Class[] = _("{B_TRAINER2_CLASS}");
 static const u8 sText_Trainer1RecallPkmn1[] = _("{B_TRAINER1_NAME}: {B_OPPONENT_MON1_NAME}, come back!");
 static const u8 sText_Trainer1WinText[] = _("{B_TRAINER1_WIN_TEXT}");
 static const u8 sText_Trainer1RecallPkmn2[] = _("{B_TRAINER1_NAME}: {B_OPPONENT_MON2_NAME}, come back!");
 static const u8 sText_Trainer1RecallBoth[] = _("{B_TRAINER1_NAME}: {B_OPPONENT_MON1_NAME} and\n{B_OPPONENT_MON2_NAME}, come back!");
 static const u8 sText_Trainer2Name[] = _("{B_TRAINER2_NAME}");
-static const u8 sText_PkmnGainedEXP[] = _("{B_BUFF1} gained{B_BUFF2}\n{B_TRAINER2_LOSE_TEXT} EXP. Points!\p");
+static const u8 sText_PkmnGainedEXP[] = _("{B_BUFF1} gained{B_BUFF2}\n{B_BUFF3} EXP. Points!\p");
 static const u8 sText_EmptyString4[] = _("");
 static const u8 sText_ABoosted[] = _(" a boosted");
 static const u8 sText_PkmnGrewToLv[] = _("{B_BUFF1} grew to\nLV. {B_BUFF2}!{WAIT_SE}\p");
@@ -333,6 +334,7 @@ static const u8 sText_PkmnFledUsing[] = _("{PLAY_SE SE_FLEE}{B_ATK_NAME_WITH_PRE
 static const u8 sText_WildPkmnFled[] = _("{PLAY_SE SE_FLEE}Wild {B_BUFF1} fled!");
 static const u8 sText_PlayerDefeatedLinkTrainer[] = _("Player defeated\n{B_LINK_OPPONENT1_NAME}!");
 static const u8 sText_TwoLinkTrainersDefeated[] = _("Player beat {B_LINK_OPPONENT1_NAME}\nand {B_LINK_OPPONENT2_NAME}!");
+static const u8 sText_TwoInGameTrainersDefeated[] = _("{B_TRAINER1_CLASS} {B_TRAINER1_NAME} and\n{B_TRAINER2_CLASS} {B_TRAINER2_NAME}\lwere defeated!\p");
 static const u8 sText_PlayerLostAgainstLinkTrainer[] = _("Player lost against\n{B_LINK_OPPONENT1_NAME}!");
 static const u8 sText_PlayerLostToTwo[] = _("Player lost to {B_LINK_OPPONENT1_NAME}\nand {B_LINK_OPPONENT2_NAME}!");
 static const u8 sText_PlayerBattledToDrawLinkTrainer[] = _("Player battled to a draw against\n{B_LINK_OPPONENT1_NAME}!");
@@ -396,11 +398,14 @@ static const u8 sText_TheGhostAppeared[] = _("The GHOST appeared!\p");
 static const u8 sText_SilphScopeUnveil[] = _("SILPH SCOPE unveiled the GHOST's\nidentity!");
 static const u8 sText_TheGhostWas[] = _("The GHOST was MAROWAK!\p\n");
 static const u8 sText_Trainer1WantsToBattle[] = _("{B_TRAINER1_CLASS} {B_TRAINER1_NAME}\nwould like to battle!\p");
+static const u8 sText_TwoTrainersWantToBattle[] = _("{B_TRAINER1_CLASS} {B_TRAINER1_NAME} and\n{B_TRAINER2_CLASS} {B_TRAINER2_NAME}\lwant to battle!\p");
 static const u8 sText_LinkTrainerWantsToBattle[] = _("{B_LINK_OPPONENT1_NAME}\nwants to battle!");
 static const u8 sText_TwoLinkTrainersWantToBattle[] = _("{B_LINK_OPPONENT1_NAME} and {B_LINK_OPPONENT2_NAME}\nwant to battle!");
 static const u8 sText_Trainer1SentOutPkmn[] = _("{B_TRAINER1_CLASS} {B_TRAINER1_NAME} sent\nout {B_OPPONENT_MON1_NAME}!{PAUSE 60}");
 static const u8 sText_Trainer1SentOutTwoPkmn[] = _("{B_TRAINER1_CLASS} {B_TRAINER1_NAME} sent\nout {B_OPPONENT_MON1_NAME} and {B_OPPONENT_MON2_NAME}!{PAUSE 60}");
+static const u8 sText_TwoTrainersSentPkmn[] = _("{B_TRAINER1_CLASS} {B_TRAINER1_NAME} sent\nout {B_OPPONENT_MON1_NAME}!\p{B_TRAINER2_CLASS} {B_TRAINER2_NAME} sent\nout {B_OPPONENT_MON2_NAME}!");
 static const u8 sText_Trainer1SentOutPkmn2[] = _("{B_TRAINER1_CLASS} {B_TRAINER1_NAME} sent\nout {B_BUFF1}!");
+static const u8 sText_Trainer2SentOutPkmn[] = _("{B_TRAINER2_CLASS} {B_TRAINER2_NAME} sent\nout {B_BUFF1}!");
 static const u8 sText_LinkTrainerSentOutPkmn[] = _("{B_LINK_OPPONENT1_NAME} sent out\n{B_OPPONENT_MON1_NAME}!");
 static const u8 sText_LinkTrainerSentOutTwoPkmn[] = _("{B_LINK_OPPONENT1_NAME} sent out\n{B_OPPONENT_MON1_NAME} and {B_OPPONENT_MON2_NAME}!");
 static const u8 sText_TwoLinkTrainersSentOutPkmn[] = _("{B_LINK_OPPONENT1_NAME} sent out {B_LINK_OPPONENT_MON1_NAME}!\n{B_LINK_OPPONENT2_NAME} sent out {B_LINK_OPPONENT_MON2_NAME}!");
@@ -920,6 +925,8 @@ const u8 *const gBattleStringsTable[] = {
     [STRINGID_PKMNITEMPREVENTSSTATLOSS - 12]      = sText_PkmnItemPreventsStatLoss,
     [STRINGID_PKMNHURTSWITHITEM - 12]             = sText_PkmnHurtsWithItem,
     [STRINGID_PKMNCANTUSEMOVEITEM - 12]           = sText_PkmnCantUseMoveItem,
+    [STRINGID_TWOENEMIESDEFEATED - 12]            = sText_TwoInGameTrainersDefeated,
+    [STRINGID_TRAINER2LOSETEXT - 12]              = sText_Trainer2LoseText,
 };
 
 const u16 gMissStringIds[] = {
@@ -1538,7 +1545,10 @@ void BufferStringBattle(u16 stringId)
             }
             else
             {
-                stringPtr = sText_Trainer1WantsToBattle;
+                if (gBattleTypeFlags & BATTLE_TYPE_TWO_OPPONENTS)
+                    stringPtr = sText_TwoTrainersWantToBattle;
+                else
+                    stringPtr = sText_Trainer1WantsToBattle;
             }
         }
         else
@@ -1583,6 +1593,8 @@ void BufferStringBattle(u16 stringId)
                     stringPtr = sText_TwoLinkTrainersSentOutPkmn;
                 else if (gBattleTypeFlags & BATTLE_TYPE_LINK)
                     stringPtr = sText_LinkTrainerSentOutTwoPkmn;
+                else if (gBattleTypeFlags & BATTLE_TYPE_TWO_OPPONENTS)
+                    stringPtr = sText_TwoTrainersSentPkmn;
                 else
                     stringPtr = sText_Trainer1SentOutTwoPkmn;
             }
@@ -1649,7 +1661,17 @@ void BufferStringBattle(u16 stringId)
             }
             else
             {
-                stringPtr = sText_Trainer1SentOutPkmn2;
+                if (gBattleTypeFlags & BATTLE_TYPE_TWO_OPPONENTS)
+                {
+                    if (gBattleScripting.battler == 1)
+                        stringPtr = sText_Trainer1SentOutPkmn2;
+                    else
+                        stringPtr = sText_Trainer2SentOutPkmn;
+                }
+                else
+                {
+                    stringPtr = sText_Trainer1SentOutPkmn2;
+                }
             }
         }
         break;
@@ -2061,6 +2083,56 @@ u32 BattleStringExpandPlaceholders(const u8 *src, u8 *dst)
                         toCpy = gTrainers[gTrainerBattleOpponent_A].trainerName;
                 }
                 break;
+            case B_TXT_TRAINER2_CLASS: // trainer class name
+                if (gTrainerBattleOpponent_B == SECRET_BASE_OPPONENT)
+                    toCpy = gTrainerClassNames[GetSecretBaseTrainerNameIndex()];
+                else if (gTrainerBattleOpponent_B == TRAINER_OPPONENT_C00)
+                    toCpy = gTrainerClassNames[GetUnionRoomTrainerClass()];
+                else if (gBattleTypeFlags & BATTLE_TYPE_BATTLE_TOWER)
+                    toCpy = gTrainerClassNames[GetBattleTowerTrainerClassNameId()];
+                else if (gBattleTypeFlags & BATTLE_TYPE_TRAINER_TOWER)
+                    toCpy = gTrainerClassNames[GetTrainerTowerOpponentClass()];
+                else if (gBattleTypeFlags & BATTLE_TYPE_EREADER_TRAINER)
+                    toCpy = gTrainerClassNames[GetEreaderTrainerClassId()];
+                else
+                    toCpy = gTrainerClassNames[gTrainers[gTrainerBattleOpponent_B].trainerClass];
+                break;
+            case B_TXT_TRAINER2_NAME: // trainer1 name
+                if (gTrainerBattleOpponent_B == SECRET_BASE_OPPONENT)
+                {
+                    for (i = 0; i < (s32)NELEMS(gBattleResources->secretBase->trainerName); i++)
+                        text[i] = gBattleResources->secretBase->trainerName[i];
+                    text[i] = EOS;
+                    toCpy = text;
+                }
+                if (gTrainerBattleOpponent_B == TRAINER_OPPONENT_C00)
+                {
+                    toCpy = gLinkPlayers[multiplayerId ^ BIT_SIDE].name;
+                }
+                else if (gBattleTypeFlags & BATTLE_TYPE_BATTLE_TOWER)
+                {
+                    GetBattleTowerTrainerName(text);
+                }
+                else if (gBattleTypeFlags & BATTLE_TYPE_TRAINER_TOWER)
+                {
+                    GetTrainerTowerOpponentName(text);
+                    toCpy = text;
+                }
+                else if (gBattleTypeFlags & BATTLE_TYPE_EREADER_TRAINER)
+                {
+                    CopyEReaderTrainerName5(text);
+                    toCpy = text;
+                }
+                else
+                {
+                    if (gTrainers[gTrainerBattleOpponent_B].trainerClass == TRAINER_CLASS_RIVAL_EARLY
+                     || gTrainers[gTrainerBattleOpponent_B].trainerClass == TRAINER_CLASS_RIVAL_LATE
+                     || gTrainers[gTrainerBattleOpponent_B].trainerClass == TRAINER_CLASS_CHAMPION)
+                        toCpy = GetExpandedPlaceholder(PLACEHOLDER_ID_RIVAL);
+                    else
+                        toCpy = gTrainers[gTrainerBattleOpponent_B].trainerName;
+                }
+                break;
             case B_TXT_LINK_PLAYER_NAME: // link player name
                 toCpy = gLinkPlayers[multiplayerId].name;
                 break;
@@ -2103,8 +2175,15 @@ u32 BattleStringExpandPlaceholders(const u8 *src, u8 *dst)
                 }
                 break;
             case B_TXT_TRAINER2_LOSE_TEXT:
-                GetTrainerTowerOpponentLoseText(gStringVar4, 1);
-                toCpy = gStringVar4;
+                if (gBattleTypeFlags & BATTLE_TYPE_TRAINER_TOWER)
+                {
+                    GetTrainerTowerOpponentLoseText(gStringVar4, 1);
+                    toCpy = gStringVar4;
+                }
+                else
+                {
+                    toCpy = GetTrainerBLoseText();
+                }
                 break;
             case B_TXT_TRAINER2_WIN_TEXT:
                 GetTrainerTowerOpponentWinText(gStringVar4, 1);

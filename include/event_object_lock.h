@@ -8,6 +8,8 @@ void ScriptFreezeObjectEvents(void);
 bool8 NativeScript_WaitPlayerAndTargetNPCStopMoving(void);
 void LockSelectedObjectEvent(void);
 void ClearPlayerHeldMovementAndUnfreezeObjectEvents(void);
+void FreezeForApproachingTrainers(void);
+bool8 NativeScript_WaitPlayerAndNPCStopMoving(void);
 bool8 walkrun_is_standing_still(void);
 void UnionRoom_UnlockPlayerAndChatPartner(void);
 

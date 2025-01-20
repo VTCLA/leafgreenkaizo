@@ -327,6 +327,9 @@ static void SetBattlePartyIds(void)
                 }
             }
         }
+
+        if (gBattleTypeFlags & BATTLE_TYPE_TWO_OPPONENTS)
+            gBattlerPartyIndexes[1] = 0, gBattlerPartyIndexes[3] = 3;
     }
 }
 
