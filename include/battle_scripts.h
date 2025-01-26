@@ -252,6 +252,8 @@ extern const u8 BattleScript_RockyHelmetActivates[];
 extern const u8 BattleScript_ApplySecondaryEffectEnd2[];
 extern const u8 BattleScript_SelectingNotAllowedMoveAssaultVest[];
 extern const u8 BattleScript_MoveUsedIsAssaultVested[];
+extern const u8 BattleScript_ButItFailedAtkStringPpReduce[];
+extern const u8 BattleScript_TraceActivatesEnd3[];
 
 extern const u8 *const gBattleScriptsForMoveEffects[];
 extern const u8 *const gBattlescriptsForBallThrow[];

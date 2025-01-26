@@ -408,7 +408,8 @@ struct BattleStruct
     u8 formToChangeInto;
     u8 chosenMovePositions[MAX_BATTLERS_COUNT];
     u8 stateIdAfterSelScript[MAX_BATTLERS_COUNT];
-    u8 field_88; // unused
+    u8 switchInAbilityPostponed:4;
+    u8 filler88:4; //unused
     u8 field_89; // unused
     u8 field_8A; // unused
     u8 playerPartyIdx;

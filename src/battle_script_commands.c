@@ -864,6 +864,33 @@ static const u8 sBallCatchBonuses[] =
     20, 15, 10, 15 // Ultra, Great, Poke, Safari
 };
 
+static bool32 NoTargetPresent(u8 battlerId, u32 move)
+{
+
+    if (!IsBattlerAlive(gBattlerTarget))
+        gBattlerTarget = GetMoveTarget(move, 0);
+
+    switch (gBattleMoves[move].target)
+    {
+    case MOVE_TARGET_SELECTED:
+    case MOVE_TARGET_DEPENDS:
+    case MOVE_TARGET_RANDOM:
+        if (!IsBattlerAlive(gBattlerTarget))
+            return TRUE;
+        break;
+    case MOVE_TARGET_BOTH:
+        if (!IsBattlerAlive(gBattlerTarget) && !IsBattlerAlive(BATTLE_PARTNER(gBattlerTarget)))
+            return TRUE;
+        break;
+    case MOVE_TARGET_FOES_AND_ALLY:
+        if (!IsBattlerAlive(gBattlerTarget) && !IsBattlerAlive(BATTLE_PARTNER(gBattlerTarget)) && !IsBattlerAlive(BATTLE_PARTNER(gBattlerAttacker)))
+            return TRUE;
+        break;
+    }
+
+    return FALSE;
+}
+
 // not used
 static const u32 gUnknown_8250898 = 0xFF7EAE60;
 
@@ -911,6 +938,14 @@ static void atk00_attackcanceler(void)
         }
     }
     gHitMarker |= HITMARKER_OBEYS;
+    if (NoTargetPresent(gBattlerAttacker, gCurrentMove) && !IsTwoTurnsMove(gCurrentMove))
+    {
+        gBattlescriptCurrInstr = BattleScript_ButItFailedAtkStringPpReduce;
+        if (!IsTwoTurnsMove(gCurrentMove))
+            CancelMultiTurnMoves(gBattlerAttacker);
+        return;
+    }
+
     if (gProtectStructs[gBattlerTarget].bounceMove && gBattleMoves[gCurrentMove].flags & FLAG_MAGICCOAT_AFFECTED)
     {
         PressurePPLose(gBattlerAttacker, gBattlerTarget, MOVE_MAGIC_COAT);
@@ -3526,6 +3561,32 @@ static void atk23_getexp(void)
     }
 }
 
+bool32 NoAliveMonsForEitherParty(void)
+{
+    u32 i;
+    u32 HP_count = 0;
+    bool32 result;
+
+    for (i = 0; i < PARTY_SIZE; i++)
+    {
+        if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES) && !GetMonData(&gPlayerParty[i], MON_DATA_IS_EGG))
+        {
+            HP_count += GetMonData(&gPlayerParty[i], MON_DATA_HP);
+        }
+    }
+    result = (HP_count == 0);
+    HP_count = 0;
+    for (i = 0; i < PARTY_SIZE; i++)
+    {
+        if (GetMonData(&gEnemyParty[i], MON_DATA_SPECIES) && !GetMonData(&gEnemyParty[i], MON_DATA_IS_EGG))
+        {
+            HP_count += GetMonData(&gEnemyParty[i], MON_DATA_HP);
+        }
+    }
+    result |= (HP_count == 0);
+    return result;
+}
+
 static void atk24(void)
 {
     u16 HP_count = 0;
@@ -5075,6 +5136,31 @@ static void atk51_switchhandleorder(void)
     }
 }
 
+bool32 ShouldPostponeSwitchinAbilities(u32 battlerId)
+{
+    
+    bool32 aliveOpposing1 = IsBattlerAlive(BATTLE_OPPOSITE(battlerId));
+    bool32 aliveOpposing2 = IsBattlerAlive(BATTLE_PARTNER(BATTLE_OPPOSITE(battlerId)));
+    // No pokemon on opposing side - postpone.
+    
+    if (!(gCurrentTurnActionNumber == gBattlersCount))
+        return FALSE;
+    
+    if (!aliveOpposing1 && !aliveOpposing2)
+        return TRUE;
+
+    // Checks for double battle, so abilities like Intimidate wait until all battlers are switched-in before activating.
+    if (IsDoubleBattle())
+    {
+        if (aliveOpposing1 && !aliveOpposing2 && !HasNoMonsToSwitch(BATTLE_PARTNER(BATTLE_OPPOSITE(battlerId)), PARTY_SIZE, PARTY_SIZE))
+            return TRUE;
+        if (!aliveOpposing1 && aliveOpposing2 && !HasNoMonsToSwitch(BATTLE_OPPOSITE(battlerId), PARTY_SIZE, PARTY_SIZE))
+            return TRUE;
+    }
+
+    return FALSE;
+}
+
 static void atk52_switchineffects(void)
 {
     s32 i;
@@ -5110,38 +5196,43 @@ static void atk52_switchineffects(void)
     {
         if (gBattleMons[gActiveBattler].ability == ABILITY_TRUANT)
             gDisableStructs[gActiveBattler].truantCounter = 1;
-        if (!AbilityBattleEffects(ABILITYEFFECT_ON_SWITCHIN, gActiveBattler, 0, 0, 0)
-         && !ItemBattleEffects(ITEMEFFECT_ON_SWITCH_IN, gActiveBattler, FALSE))
+        if (ShouldPostponeSwitchinAbilities(gActiveBattler) || gBattleStruct->switchInAbilityPostponed)
         {
-            gSideStatuses[GetBattlerSide(gActiveBattler)] &= ~(SIDE_STATUS_SPIKES_DAMAGED);
-
-            for (i = 0; i < gBattlersCount; ++i)
-            {
-                if (gBattlerByTurnOrder[i] == gActiveBattler)
-                    gActionsByTurnOrder[i] = B_ACTION_CANCEL_PARTNER;
-            }
-            for (i = 0; i < gBattlersCount; ++i)
-            {
-                u16 *hpOnSwitchout = &gBattleStruct->hpOnSwitchout[GetBattlerSide(i)];
-                *hpOnSwitchout = gBattleMons[i].hp;
-            }
-
-            if (gBattlescriptCurrInstr[1] == 5)
-            {
-                u32 hitmarkerFaintBits = gHitMarker >> 0x1C;
-
-                ++gBattlerFainted;
-                while (TRUE)
-                {
-                    if (hitmarkerFaintBits & gBitTable[gBattlerFainted] && !(gAbsentBattlerFlags & gBitTable[gBattlerFainted]))
-                        break;
-                    if (gBattlerFainted >= gBattlersCount)
-                        break;
-                    ++gBattlerFainted;
-                }
-            }
-            gBattlescriptCurrInstr += 2;
+            gBattleStruct->switchInAbilityPostponed |= gBitTable[gActiveBattler];
         }
+        else
+        {
+            if (AbilityBattleEffects(ABILITYEFFECT_ON_SWITCHIN, gActiveBattler, 0, 0, 0)
+                || ItemBattleEffects(ITEMEFFECT_ON_SWITCH_IN, gActiveBattler, FALSE)
+                || AbilityBattleEffects(ABILITYEFFECT_INTIMIDATE2, 0, 0, 0, 0)
+                || AbilityBattleEffects(ABILITYEFFECT_TRACE2, 0, 0, 0, 0)
+                || AbilityBattleEffects(ABILITYEFFECT_FORECAST, 0, 0, 0, 0))
+                return;
+        }
+        gSideStatuses[GetBattlerSide(gActiveBattler)] &= ~(SIDE_STATUS_SPIKES_DAMAGED);
+        for (i = 0; i < gBattlersCount; ++i)
+        {
+            if (gBattlerByTurnOrder[i] == gActiveBattler)
+                gActionsByTurnOrder[i] = B_ACTION_CANCEL_PARTNER;
+
+            gBattleStruct->hpOnSwitchout[GetBattlerSide(i)] = gBattleMons[i].hp;
+        }
+        if (gBattlescriptCurrInstr[1] == 5)
+        {
+            u32 hitmarkerFaintBits = gHitMarker >> 0x1C;
+
+            ++gBattlerFainted;
+            while (TRUE)
+            {
+                if (hitmarkerFaintBits & gBitTable[gBattlerFainted] && !(gAbsentBattlerFlags & gBitTable[gBattlerFainted]))
+                    break;
+                if (gBattlerFainted >= gBattlersCount)
+                    break;
+                ++gBattlerFainted;
+            }
+        }
+        
+        gBattlescriptCurrInstr += 2;
     }
 }
 
@@ -7247,7 +7338,7 @@ static void atk96_weatherdamage(void)
         ++gBattlescriptCurrInstr;
         return;
     }
-    if (WEATHER_HAS_EFFECT)
+    if (WEATHER_HAS_EFFECT && IsBattlerAlive(gBattlerAttacker))
     {
         if (gBattleWeather & WEATHER_SANDSTORM_ANY)
         {
@@ -7292,8 +7383,6 @@ static void atk96_weatherdamage(void)
     {
         gBattleMoveDamage = 0;
     }
-    if (gAbsentBattlerFlags & gBitTable[gBattlerAttacker])
-        gBattleMoveDamage = 0;
     ++gBattlescriptCurrInstr;
 }
 
@@ -8437,7 +8526,7 @@ static void atkC1_hiddenpowercalc(void)
 static void atkC2_selectfirstvalidtarget(void)
 {
     for (gBattlerTarget = 0; gBattlerTarget < gBattlersCount; ++gBattlerTarget)
-        if (gBattlerTarget != gBattlerAttacker && !(gAbsentBattlerFlags & gBitTable[gBattlerTarget]))
+        if (gBattlerTarget != gBattlerAttacker && IsBattlerAlive(gBattlerTarget))
             break;
     ++gBattlescriptCurrInstr;
 }

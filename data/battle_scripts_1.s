@@ -4025,6 +4025,10 @@ BattleScript_TraceActivates::
 	pause 0x20
 	printstring STRINGID_PKMNTRACED
 	waitmessage 0x40
+	return
+
+BattleScript_TraceActivatesEnd3::
+	call BattleScript_TraceActivates
 	end3
 
 BattleScript_RainDishActivates::
