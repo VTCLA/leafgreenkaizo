@@ -1,16 +1,16 @@
 {
   "ExpandedNodes": [
     "",
-    "\\data",
-    "\\data\\maps",
-    "\\data\\maps\\CeruleanCity",
+    "\\asm\\macros",
     "\\data\\maps\\CeruleanCity_BikeShop",
     "\\data\\maps\\MtMoon_B1F",
     "\\data\\maps\\Route8",
     "\\data\\maps\\VictoryRoad_2F",
-    "\\include",
-    "\\include\\constants"
+    "\\include\\constants",
+    "\\src",
+    "\\src\\data",
+    "\\src\\data\\graphics"
   ],
-  "SelectedNode": "\\include\\constants\\moves.h",
+  "SelectedNode": "\\src\\battle_main.c",
   "PreviewInSolutionExplorer": false
 }

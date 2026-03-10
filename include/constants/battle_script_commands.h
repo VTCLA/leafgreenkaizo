@@ -119,7 +119,10 @@
 #define ATK49_UPDATE_LAST_MOVES                 14
 #define ATK49_MIRROR_MOVE                       15
 #define ATK49_NEXT_TARGET                       16
-#define ATK49_COUNT                             17
+#define ATK49_EJECT_BUTTON                      17
+#define ATK49_RED_CARD                          18
+#define ATK49_EJECT_PACK                        19
+#define ATK49_COUNT                             20
 
 #define BIT_HP                      0x1
 #define BIT_ATK                     0x2

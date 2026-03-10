@@ -69,9 +69,9 @@ ViridianCity_Mart_Items:: @ 816A298
 	.2byte ITEM_POKE_BALL
 	.2byte ITEM_POTION
 	.2byte ITEM_ANTIDOTE
-	.2byte ITEM_PARALYZE_HEAL
-	.2byte ITEM_SHED_SHELL
-	.2byte ITEM_IRON_BALL
+	.2byte ITEM_EJECT_BUTTON
+	.2byte ITEM_RED_CARD
+	.2byte ITEM_EJECT_PACK
 	.2byte ITEM_NONE
 	release
 	end

@@ -845,3 +845,12 @@ const u32 gFile_graphics_items_icon_palettes_shed_shell_palette[] = INCBIN_U32("
 
 const u32 gFile_graphics_items_icons_iron_ball_sheet[] = INCBIN_U32("graphics/items/icons/iron_ball.4bpp.lz");
 const u32 gFile_graphics_items_icon_palettes_iron_ball_palette[] = INCBIN_U32("graphics/items/icon_palettes/iron_ball.gbapal.lz");
+
+const u32 gFile_graphics_items_icons_eject_button_sheet[] = INCBIN_U32("graphics/items/icons/eject_button.4bpp.lz");
+const u32 gFile_graphics_items_icon_palettes_eject_button_palette[] = INCBIN_U32("graphics/items/icon_palettes/eject_button.gbapal.lz");
+
+const u32 gFile_graphics_items_icons_eject_pack_sheet[] = INCBIN_U32("graphics/items/icons/eject_pack.4bpp.lz");
+const u32 gFile_graphics_items_icon_palettes_eject_pack_palette[] = INCBIN_U32("graphics/items/icon_palettes/eject_pack.gbapal.lz");
+
+const u32 gFile_graphics_items_icons_red_card_sheet[] = INCBIN_U32("graphics/items/icons/red_card.4bpp.lz");
+const u32 gFile_graphics_items_icon_palettes_red_card_palette[] = INCBIN_U32("graphics/items/icon_palettes/red_card.gbapal.lz");

@@ -274,20 +274,20 @@ static const struct TrainerMonItemDefaultMoves sParty_BugCatcherRick[] = {
     {
         .iv = 0,
         .lvl = 5,
-        .species = SPECIES_CHARMANDER,
-        .heldItem = ITEM_FOCUS_SASH,
+        .species = SPECIES_PIKACHU,
+        .heldItem = ITEM_EJECT_PACK,
     },
     {
         .iv = 0,
         .lvl = 6,
         .species = SPECIES_WEEDLE,
-        .heldItem = ITEM_EVIOLITE
+        .heldItem = ITEM_EJECT_PACK,
     },
     {
         .iv = 0,
         .lvl = 6,
         .species = SPECIES_CATERPIE,
-        .heldItem = ITEM_MUSCLE_BAND
+        .heldItem = ITEM_WHITE_HERB,
     },
 };
 
@@ -309,16 +309,18 @@ static const struct TrainerMonNoItemDefaultMoves sParty_BugCatcherDoug[] = {
     },
 };
 
-static const struct TrainerMonNoItemDefaultMoves sParty_BugCatcherSammy[] = {
+static const struct TrainerMonItemDefaultMoves sParty_BugCatcherSammy[] = {
     {
         .iv = 0,
-        .lvl = 3,
+        .lvl = 5,
         .species = SPECIES_WEEDLE,
+        .heldItem = ITEM_EJECT_PACK
     },
     {
         .iv = 0,
-        .lvl = 3,
+        .lvl = 5,
         .species = SPECIES_WEEDLE,
+        .heldItem = ITEM_EJECT_PACK,
     },
 };
 
@@ -3780,8 +3782,17 @@ static const struct TrainerMonItemCustomMoves sParty_RivalOaksLabCharmander[] = 
     {
         .iv = 0,
         .lvl = 1,
+        .species = SPECIES_GEODUDE,
+        .heldItem = ITEM_EJECT_PACK,
+        .moves = {MOVE_SEISMIC_TOSS, MOVE_NONE, MOVE_NONE, MOVE_NONE},
+        .abilitynum = 0,
+        .nature = NATURE_MODEST,
+    },
+    {
+        .iv = 0,
+        .lvl = 1,
         .species = SPECIES_CHARMANDER,
-        .heldItem = ITEM_ZOOM_LENS,
+        .heldItem = ITEM_EJECT_PACK,
         .moves = {MOVE_SEISMIC_TOSS, MOVE_NONE, MOVE_NONE, MOVE_NONE},
         .abilitynum = 0,
         .nature = NATURE_MODEST,

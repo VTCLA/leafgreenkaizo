@@ -2727,6 +2727,7 @@ enum
 u8 ItemBattleEffects(u8 caseID, u8 battlerId, bool8 moveTurn)
 {
     int i = 0;
+    int j = 0;
     u8 effect = ITEM_NO_EFFECT;
     u8 changedPP = 0;
     u8 battlerHoldEffect, atkHoldEffect, defHoldEffect;
@@ -2777,29 +2778,64 @@ u8 ItemBattleEffects(u8 caseID, u8 battlerId, bool8 moveTurn)
     switch (caseID)
     {
     case ITEMEFFECT_ON_SWITCH_IN:
-        switch (battlerHoldEffect)
-        {
-        case HOLD_EFFECT_DOUBLE_PRIZE:
-            gBattleStruct->moneyMultiplier = 2;
-            break;
-        case HOLD_EFFECT_RESTORE_STATS:
-            for (i = 0; i < NUM_BATTLE_STATS; ++i)
+        for (j = 0; j < gBattlersCount; j++)
             {
-                if (gBattleMons[battlerId].statStages[i] < 6)
+                gLastUsedItem = gBattleMons[j].item;
+                battlerHoldEffect = ItemId_GetHoldEffect(gLastUsedItem);
+                switch (battlerHoldEffect)
                 {
-                    gBattleMons[battlerId].statStages[i] = 6;
-                    effect = ITEM_STATS_CHANGE;
+                case HOLD_EFFECT_DOUBLE_PRIZE:
+                    gBattleStruct->moneyMultiplier = 2;
+                    break;
+                case HOLD_EFFECT_RESTORE_STATS:
+                    for (i = 0; i < NUM_BATTLE_STATS; ++i)
+                    {
+                        if (gBattleMons[j].statStages[i] < 6)
+                        {
+                            gBattleMons[j].statStages[i] = 6;
+                            effect = ITEM_STATS_CHANGE;
+                        }
+                    }
+                    if (effect)
+                    {
+                        gBattleScripting.battler = j;
+                        gPotentialItemEffectBattler = j;
+                        gActiveBattler = gBattlerAttacker = j;
+                        BattleScriptExecute(BattleScript_WhiteHerbEnd2);
+                    }
+                    break;
+                case HOLD_EFFECT_EJECT_PACK:
+                    for (i = 0; i < NUM_BATTLE_STATS; ++i)
+                    {
+                        if (gBattleMons[j].statStages[i] < 6)
+                        {
+                            effect =  ITEM_STATS_CHANGE;
+                        }
+                    }
+                    if (effect
+                        /*&& gProtectStructs[j].disableEjectPack == 0 this only involves weak armor
+                        && !(gCurrentMove == MOVE_PARTING_SHOT && CanBattlerSwitch(gBattlerAttacker))*/) // Does not activate if attacker used Parting Shot and can switch out
+                    {
+                        gActiveBattler = j;
+                        gPotentialItemEffectBattler = j;
+                        gActiveBattler = gBattlerAttacker = j;
+                        gBattleScripting.battler = j;
+                        *(gBattleStruct->AI_monToSwitchIntoId + (GetBattlerPosition(gActiveBattler) >> 1)) = PARTY_SIZE;
+                        /*if (moveTurn)
+                        {
+                            BattleScriptPushCursor();
+                            gBattlescriptCurrInstr = BattleScript_EjectPackActivate_Ret;
+                        }
+                        else
+                        {*/
+                            BattleScriptExecute(BattleScript_EjectPackActivate_End2);
+                        //}
+                    }
+                    break;
                 }
+                if (effect)
+                    break;
             }
-            if (effect)
-            {
-                gBattleScripting.battler = battlerId;
-                gPotentialItemEffectBattler = battlerId;
-                gActiveBattler = gBattlerAttacker = battlerId;
-                BattleScriptExecute(BattleScript_WhiteHerbEnd2);
-            }
-            break;
-        }
         break;
     case 1:
         if (gBattleMons[battlerId].hp)
@@ -2866,6 +2902,31 @@ u8 ItemBattleEffects(u8 caseID, u8 battlerId, bool8 moveTurn)
                     gPotentialItemEffectBattler = battlerId;
                     gActiveBattler = gBattlerAttacker = battlerId;
                     BattleScriptExecute(BattleScript_WhiteHerbEnd2);
+                }
+                break;
+            case HOLD_EFFECT_EJECT_PACK:
+                for (i = 0; i < NUM_BATTLE_STATS; ++i)
+                {
+                    if (gBattleMons[battlerId].statStages[i] < 6)
+                    {
+                        effect =  ITEM_STATS_CHANGE;
+                    }
+                }
+                if (effect)
+                {
+                    gActiveBattler = battlerId;
+                    gPotentialItemEffectBattler = battlerId;
+                    gActiveBattler = gBattlerAttacker = battlerId;
+                    gBattleScripting.battler = battlerId;
+                    /*if (moveTurn)
+                    {
+                        BattleScriptPushCursor();
+                        gBattlescriptCurrInstr = BattleScript_EjectPackActivate_Ret;
+                    }
+                    else
+                    {*/
+                        BattleScriptExecute(BattleScript_EjectPackActivate_End2);
+                    //}
                 }
                 break;
             case HOLD_EFFECT_LEFTOVERS:

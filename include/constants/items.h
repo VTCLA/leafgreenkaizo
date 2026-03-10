@@ -61,9 +61,9 @@
 #define ITEM_EVIOLITE 57  //new
 #define ITEM_FOCUS_SASH 58  //new
 #define ITEM_ENDLESS_CANDY 59 //new
-#define ITEM_03C 60
-#define ITEM_03D 61
-#define ITEM_03E 62
+#define ITEM_EJECT_BUTTON 60
+#define ITEM_EJECT_PACK 61
+#define ITEM_RED_CARD 62
 #define ITEM_HP_UP 63
 #define ITEM_PROTEIN 64
 #define ITEM_IRON 65

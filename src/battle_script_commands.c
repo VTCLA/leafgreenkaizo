@@ -4240,9 +4240,88 @@ static void atk48_playstatchangeanimation(void)
     }
 }
 
+bool32 IsSheerForceActive(u8 attacker, u16 move)
+{
+    if (!(gBattleMons[attacker].ability == ABILITY_SHEER_FORCE))
+        return FALSE;
+
+    if (gBattleMoves[move].category == MOVE_CATEGORY_STATUS)
+        return FALSE;
+
+    if (gBattleMoves[move].secondaryEffectChance == 0 || gBattleMoves[move].secondaryEffectChance == 100)
+        return FALSE;
+
+    return TRUE;
+}
+
+bool32 CanBattlerSwitch(u32 battlerId)
+{
+    s32 i, lastMonId, battlerIn1, battlerIn2;
+    bool32 ret = FALSE;
+    struct Pokemon *party;
+
+    if (gBattleTypeFlags & BATTLE_TYPE_TWO_OPPONENTS && GetBattlerSide(battlerId) == B_SIDE_OPPONENT)
+    {
+        party = gEnemyParty;
+
+        lastMonId = 0;
+        if (battlerId == B_POSITION_OPPONENT_RIGHT)
+            lastMonId = PARTY_SIZE / 2;
+
+        for (i = lastMonId; i < lastMonId + (PARTY_SIZE / 2); i++)
+        {
+            if (GetMonData(&party[i], MON_DATA_SPECIES) != SPECIES_NONE
+             && !GetMonData(&party[i], MON_DATA_IS_EGG)
+             && GetMonData(&party[i], MON_DATA_HP) != 0
+             && gBattlerPartyIndexes[battlerId] != i)
+                break;
+        }
+
+        ret = (i != lastMonId + (PARTY_SIZE / 2));
+    }
+    else
+    {
+        if (GetBattlerSide(battlerId) == B_SIDE_OPPONENT)
+        {
+            battlerIn1 = GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT);
+
+            if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE)
+                battlerIn2 = GetBattlerAtPosition(B_POSITION_OPPONENT_RIGHT);
+            else
+                battlerIn2 = battlerIn1;
+
+            party = gEnemyParty;
+        }
+        else
+        {
+            // Check if attacker side has mon to switch into
+            battlerIn1 = GetBattlerAtPosition(B_POSITION_PLAYER_LEFT);
+
+            if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE)
+                battlerIn2 = GetBattlerAtPosition(B_POSITION_PLAYER_RIGHT);
+            else
+                battlerIn2 = battlerIn1;
+
+            party = gPlayerParty;
+        }
+
+        for (i = 0; i < PARTY_SIZE; i++)
+        {
+            if (GetMonData(&party[i], MON_DATA_HP) != 0
+             && GetMonData(&party[i], MON_DATA_SPECIES) != SPECIES_NONE
+             && !GetMonData(&party[i], MON_DATA_IS_EGG)
+             && i != gBattlerPartyIndexes[battlerIn1] && i != gBattlerPartyIndexes[battlerIn2])
+                break;
+        }
+
+        ret = (i != PARTY_SIZE);
+    }
+    return ret;
+}
+
 static void atk49_moveend(void)
 {
-    s32 i;
+    s32 i, j;
     bool32 effect = FALSE;
     u8 moveType = 0;
     u8 holdEffectAtk = 0;
@@ -4509,6 +4588,98 @@ static void atk49_moveend(void)
                 else
                 {
                     gHitMarker |= HITMARKER_NO_ATTACKSTRING;
+                }
+            }
+            ++gBattleScripting.atk49_state;
+            break;
+        case ATK49_EJECT_BUTTON:
+            if (/*gBattleMoves[gCurrentMove].effect != EFFECT_HIT_SWITCH_TARGET fix this if you add circle throw
+              && */!IsSheerForceActive(gBattlerAttacker, gCurrentMove)
+              && IsBattlerAlive(gBattlerAttacker)) //doesnt go off if attacker dies mid attack - is this even right?
+            {
+                for (i = 0; i < gBattlersCount; i++)
+                {
+                    // Attacker is the damage-dealer, battler is mon to be switched out
+                    if (IsBattlerAlive(i)
+                      && ItemId_GetHoldEffect(gBattleMons[i].item) == HOLD_EFFECT_EJECT_BUTTON
+                      //&& !DoesSubstituteBlockMove(gBattlerAttacker, battler, gCurrentMove) this doesnt work but we dont need it anyway
+                      && (gSpecialStatuses[i].physicalDmg != 0 || gSpecialStatuses[i].specialDmg != 0)
+                      && CanBattlerSwitch(i))
+                    {
+                        gActiveBattler = i;
+                        gBattleScripting.battler = i;
+                        gLastUsedItem = gBattleMons[i].item;
+                        gSpecialStatuses[i].physicalDmg = 0;
+                        gSpecialStatuses[i].specialDmg = 0;
+                        /*if (gBattleMoves[gCurrentMove].effect == EFFECT_HIT_ESCAPE)
+                            gBattlescriptCurrInstr = BattleScript_MoveEnd;*/  // Cancels u-turn switches, add once u-turn is in
+                        BattleScriptPushCursor();
+                        gBattlescriptCurrInstr = BattleScript_EjectButtonActivates;
+                        effect = TRUE;
+                        break; // Only the fastest Eject Button activates
+                    }
+                }
+            }
+            ++gBattleScripting.atk49_state;
+            break;
+        case ATK49_RED_CARD:
+            if (/*(gBattleMoves[gCurrentMove].effect != EFFECT_HIT_SWITCH_TARGET || gBattleStruct->hitSwitchTargetFailed) fix this if you add circle throw
+              && */!IsSheerForceActive(gBattlerAttacker, gCurrentMove)
+              && IsBattlerAlive(gBattlerAttacker)) //doesnt go off if attacker dies mid attack
+            {
+                for (i = 0; i < gBattlersCount; i++)
+                {
+                    // Search for fastest hit pokemon with a red card
+                    // Attacker is the one to be switched out, battler is one with red card
+                    if (i != gBattlerAttacker
+                      && IsBattlerAlive(i)
+                      //&& !DoesSubstituteBlockMove(gBattlerAttacker, battler, gCurrentMove) this doesnt work but we dont need it anyway
+                      && ItemId_GetHoldEffect(gBattleMons[i].item) == HOLD_EFFECT_RED_CARD
+                      && (gSpecialStatuses[i].physicalDmg != 0 || gSpecialStatuses[i].specialDmg != 0)
+                      && CanBattlerSwitch(i))
+                    {
+                        gLastUsedItem = gBattleMons[i].item;
+                        gActiveBattler = i;  // Battler with red card
+                        gBattleScripting.battler = i;
+                        gEffectBattler = gBattlerAttacker;
+                        /*if (gBattleMoves[gCurrentMove].effect == EFFECT_HIT_ESCAPE)
+                            gBattlescriptCurrInstr = BattleScript_MoveEnd;*/  // Cancels u-turn switches, add once u-turn is in
+                        BattleScriptPushCursor();
+                        gBattlescriptCurrInstr = BattleScript_RedCardActivates;
+                        effect = TRUE;
+                        break;  // Only fastest red card activates
+                    }
+                }
+            }
+            ++gBattleScripting.atk49_state;
+            break;
+        case ATK49_EJECT_PACK:
+            {
+                for (i = 0; i < gBattlersCount; i++)
+                {
+                    for (j = 0; j < NUM_BATTLE_STATS; ++j)
+                    {
+                        if (gBattleMons[i].statStages[j] < 6)
+                        {
+                            gBattleMons[i].statStages[j] = 6;
+                            effect = TRUE;
+                        }
+                    }
+                    if (IsBattlerAlive(i)
+                     && effect
+                     && ItemId_GetHoldEffect(gBattleMons[i].item) == HOLD_EFFECT_EJECT_PACK
+                     //&& !(gCurrentMove == MOVE_PARTING_SHOT && CanBattlerSwitch(gBattlerAttacker))  // Does not activate if attacker used Parting Shot and can switch out
+                     && CanBattlerSwitch(i))
+                    {
+                        gActiveBattler = i;
+                        gBattleScripting.battler = i;
+                        gLastUsedItem = gBattleMons[i].item;
+                        BattleScriptPushCursor();
+                        gBattlescriptCurrInstr = BattleScript_EjectPackActivates;
+                        break;  // Only fastest eject pack activates
+                    }
+                    else
+                        effect = FALSE;
                 }
             }
             ++gBattleScripting.atk49_state;
@@ -7010,7 +7181,10 @@ static bool8 TryDoForceSwitchOut(void)
         }
         *(gBattleStruct->battlerPartyIndexes + gBattlerTarget) = gBattlerPartyIndexes[gBattlerTarget];
     }
-    gBattlescriptCurrInstr = BattleScript_SuccessForceOut;
+    if (gLastUsedItem == ITEM_RED_CARD)
+        gBattlescriptCurrInstr = BattleScript_SuccessForceOutRedCard;
+    else
+        gBattlescriptCurrInstr = BattleScript_SuccessForceOut;
     return TRUE;
 }
 

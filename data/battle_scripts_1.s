@@ -3336,6 +3336,16 @@ BattleScript_TrainerBattleForceOut::
 	switchineffects BS_TARGET
 	goto BattleScript_MoveEnd
 
+	
+BattleScript_SuccessForceOutRedCard::
+	switchoutabilities BS_TARGET
+	returntoball BS_TARGET
+	waitstate
+	jumpifbattletype BATTLE_TYPE_TRAINER, BattleScript_TrainerBattleForceOut
+	setbyte gBattleOutcome, B_OUTCOME_PLAYER_TELEPORTED
+	finishaction
+	return
+
 BattleScript_MistProtected::
 	pause 0x20
 	printstring STRINGID_PKMNPROTECTEDBYMIST
@@ -4592,4 +4602,51 @@ BattleScript_ActionSelectionItemsCantBeUsed::
 
 BattleScript_FlushMessageBox::
 	printstring STRINGID_EMPTYSTRING3
+	return
+
+
+BattleScript_EjectButtonActivates::
+	makevisible BS_ATTACKER
+	playanimation BS_SCRIPTING, B_ANIM_ITEM_EFFECT, NULL
+	printstring STRINGID_EJECTBUTTONACTIVATE
+	waitmessage 0x40
+	removeitem BS_SCRIPTING
+	@ makeinvisible BS_SCRIPTING < address animation later
+	openpartyscreen BS_SCRIPTING, BattleScript_EjectButtonEnd
+	switchoutabilities BS_SCRIPTING
+	waitstate
+	switchhandleorder BS_SCRIPTING 2
+	returntoball BS_SCRIPTING
+	getswitchedmondata BS_SCRIPTING
+	switchindataupdate BS_SCRIPTING
+	hpthresholds BS_SCRIPTING
+	printstring STRINGID_SWITCHINMON
+	switchinanim BS_SCRIPTING 1
+	waitstate
+	switchineffects BS_SCRIPTING
+BattleScript_EjectButtonEnd::
+	return
+
+BattleScript_EjectPackActivate_Ret::
+	goto BattleScript_EjectButtonActivates
+
+BattleScript_EjectPackActivate_End2::
+	call BattleScript_EjectPackActivate_Ret
+	end2
+
+BattleScript_EjectPackActivates::
+	jumpifcantswitch BS_SCRIPTING, BattleScript_EjectButtonEnd
+	goto BattleScript_EjectPackActivate_Ret
+
+BattleScript_RedCardActivates::
+	playanimation BS_SCRIPTING, B_ANIM_ITEM_EFFECT, NULL
+	printstring STRINGID_REDCARDACTIVATE
+	waitmessage 0x40
+	removeitem BS_SCRIPTING
+	swapattackerwithtarget
+	jumpifability BS_TARGET, ABILITY_SUCTION_CUPS, BattleScript_AbilityPreventsPhasingOut
+	jumpifstatus3 BS_TARGET, STATUS3_ROOTED, BattleScript_PrintMonIsRooted
+	forcerandomswitch BattleScript_RedCardEnd
+	@ changes the current battle script. the rest happens in BattleScript_RoarSuccessSwitch_Ret, if switch is successful
+BattleScript_RedCardEnd::
 	return

@@ -3990,6 +3990,12 @@ extern const u8 gFile_graphics_items_icons_fairy_feather_sheet[];
 extern const u8 gFile_graphics_items_icon_palettes_fairy_feather_palette[];
 extern const u8 gFile_graphics_items_icons_shed_shell_sheet[];
 extern const u8 gFile_graphics_items_icon_palettes_shed_shell_palette[];
+extern const u8 gFile_graphics_items_icons_eject_button_sheet[];
+extern const u8 gFile_graphics_items_icon_palettes_eject_button_palette[];
+extern const u8 gFile_graphics_items_icons_eject_pack_sheet[];
+extern const u8 gFile_graphics_items_icon_palettes_eject_pack_palette[];
+extern const u8 gFile_graphics_items_icons_red_card_sheet[];
+extern const u8 gFile_graphics_items_icon_palettes_red_card_palette[];
 extern const u8 gFile_graphics_items_icons_iron_ball_sheet[];
 extern const u8 gFile_graphics_items_icon_palettes_iron_ball_palette[];
 
