@@ -61,9 +61,9 @@
 #define ITEM_EVIOLITE 57  //new
 #define ITEM_FOCUS_SASH 58  //new
 #define ITEM_ENDLESS_CANDY 59 //new
-#define ITEM_EJECT_BUTTON 60
-#define ITEM_EJECT_PACK 61
-#define ITEM_RED_CARD 62
+#define ITEM_EJECT_BUTTON 60 //new
+#define ITEM_EJECT_PACK 61 //new
+#define ITEM_RED_CARD 62 //new
 #define ITEM_HP_UP 63
 #define ITEM_PROTEIN 64
 #define ITEM_IRON 65
@@ -116,12 +116,12 @@
 #define ITEM_070 112
 #define ITEM_071 113
 #define ITEM_072 114
-#define ITEM_073 115
-#define ITEM_074 116
-#define ITEM_SHED_SHELL 117
-#define ITEM_IRON_BALL 118
-#define ITEM_WIDE_LENS 119
-#define ITEM_ZOOM_LENS 120
+#define ITEM_AIR_BALLOON 115 //new
+#define ITEM_THROAT_SPRAY 116 //new
+#define ITEM_SHED_SHELL 117 //new
+#define ITEM_IRON_BALL 118 //new
+#define ITEM_WIDE_LENS 119 //new
+#define ITEM_ZOOM_LENS 120 //new
 #define ITEM_ORANGE_MAIL 121
 #define ITEM_HARBOR_MAIL 122
 #define ITEM_GLITTER_MAIL 123
@@ -251,10 +251,10 @@
 #define ITEM_ROCKY_HELMET 247 //new
 #define ITEM_LOADED_DICE 248 //new
 #define ITEM_LIGHT_CLAY 249 //new
-#define ITEM_FLAME_ORB 250
-#define ITEM_TOXIC_ORB 251
-#define ITEM_ASSAULT_VEST 252
-#define ITEM_FAIRY_FEATHER 253
+#define ITEM_FLAME_ORB 250 //new
+#define ITEM_TOXIC_ORB 251 //new
+#define ITEM_ASSAULT_VEST 252 //new
+#define ITEM_FAIRY_FEATHER 253 //new
 #define ITEM_RED_SCARF 254
 #define ITEM_BLUE_SCARF 255
 #define ITEM_PINK_SCARF 256

@@ -4573,6 +4573,24 @@ BattleScript_WeaknessPolicy::
 	removeitem BS_SCRIPTING
 	return
 
+BattleScript_ThroatSpray::
+	playanimation BS_SCRIPTING, B_ANIM_STATS_CHANGE, sB_ANIM_ARG1
+	printstring STRINGID_PKMNSTHROATSPRAY
+	waitmessage 0x40
+	removeitem BS_SCRIPTING
+	return
+
+BattleScript_AirBalloonFloat::
+	printstring STRINGID_AIRBALLOONFLOAT
+	waitmessage 0x40
+	end2
+
+BattleScript_AirBalloonPop::
+	printstring STRINGID_AIRBALLOONPOP
+	waitmessage 0x40
+	removeitem BS_SCRIPTING
+	return
+
 BattleScript_Gem::
 	playanimation BS_SCRIPTING, B_ANIM_ITEM_EFFECT, NULL
 	printstring STRINGID_PKMNSGEMBOOSTED

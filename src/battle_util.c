@@ -2820,7 +2820,6 @@ u8 ItemBattleEffects(u8 caseID, u8 battlerId, bool8 moveTurn)
                         gPotentialItemEffectBattler = j;
                         gActiveBattler = gBattlerAttacker = j;
                         gBattleScripting.battler = j;
-                        *(gBattleStruct->AI_monToSwitchIntoId + (GetBattlerPosition(gActiveBattler) >> 1)) = PARTY_SIZE;
                         /*if (moveTurn)
                         {
                             BattleScriptPushCursor();
@@ -2830,6 +2829,16 @@ u8 ItemBattleEffects(u8 caseID, u8 battlerId, bool8 moveTurn)
                         {*/
                             BattleScriptExecute(BattleScript_EjectPackActivate_End2);
                         //}
+                    }
+                    break;
+                case HOLD_EFFECT_AIR_BALLOON:
+                    if (j == battlerId)
+                    {
+                        gActiveBattler = battlerId;
+                        gBattleScripting.battler = battlerId;
+                        gPotentialItemEffectBattler = battlerId;
+                        effect = ITEM_EFFECT_OTHER;
+                        BattleScriptExecute(BattleScript_AirBalloonFloat);
                     }
                     break;
                 }
@@ -3338,6 +3347,30 @@ u8 ItemBattleEffects(u8 caseID, u8 battlerId, bool8 moveTurn)
                     BattleScriptPushCursor();
                     gBattlescriptCurrInstr = BattleScript_WeaknessPolicy;
                     effect = ITEM_STATS_CHANGE;
+                }
+                break;
+            case HOLD_EFFECT_AIR_BALLOON:
+                if (battlerId == gBattlerTarget && TARGET_TURN_DAMAGED)
+                {
+                    BattleScriptPushCursor();
+                    gBattlescriptCurrInstr = BattleScript_AirBalloonPop;
+                    effect = ITEM_EFFECT_OTHER;
+                }
+            case HOLD_EFFECT_THROAT_SPRAY:
+                if (battlerId == gBattlerAttacker &&  gBattleMons[battlerId].statStages[STAT_SPATK] < 0xC)
+                {
+                    for (i = 0; sSoundMovesTable[i] != 0xFFFF; ++i)
+                        if (sSoundMovesTable[i] == gCurrentMove)
+                            break;
+                    if (sSoundMovesTable[i] != 0xFFFF)
+                    {
+                        ++gBattleMons[battlerId].statStages[STAT_ATK];
+                        gBattleScripting.animArg1 = 0xE + STAT_SPATK;
+                        gBattleScripting.animArg2 = 0;
+                        BattleScriptPushCursor();
+                        gBattlescriptCurrInstr = BattleScript_ThroatSpray;
+                        effect = ITEM_STATS_CHANGE;
+                    }
                 }
                 break;
             case HOLD_EFFECT_RESTORE_HP:

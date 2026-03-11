@@ -2999,6 +2999,7 @@ u8 IsRunningFromBattleImpossible(void)
          || ItemId_GetHoldEffect(gBattleMons[gActiveBattler].item) == HOLD_EFFECT_IRON_BALL
          || (gStatuses3[gActiveBattler] & STATUS3_ROOTED))
          && !IS_BATTLER_OF_TYPE(gActiveBattler, TYPE_GHOST)
+         && !(ItemId_GetHoldEffect(gBattleMons[gActiveBattler].item) == HOLD_EFFECT_AIR_BALLOON)
          && gBattleMons[i].ability == ABILITY_ARENA_TRAP)
         {
             gBattleScripting.battler = i;
@@ -3179,7 +3180,8 @@ static void HandleTurnActionSelectionState(void)
                               && gBattleMons[gActiveBattler].ability != ABILITY_LEVITATE)
                                || ItemId_GetHoldEffect(gBattleMons[gActiveBattler].item) == HOLD_EFFECT_IRON_BALL
                                || (gStatuses3[gActiveBattler] & STATUS3_ROOTED))
-                              && !IS_BATTLER_OF_TYPE(gActiveBattler, TYPE_GHOST))
+                              && !IS_BATTLER_OF_TYPE(gActiveBattler, TYPE_GHOST)
+                              && !(ItemId_GetHoldEffect(gBattleMons[gActiveBattler].item) == HOLD_EFFECT_AIR_BALLOON))
                           || ((i = AbilityBattleEffects(ABILITYEFFECT_CHECK_FIELD_EXCEPT_BATTLER, gActiveBattler, ABILITY_MAGNET_PULL, 0, 0))
                               && IS_BATTLER_OF_TYPE(gActiveBattler, TYPE_STEEL))))
                     {

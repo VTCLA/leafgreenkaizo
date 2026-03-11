@@ -854,3 +854,9 @@ const u32 gFile_graphics_items_icon_palettes_eject_pack_palette[] = INCBIN_U32("
 
 const u32 gFile_graphics_items_icons_red_card_sheet[] = INCBIN_U32("graphics/items/icons/red_card.4bpp.lz");
 const u32 gFile_graphics_items_icon_palettes_red_card_palette[] = INCBIN_U32("graphics/items/icon_palettes/red_card.gbapal.lz");
+
+const u32 gFile_graphics_items_icons_throat_spray_sheet[] = INCBIN_U32("graphics/items/icons/throat_spray.4bpp.lz");
+const u32 gFile_graphics_items_icon_palettes_throat_spray_palette[] = INCBIN_U32("graphics/items/icon_palettes/throat_spray.gbapal.lz");
+
+const u32 gFile_graphics_items_icons_air_balloon_sheet[] = INCBIN_U32("graphics/items/icons/air_balloon.4bpp.lz");
+const u32 gFile_graphics_items_icon_palettes_air_balloon_palette[] = INCBIN_U32("graphics/items/icon_palettes/air_balloon.gbapal.lz");

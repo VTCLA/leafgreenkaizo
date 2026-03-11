@@ -517,7 +517,10 @@ static const u8 sText_PkmnsItemRestoredHPALittle[] = _("{B_SCR_ACTIVE_NAME_WITH_
 static const u8 sText_PkmnsItemWeakenedDamage[] = _("{B_LAST_ITEM} weakened the damage\nto {B_SCR_ACTIVE_NAME_WITH_PREFIX}!");
 static const u8 sText_PkmnsWeaknessPolicy[] = _("WEAKNESS POLICY sharply raised\n{B_SCR_ACTIVE_NAME_WITH_PREFIX}'s ATTACK!");
 static const u8 sText_PkmnsWeaknessPolicy2[] = _("WEAKNESS POLICY sharply raised\n{B_SCR_ACTIVE_NAME_WITH_PREFIX}'s SP. ATK!");
+static const u8 sText_PkmnsThroatSpray[] = _("THROAT SPRAY raised\n{B_SCR_ACTIVE_NAME_WITH_PREFIX}'s SP. ATK!");
 static const u8 sText_PkmnsGemBoosted[] = _("{B_LAST_ITEM} strengthened\n{B_SCR_ACTIVE_NAME_WITH_PREFIX}'s power!");
+static const u8 sText_AirBalloonFloat[] = _("{B_SCR_ACTIVE_NAME_WITH_PREFIX} floats in the air\nwith its {B_LAST_ITEM}!");
+static const u8 sText_AirBalloonPop[] = _("{B_DEF_NAME_WITH_PREFIX}'s {B_LAST_ITEM} popped!");
 static const u8 sText_ItemAllowsOnlyYMove[] = _("{B_LAST_ITEM}'s effect allows only\n{B_CURRENT_MOVE} to be used!\p");
 static const u8 sText_PkmnHungOnWithX[] = _("{B_DEF_NAME_WITH_PREFIX} hung on\nusing its {B_LAST_ITEM}!");
 static const u8 sText_PkmnHungOnWithXAbility[] = _("{B_DEF_NAME_WITH_PREFIX} hung on\nthanks to {B_DEF_ABILITY}!");
@@ -931,6 +934,9 @@ const u8 *const gBattleStringsTable[] = {
     [STRINGID_TRAINER2LOSETEXT - 12]              = sText_Trainer2LoseText,
     [STRINGID_EJECTBUTTONACTIVATE - 12]           = sText_EjectButtonActivate,
     [STRINGID_REDCARDACTIVATE - 12]               = sText_RedCardActivate,
+    [STRINGID_PKMNSTHROATSPRAY - 12]              = sText_PkmnsThroatSpray,
+    [STRINGID_AIRBALLOONFLOAT - 12]               = sText_AirBalloonFloat,
+    [STRINGID_AIRBALLOONPOP - 12]                 = sText_AirBalloonPop,
 };
 
 const u16 gMissStringIds[] = {
