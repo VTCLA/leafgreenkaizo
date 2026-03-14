@@ -196,6 +196,7 @@ const u8 gUnknown_8416556[] = _("ひでんマシンを きどうした!");
 const u8 gUnknown_8416565[] = _("なかには {STR_VAR_1}が\nきろくされていた!\p{STR_VAR_1}を\nポケモンに おぼえさせますか?");
 const u8 gUnknown_841658C[] = _("{PLAYER} used the\n{STR_VAR_2}.{PAUSE_UNTIL_PRESS}");
 const u8 gUnknown_841659E[] = _("But the effects of a REPEL\nlingered from earlier.{PAUSE_UNTIL_PRESS}");
+const u8 gText_EndlessRepelOff[] = _("The Repellant is deactivated.\nWild POKéMON may be encountered.{PAUSE_UNTIL_PRESS}");
 const u8 gUnknown_84165D2[] = _("{PLAYER} used the\n{STR_VAR_2}.\pWild POKéMON will be lured.{PAUSE_UNTIL_PRESS}");
 const u8 gUnknown_8416600[] = _("{PLAYER} used the\n{STR_VAR_2}.\pWild POKéMON will be repelled.{PAUSE_UNTIL_PRESS}");
 const u8 gUnknown_8416631[] = _("The BOX is full.{PAUSE_UNTIL_PRESS}");

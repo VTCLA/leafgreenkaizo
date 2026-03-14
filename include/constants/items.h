@@ -113,7 +113,7 @@
 #define ITEM_STAR_PIECE 109
 #define ITEM_NUGGET 110
 #define ITEM_HEART_SCALE 111
-#define ITEM_070 112
+#define ITEM_REPELLANT 112 //new
 #define ITEM_STICKY_BARB 113 //new
 #define ITEM_BLACK_SLUDGE 114 //new
 #define ITEM_AIR_BALLOON 115 //new

@@ -866,3 +866,5 @@ const u32 gFile_graphics_items_icon_palettes_sticky_barb_palette[] = INCBIN_U32(
 
 const u32 gFile_graphics_items_icons_black_sludge_sheet[] = INCBIN_U32("graphics/items/icons/black_sludge.4bpp.lz");
 const u32 gFile_graphics_items_icon_palettes_black_sludge_palette[] = INCBIN_U32("graphics/items/icon_palettes/black_sludge.gbapal.lz");
+
+const u32 gFile_graphics_items_icon_palettes_repellant_palette[] = INCBIN_U32("graphics/items/icon_palettes/repellant.gbapal.lz");

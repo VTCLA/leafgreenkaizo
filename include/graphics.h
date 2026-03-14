@@ -4004,6 +4004,7 @@ extern const u8 gFile_graphics_items_icons_air_balloon_sheet[];
 extern const u8 gFile_graphics_items_icon_palettes_air_balloon_palette[];
 extern const u8 gFile_graphics_items_icons_sticky_barb_sheet[];
 extern const u8 gFile_graphics_items_icon_palettes_sticky_barb_palette[];
+extern const u8 gFile_graphics_items_icon_palettes_repellant_palette[];
 extern const u8 gFile_graphics_items_icons_black_sludge_sheet[];
 extern const u8 gFile_graphics_items_icon_palettes_black_sludge_palette[];
 

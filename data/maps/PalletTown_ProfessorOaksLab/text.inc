@@ -376,7 +376,6 @@ PalletTown_ProfessorOaksLab_Text_ExplainRunningShoes:: @ 817E9C7
     .string "Press the B Button to run.\n"
     .string "But be careful where you run!$"
 
-
 PalletTown_ProfessorOaksLab_Text_ThisWillHelpTrain::
     .string "This will help you train\n"
     .string "POKéMON to be stronger.$"
@@ -384,3 +383,11 @@ PalletTown_ProfessorOaksLab_Text_ThisWillHelpTrain::
 PalletTown_ProfessorOaksLab_Text_ReceivedEndlessCandy:: @ 819F0B2
     .string "{PLAYER} received the\n"
     .string "ENDLESS CANDY from PROF. OAK.$"
+
+PalletTown_ProfessorOaksLab_Text_RepellantGive::
+    .string "Turn this on to keep\n"
+    .string "wild POKéMON away.$"
+    
+PalletTown_ProfessorOaksLab_Text_ReceivedRepellant:: @ 819F0B2
+    .string "{PLAYER} received the\n"
+    .string "REPELLANT from PROF. OAK.$"

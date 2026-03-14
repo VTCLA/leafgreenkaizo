@@ -185,6 +185,7 @@ extern const u8 gText_WontHaveEffect[];
 extern const u8 gUnknown_841623D[];
 extern const u8 gUnknown_84162BD[];
 extern const u8 gText_Ghost[];
+extern const u8 gText_EndlessRepelOff[];
 
 // pokemon
 extern const u8 gBattleText_Rose[];

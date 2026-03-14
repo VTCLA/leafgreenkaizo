@@ -585,6 +585,22 @@ static void sub_80A1A44(void)
     StringExpandPlaceholders(gStringVar4, gUnknown_841658C);
 }
 
+void FieldUseFunc_EndlessRepel(u8 taskId)
+{
+    if (FlagGet(FLAG_SYS_ENDLESS_REPEL) == TRUE)
+    {
+        FlagClear(FLAG_SYS_ENDLESS_REPEL);
+        DisplayItemMessageInCurrentContext(taskId, gTasks[taskId].data[3], 2, gText_EndlessRepelOff);
+    }
+    else
+    {
+        FlagSet(FLAG_SYS_ENDLESS_REPEL);
+        PlaySE(SE_REPEL);
+        CopyItemName(ITEM_REPELLANT, gStringVar2);
+        DisplayItemMessageInCurrentContext(taskId, gTasks[taskId].data[3], 2, gUnknown_8416600);
+    }
+}
+
 void FieldUseFunc_BlackFlute(u8 taskId)
 {
     ItemUse_SetQuestLogEvent(QL_EVENT_USED_ITEM, NULL, gSpecialVar_ItemId, 0xFFFF);
