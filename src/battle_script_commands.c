@@ -2785,7 +2785,7 @@ void SetMoveEffect(bool8 primary, u8 certain)
                         break;
                     }
                     side = GetBattlerSide(gBattlerAttacker);
-                    if (GetBattlerSide(gBattlerAttacker) == B_SIDE_OPPONENT
+                    /*if (GetBattlerSide(gBattlerAttacker) == B_SIDE_OPPONENT
                      && !(gBattleTypeFlags &
                           (BATTLE_TYPE_EREADER_TRAINER
                           | BATTLE_TYPE_BATTLE_TOWER
@@ -2794,7 +2794,7 @@ void SetMoveEffect(bool8 primary, u8 certain)
                     {
                         ++gBattlescriptCurrInstr;
                     }
-                    else if (!(gBattleTypeFlags &
+                    else */if (!(gBattleTypeFlags &
                              (BATTLE_TYPE_EREADER_TRAINER
                              | BATTLE_TYPE_BATTLE_TOWER
                              | BATTLE_TYPE_LINK))
@@ -2909,8 +2909,8 @@ void SetMoveEffect(bool8 primary, u8 certain)
                 {
                     side = GetBattlerSide(gEffectBattler);
                     gLastUsedItem = gBattleMons[gEffectBattler].item;
-                    gBattleMons[gEffectBattler].item = ITEM_NONE;
-                    gWishFutureKnock.knockedOffMons[side] |= gBitTable[gBattlerPartyIndexes[gEffectBattler]];
+                    //gBattleMons[gEffectBattler].item = ITEM_NONE;
+                    //gWishFutureKnock.knockedOffMons[side] |= gBitTable[gBattlerPartyIndexes[gEffectBattler]];
                     BattleScriptPush(gBattlescriptCurrInstr + 1);
                     gBattlescriptCurrInstr = BattleScript_KnockedOff;
                     *(u8 *)((u8 *)(&gBattleStruct->choicedMove[gEffectBattler]) + 0) = 0;
@@ -8966,7 +8966,7 @@ static void atkD1_trysethelpinghand(void)
 static void atkD2_tryswapitems(void) // trick
 {
     // opponent can't swap items with player in regular battles
-    if (gBattleTypeFlags & BATTLE_TYPE_TRAINER_TOWER
+    /**if (gBattleTypeFlags & BATTLE_TYPE_TRAINER_TOWER
      || (GetBattlerSide(gBattlerAttacker) == B_SIDE_OPPONENT
          && !(gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_BATTLE_TOWER | BATTLE_TYPE_EREADER_TRAINER))
          && gTrainerBattleOpponent_A != TRAINER_SECRET_BASE))
@@ -8974,7 +8974,7 @@ static void atkD2_tryswapitems(void) // trick
         gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
     }
     else
-    {
+    {*/
         u8 sideAttacker = GetBattlerSide(gBattlerAttacker);
         u8 sideTarget = GetBattlerSide(gBattlerTarget);
 
@@ -9034,7 +9034,7 @@ static void atkD2_tryswapitems(void) // trick
             else
                 gBattleCommunication[MULTISTRING_CHOOSER] = 1; // attacker's item -> <- nothing
         }
-    }
+    //}
 }
 
 static void atkD3_trycopyability(void) // role play

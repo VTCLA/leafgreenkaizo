@@ -860,3 +860,9 @@ const u32 gFile_graphics_items_icon_palettes_throat_spray_palette[] = INCBIN_U32
 
 const u32 gFile_graphics_items_icons_air_balloon_sheet[] = INCBIN_U32("graphics/items/icons/air_balloon.4bpp.lz");
 const u32 gFile_graphics_items_icon_palettes_air_balloon_palette[] = INCBIN_U32("graphics/items/icon_palettes/air_balloon.gbapal.lz");
+
+const u32 gFile_graphics_items_icons_sticky_barb_sheet[] = INCBIN_U32("graphics/items/icons/sticky_barb.4bpp.lz");
+const u32 gFile_graphics_items_icon_palettes_sticky_barb_palette[] = INCBIN_U32("graphics/items/icon_palettes/sticky_barb.gbapal.lz");
+
+const u32 gFile_graphics_items_icons_black_sludge_sheet[] = INCBIN_U32("graphics/items/icons/black_sludge.4bpp.lz");
+const u32 gFile_graphics_items_icon_palettes_black_sludge_palette[] = INCBIN_U32("graphics/items/icon_palettes/black_sludge.gbapal.lz");

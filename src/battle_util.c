@@ -2952,6 +2952,46 @@ u8 ItemBattleEffects(u8 caseID, u8 battlerId, bool8 moveTurn)
                     RecordItemEffectBattle(battlerId, battlerHoldEffect);
                 }
                 break;
+            case HOLD_EFFECT_BLACK_SLUDGE:
+                if (gBattleMons[battlerId].type1 == TYPE_POISON || gBattleMons[battlerId].type2 == TYPE_POISON)
+                {
+                    if (gBattleMons[battlerId].hp < gBattleMons[battlerId].maxHP && !moveTurn)
+                    {
+                        gBattleMoveDamage = gBattleMons[battlerId].maxHP / 8;
+                        if (gBattleMoveDamage == 0)
+                            gBattleMoveDamage = 1;
+                        if (gBattleMons[battlerId].hp + gBattleMoveDamage > gBattleMons[battlerId].maxHP)
+                            gBattleMoveDamage = gBattleMons[battlerId].maxHP - gBattleMons[battlerId].hp;
+                        gBattleMoveDamage *= -1;
+                        BattleScriptExecute(BattleScript_ItemHealHP_End2);
+                        effect = ITEM_HP_CHANGE;
+                        RecordItemEffectBattle(battlerId, battlerHoldEffect);
+                    }
+                }
+                else
+                {
+                    if (!moveTurn && gBattleMons[battlerId].ability != ABILITY_MAGIC_GUARD)
+                    {
+                        gBattleMoveDamage = gBattleMons[battlerId].maxHP / 16;
+                        if (gBattleMoveDamage == 0)
+                            gBattleMoveDamage = 1;
+                        BattleScriptExecute(BattleScript_ItemHurt_End2);
+                        effect = ITEM_HP_CHANGE;
+                        RecordItemEffectBattle(battlerId, battlerHoldEffect);
+                    }
+                }
+                break;
+            case HOLD_EFFECT_STICKY_BARB:
+                if (!moveTurn && gBattleMons[battlerId].ability != ABILITY_MAGIC_GUARD)
+                {
+                    gBattleMoveDamage = gBattleMons[battlerId].maxHP / 16;
+                    if (gBattleMoveDamage == 0)
+                        gBattleMoveDamage = 1;
+                    BattleScriptExecute(BattleScript_ItemHurt_End2);
+                    effect = ITEM_HP_CHANGE;
+                    RecordItemEffectBattle(battlerId, battlerHoldEffect);
+                }
+                break;
             case HOLD_EFFECT_RESTORE_PCT_HP:
                 if (gBattleMons[battlerId].hp <= gBattleMons[battlerId].maxHP / 2 && !moveTurn)
                     {
@@ -3371,6 +3411,29 @@ u8 ItemBattleEffects(u8 caseID, u8 battlerId, bool8 moveTurn)
                         gBattlescriptCurrInstr = BattleScript_ThroatSpray;
                         effect = ITEM_STATS_CHANGE;
                     }
+                }
+                break;
+            case HOLD_EFFECT_STICKY_BARB:
+                if (TARGET_TURN_DAMAGED && gBattleMons[gBattlerAttacker].hp && battlerId == gBattlerTarget
+                 && (gBattleMoves[gCurrentMove].flags & FLAG_MAKES_CONTACT) && !(gMoveResultFlags & MOVE_RESULT_NO_EFFECT)
+                 && gBattleMons[gBattlerAttacker].item == ITEM_NONE
+                 && !gProtectStructs[gBattlerAttacker].confusionSelfDmg)
+                {
+                    //u16 *changedItem = &gBattleStruct->changedItems[gBattlerAttacker];
+                    //gLastUsedItem = *changedItem = gBattleMons[gBattlerTarget].item;
+                    gActiveBattler = gBattlerAttacker;
+                    gBattleMons[gActiveBattler].item = ITEM_STICKY_BARB;
+                    BtlController_EmitSetMonData(0, REQUEST_HELDITEM_BATTLE, 0, 2, &gBattleMons[gActiveBattler].item);
+                    MarkBattlerForControllerExec(gBattlerAttacker);
+                    gActiveBattler = gBattlerTarget;
+                    gBattleMons[gActiveBattler].item = ITEM_NONE;
+                    BtlController_EmitSetMonData(0, REQUEST_HELDITEM_BATTLE, 0, 2, &gBattleMons[gActiveBattler].item);
+                    MarkBattlerForControllerExec(gBattlerTarget);
+                    //gBattleMons[gBattlerAttacker].item = *changedItem;
+                    //*changedItem = 0;
+                    BattleScriptPushCursor();
+                    gBattlescriptCurrInstr = BattleScript_ItemSteal;
+                    effect = ITEM_EFFECT_OTHER;
                 }
                 break;
             case HOLD_EFFECT_RESTORE_HP:

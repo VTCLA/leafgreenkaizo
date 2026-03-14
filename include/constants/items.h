@@ -114,8 +114,8 @@
 #define ITEM_NUGGET 110
 #define ITEM_HEART_SCALE 111
 #define ITEM_070 112
-#define ITEM_071 113
-#define ITEM_072 114
+#define ITEM_STICKY_BARB 113 //new
+#define ITEM_BLACK_SLUDGE 114 //new
 #define ITEM_AIR_BALLOON 115 //new
 #define ITEM_THROAT_SPRAY 116 //new
 #define ITEM_SHED_SHELL 117 //new

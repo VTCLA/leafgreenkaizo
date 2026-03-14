@@ -3637,6 +3637,7 @@ BattleScript_KnockedOff::
 	playanimation BS_TARGET, B_ANIM_ITEM_KNOCKOFF, NULL
 	printstring STRINGID_PKMNKNOCKEDOFF
 	waitmessage 0x40
+	removeitem BS_TARGET
 	return
 
 BattleScript_MoveUsedIsImprisoned::
@@ -3964,6 +3965,7 @@ BattleScript_ItemSteal::
 	playanimation BS_TARGET, B_ANIM_ITEM_STEAL, NULL
 	printstring STRINGID_PKMNSTOLEITEM
 	waitmessage 0x40
+	removeitem BS_TARGET
 	return
 	
 BattleScript_CursedBodyActivates::
@@ -4476,6 +4478,12 @@ BattleScript_BerryPPHealEnd2::
 
 BattleScript_ItemHealHP_End2::
 	call BattleScript_ItemHealHP_Ret
+	end2
+
+BattleScript_ItemHurt_End2::
+	playanimation BS_ATTACKER, B_ANIM_ITEM_EFFECT, NULL
+	waitanimation
+	call BattleScript_LifeOrb
 	end2
 
 BattleScript_ItemHealHP_Ret::
