@@ -4007,6 +4007,10 @@ extern const u8 gFile_graphics_items_icon_palettes_sticky_barb_palette[];
 extern const u8 gFile_graphics_items_icon_palettes_repellant_palette[];
 extern const u8 gFile_graphics_items_icons_black_sludge_sheet[];
 extern const u8 gFile_graphics_items_icon_palettes_black_sludge_palette[];
+extern const u8 gFile_graphics_items_icons_jaboca_berry_sheet[];
+extern const u8 gFile_graphics_items_icon_palettes_jaboca_berry_palette[];
+extern const u8 gFile_graphics_items_icons_rowap_berry_sheet[];
+extern const u8 gFile_graphics_items_icon_palettes_rowap_berry_palette[];
 
 
 // battle_anim_utility_funcs

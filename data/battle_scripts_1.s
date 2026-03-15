@@ -4676,3 +4676,10 @@ BattleScript_RedCardActivates::
 	@ changes the current battle script. the rest happens in BattleScript_RoarSuccessSwitch_Ret, if switch is successful
 BattleScript_RedCardEnd::
 	return
+
+BattleScript_JabocaRowapBerryActivates::
+	playanimation BS_TARGET, B_ANIM_ITEM_EFFECT, NULL
+	waitanimation
+	call BattleScript_RockyHelmetActivates
+	removeitem BS_TARGET
+	return

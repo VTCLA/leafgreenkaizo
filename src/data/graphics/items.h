@@ -868,3 +868,9 @@ const u32 gFile_graphics_items_icons_black_sludge_sheet[] = INCBIN_U32("graphics
 const u32 gFile_graphics_items_icon_palettes_black_sludge_palette[] = INCBIN_U32("graphics/items/icon_palettes/black_sludge.gbapal.lz");
 
 const u32 gFile_graphics_items_icon_palettes_repellant_palette[] = INCBIN_U32("graphics/items/icon_palettes/repellant.gbapal.lz");
+
+const u32 gFile_graphics_items_icons_jaboca_berry_sheet[] = INCBIN_U32("graphics/items/icons/jaboca_berry.4bpp.lz");
+const u32 gFile_graphics_items_icon_palettes_jaboca_berry_palette[] = INCBIN_U32("graphics/items/icon_palettes/jaboca_berry.gbapal.lz");
+
+const u32 gFile_graphics_items_icons_rowap_berry_sheet[] = INCBIN_U32("graphics/items/icons/rowap_berry.4bpp.lz");
+const u32 gFile_graphics_items_icon_palettes_rowap_berry_palette[] = INCBIN_U32("graphics/items/icon_palettes/rowap_berry.gbapal.lz");

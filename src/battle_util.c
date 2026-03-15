@@ -3436,6 +3436,42 @@ u8 ItemBattleEffects(u8 caseID, u8 battlerId, bool8 moveTurn)
                     effect = ITEM_EFFECT_OTHER;
                 }
                 break;
+            case HOLD_EFFECT_JABOCA_BERRY:  // consume and damage attacker if used physical move
+                if (gBattleMons[gBattlerAttacker].hp && battlerId == gBattlerTarget
+                 && TARGET_TURN_DAMAGED
+                 && gBattleMoves[gCurrentMove].category == MOVE_CATEGORY_PHYSICAL
+                 && gBattleMons[gBattlerAttacker].ability != ABILITY_MAGIC_GUARD)
+                {
+                    gBattleMoveDamage = gBattleMons[gBattlerAttacker].maxHP / 8;
+                    if (gBattleMoveDamage == 0)
+                        gBattleMoveDamage = 1;
+
+                    effect = ITEM_HP_CHANGE;
+                    gLastUsedItem = defItem;
+                    gPotentialItemEffectBattler = gBattlerTarget;
+                    gBattleScripting.battler = gBattlerAttacker;
+                    BattleScriptPushCursor();
+                    gBattlescriptCurrInstr = BattleScript_JabocaRowapBerryActivates;
+                }
+                break;
+            case HOLD_EFFECT_ROWAP_BERRY:  // consume and damage attacker if used special move
+                if (gBattleMons[gBattlerAttacker].hp && battlerId == gBattlerTarget
+                 && TARGET_TURN_DAMAGED
+                 && gBattleMoves[gCurrentMove].category == MOVE_CATEGORY_SPECIAL
+                 && gBattleMons[gBattlerAttacker].ability != ABILITY_MAGIC_GUARD)
+                {
+                    gBattleMoveDamage = gBattleMons[gBattlerAttacker].maxHP / 8;
+                    if (gBattleMoveDamage == 0)
+                        gBattleMoveDamage = 1;
+
+                    effect = ITEM_HP_CHANGE;
+                    gLastUsedItem = defItem;
+                    gPotentialItemEffectBattler = gBattlerTarget;
+                    gBattleScripting.battler = gBattlerAttacker;
+                    BattleScriptPushCursor();
+                    gBattlescriptCurrInstr = BattleScript_JabocaRowapBerryActivates;
+                }
+                break;
             case HOLD_EFFECT_RESTORE_HP:
                 if (gBattleMons[battlerId].hp <= gBattleMons[battlerId].maxHP / 2 && gBattleMons[battlerId].hp)
                 {

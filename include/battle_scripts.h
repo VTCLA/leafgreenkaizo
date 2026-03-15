@@ -264,6 +264,7 @@ extern const u8 BattleScript_EjectPackActivate_End2[];
 extern const u8 BattleScript_EjectPackActivates[];
 extern const u8 BattleScript_RedCardActivates[];
 extern const u8 BattleScript_ItemHurt_End2[];
+extern const u8 BattleScript_JabocaRowapBerryActivates[];
 
 extern const u8 *const gBattleScriptsForMoveEffects[];
 extern const u8 *const gBattlescriptsForBallThrow[];
