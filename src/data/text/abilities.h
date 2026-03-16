@@ -110,6 +110,15 @@ static const u8 sCursedBodyDescription[] = _("Disables moves when hit.");
 static const u8 sGooeyDescription[] = _("Lowers speed on contact.");
 static const u8 sSniperDescription[] = _("Powers up critical hits.");
 static const u8 sSkillLinkDescription[] = _("Multihit moves hit maximum times.");
+static const u8 sAnalyticDescription[] = _("Boosts damage when moving last.");
+static const u8 sUnawareDescription[] = _("Ignores opponent's stat changes.");
+static const u8 sHeatproofDescription[] = _("Halves damage from FIRE type attacks.");
+static const u8 sToxicBoostDescription[] = _("Boosts ATTACK when poisoned.");
+static const u8 sFriendGuardDescription[] = _("Reduces damage taken by allies.");
+static const u8 sSlushRushDescription[] = _("Raises SPEED in hail.");
+static const u8 sIceBodyDescription[] = _("Slight HP recovery in hail.");
+static const u8 sHeavyMetalDescription[] = _("Doubles weight.");
+static const u8 sHarvestDescription[] = _("May restore used berry.");
 
 const u8 *const gAbilityDescriptionPointers[ABILITIES_COUNT] =
 {
@@ -225,6 +234,15 @@ const u8 *const gAbilityDescriptionPointers[ABILITIES_COUNT] =
     [ABILITY_GOOEY] = sGooeyDescription,
     [ABILITY_SNIPER] = sSniperDescription,
     [ABILITY_SKILL_LINK] = sSkillLinkDescription,
+    [ABILITY_ANALYTIC] = sAnalyticDescription,
+    [ABILITY_UNAWARE] = sUnawareDescription,
+    [ABILITY_HEATPROOF] = sHeatproofDescription,
+    [ABILITY_TOXIC_BOOST] = sToxicBoostDescription,
+    [ABILITY_FRIEND_GUARD] = sFriendGuardDescription,
+    [ABILITY_SLUSH_RUSH] = sSlushRushDescription,
+    [ABILITY_ICE_BODY] = sIceBodyDescription,
+    [ABILITY_HEAVY_METAL] = sHeavyMetalDescription,
+    [ABILITY_HARVEST] = sHarvestDescription,
 };
 
 const u8 gAbilityNames[ABILITIES_COUNT][ABILITY_NAME_LENGTH + 1] =
@@ -341,4 +359,13 @@ const u8 gAbilityNames[ABILITIES_COUNT][ABILITY_NAME_LENGTH + 1] =
     [ABILITY_GOOEY] = _("GOOEY"),
     [ABILITY_SNIPER] = _("SNIPER"),
     [ABILITY_SKILL_LINK] = _("SKILL LINK"),
+    [ABILITY_ANALYTIC] = _("ANALYTIC"),
+    [ABILITY_UNAWARE] = _("UNAWARE"),
+    [ABILITY_HEATPROOF] = _("HEATPROOF"),
+    [ABILITY_TOXIC_BOOST] = _("TOXIC BOOST"),
+    [ABILITY_FRIEND_GUARD] = _("FRIEND GUARD"),
+    [ABILITY_SLUSH_RUSH] = _("SLUSH RUSH"),
+    [ABILITY_ICE_BODY] = _("ICE BODY"),
+    [ABILITY_HEAVY_METAL] = _("HEAVY METAL"),
+    [ABILITY_HARVEST] = _("HARVEST"),
 };

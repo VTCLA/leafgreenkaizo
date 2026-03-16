@@ -9227,10 +9227,15 @@ static void atkDC_trysetgrudge(void)
 static void atkDD_weightdamagecalculation(void)
 {
     s32 i;
+    u16 weight;
+
+    weight = GetPokedexHeightWeight(SpeciesToNationalPokedexNum(gBattleMons[gBattlerTarget].species), 1);
+    if (gBattleMons[gBattlerTarget].ability == ABILITY_HEAVY_METAL)
+        weight *= 2;
 
     for (i = 0; sWeightToDamageTable[i] != 0xFFFF; i += 2)
     {
-        if (sWeightToDamageTable[i] > GetPokedexHeightWeight(SpeciesToNationalPokedexNum(gBattleMons[gBattlerTarget].species), 1))
+        if (sWeightToDamageTable[i] > weight)
             break;
     }
     if (sWeightToDamageTable[i] != 0xFFFF)

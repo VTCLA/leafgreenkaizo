@@ -1867,6 +1867,19 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u8 ability, u8 special, u16 moveA
                         ++effect;
                     }
                     break;
+                case ABILITY_ICE_BODY:
+                    if (WEATHER_HAS_EFFECT && (gBattleWeather & WEATHER_HAIL_ANY)
+                     && gBattleMons[battler].maxHP > gBattleMons[battler].hp)
+                    {
+                        gLastUsedAbility = ABILITY_ICE_BODY; // why
+                        BattleScriptPushCursorAndCallback(BattleScript_RainDishActivates);
+                        gBattleMoveDamage = gBattleMons[battler].maxHP / 16;
+                        if (gBattleMoveDamage == 0)
+                            gBattleMoveDamage = 1;
+                        gBattleMoveDamage *= -1;
+                        ++effect;
+                    }
+                    break;
                 case ABILITY_DRY_SKIN:
                     if (WEATHER_HAS_EFFECT && (gBattleWeather & WEATHER_RAIN_ANY)
                     && gBattleMons[battler].maxHP > gBattleMons[battler].hp)
@@ -1900,6 +1913,23 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u8 ability, u8 special, u16 moveA
                         ++effect;
                     }
                     break;
+                case ABILITY_HARVEST:
+                    if (gBattleStruct->usedHeldItems[battler] > ITEM_RETRO_MAIL && gBattleStruct->usedHeldItems[battler] < ITEM_ENIGMA_BERRY)
+                    {
+                        if ((WEATHER_HAS_EFFECT && (gBattleWeather & WEATHER_SUN_ANY)) || (Random() & 2))
+                        {
+                            u16 *usedHeldItem;
+                            usedHeldItem = &gBattleStruct->usedHeldItems[gActiveBattler];
+                            gLastUsedAbility = ABILITY_HARVEST;
+                            gLastUsedItem = *usedHeldItem;
+                            *usedHeldItem = ITEM_NONE;
+                            gBattleMons[battler].item = gLastUsedItem;
+                            gBattleScripting.battler = gActiveBattler = battler;
+                            BtlController_EmitSetMonData(0, REQUEST_HELDITEM_BATTLE, 0, 2, &gBattleMons[battler].item);
+                            BattleScriptPushCursorAndCallback(BattleScript_HarvestActivates);
+                            ++effect;
+                        }
+                    }
                 case ABILITY_SHED_SKIN:
                     if ((gBattleMons[battler].status1 & STATUS1_ANY) && (Random() % 3) == 0)
                     {

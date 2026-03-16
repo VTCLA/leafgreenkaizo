@@ -300,6 +300,7 @@ static const u8 sText_ItSuckedLiquidOoze[] = _("It sucked up the\nLIQUID OOZE!")
 static const u8 sText_PkmnTransformed[] = _("{B_SCR_ACTIVE_NAME_WITH_PREFIX} transformed!");
 static const u8 sText_PkmnsXTookAttack[] = _("{B_DEF_NAME_WITH_PREFIX}'s {B_DEF_ABILITY}\ntook the attack!");
 const u8 gText_PkmnsXPreventsSwitching[] = _("{B_BUFF1}'s {B_LAST_ABILITY}\nprevents switching!\p");
+static const u8 sText_HarvestedItem[] = _("{B_SCR_ACTIVE_NAME_WITH_PREFIX} harvested\nits {B_LAST_ITEM}!");
 static const u8 sText_PreventedFromWorking[] = _("{B_DEF_NAME_WITH_PREFIX}'s {B_DEF_ABILITY}\nprevented {B_SCR_ACTIVE_NAME_WITH_PREFIX}'s\l{B_BUFF1} from working!");
 static const u8 sText_PreventedByItem[] = _("{B_DEF_NAME_WITH_PREFIX}'s {B_LAST_ITEM}\nprevented {B_SCR_ACTIVE_NAME_WITH_PREFIX}'s\l{B_BUFF1} from working!");
 static const u8 sText_PkmnsXMadeItIneffective[] = _("{B_SCR_ACTIVE_NAME_WITH_PREFIX}'s {B_SCR_ACTIVE_ABILITY}\nmade it ineffective!");
@@ -937,6 +938,7 @@ const u8 *const gBattleStringsTable[] = {
     [STRINGID_PKMNSTHROATSPRAY - 12]              = sText_PkmnsThroatSpray,
     [STRINGID_AIRBALLOONFLOAT - 12]               = sText_AirBalloonFloat,
     [STRINGID_AIRBALLOONPOP - 12]                 = sText_AirBalloonPop,
+    [STRINGID_HARVESTEDITEM - 12]                 = sText_HarvestedItem,
 };
 
 const u16 gMissStringIds[] = {

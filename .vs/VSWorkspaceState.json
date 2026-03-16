@@ -1,16 +1,14 @@
 {
   "ExpandedNodes": [
     "",
-    "\\asm\\macros",
-    "\\data\\maps\\CeruleanCity_BikeShop",
+    "\\data\\maps",
     "\\data\\maps\\MtMoon_B1F",
-    "\\data\\maps\\Route8",
     "\\data\\maps\\VictoryRoad_2F",
+    "\\data\\maps\\ViridianCity_Mart",
     "\\include\\constants",
     "\\src",
-    "\\src\\data",
-    "\\src\\data\\graphics"
+    "\\src\\data"
   ],
-  "SelectedNode": "\\src\\battle_main.c",
+  "SelectedNode": "\\src\\evolution_scene.c",
   "PreviewInSolutionExplorer": false
 }

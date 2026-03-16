@@ -3391,11 +3391,13 @@ u8 GetWhoStrikesFirst(u8 battler1, u8 battler2, bool8 ignoreChosenMoves)
     {
         if ((gBattleMons[battler1].ability == ABILITY_SWIFT_SWIM && gBattleWeather & WEATHER_RAIN_ANY)
          || (gBattleMons[battler1].ability == ABILITY_CHLOROPHYLL && gBattleWeather & WEATHER_SUN_ANY)
-         || (gBattleMons[battler1].ability == ABILITY_SAND_RUSH && gBattleWeather & WEATHER_SANDSTORM_ANY))
+         || (gBattleMons[battler1].ability == ABILITY_SAND_RUSH && gBattleWeather & WEATHER_SANDSTORM_ANY)
+         || (gBattleMons[battler1].ability == ABILITY_SLUSH_RUSH && gBattleWeather & WEATHER_HAIL_ANY))
             speedBattler1 *= 2;
         if ((gBattleMons[battler2].ability == ABILITY_SWIFT_SWIM && gBattleWeather & WEATHER_RAIN_ANY)
          || (gBattleMons[battler2].ability == ABILITY_CHLOROPHYLL && gBattleWeather & WEATHER_SUN_ANY)
-         || (gBattleMons[battler2].ability == ABILITY_SAND_RUSH && gBattleWeather & WEATHER_SANDSTORM_ANY))
+         || (gBattleMons[battler2].ability == ABILITY_SAND_RUSH && gBattleWeather & WEATHER_SANDSTORM_ANY)
+         || (gBattleMons[battler2].ability == ABILITY_SLUSH_RUSH && gBattleWeather & WEATHER_HAIL_ANY))
             speedBattler2 *= 2;
     }
     if (gBattleMons[battler1].ability == ABILITY_QUICK_FEET && gBattleMons[battler1].status1 & STATUS1_ANY)

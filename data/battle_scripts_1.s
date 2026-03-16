@@ -4683,3 +4683,10 @@ BattleScript_JabocaRowapBerryActivates::
 	call BattleScript_RockyHelmetActivates
 	removeitem BS_TARGET
 	return
+
+BattleScript_HarvestActivates::
+	playanimation BS_SCRIPTING, B_ANIM_ITEM_EFFECT, NULL
+	waitanimation
+	printstring STRINGID_HARVESTEDITEM
+	waitmessage 0x40
+	end3
