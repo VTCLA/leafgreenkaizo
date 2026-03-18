@@ -31,6 +31,8 @@
 #define ABILITYEFFECT_COUNT_ON_FIELD             0x12
 #define ABILITYEFFECT_CHECK_ON_FIELD             0x13
 #define ABILITYEFFECT_TRACE2                     0x14
+#define ABILITYEFFECT_DOWNLOAD                   0x15
+#define ABILITYEFFECT_DOWNLOAD2                  0x16
 #define ABILITYEFFECT_SWITCH_IN_WEATHER          0xFF
 
 #define ABILITY_ON_OPPOSING_FIELD(battlerId, abilityId)(AbilityBattleEffects(ABILITYEFFECT_CHECK_OTHER_SIDE, battlerId, abilityId, 0, 0))

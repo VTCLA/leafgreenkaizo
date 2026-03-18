@@ -1226,6 +1226,7 @@ bool8 HandleFaintedMonActions(void)
                         || ItemBattleEffects(ITEMEFFECT_ON_SWITCH_IN, i, FALSE)
                         || AbilityBattleEffects(ABILITYEFFECT_INTIMIDATE1, 0, 0, 0, 0)
                         || AbilityBattleEffects(ABILITYEFFECT_TRACE, 0, 0, 0, 0)
+                        //|| AbilityBattleEffects(ABILITYEFFECT_DOWNLOAD, 0, 0, 0, 0)
                         || AbilityBattleEffects(ABILITYEFFECT_FORECAST, 0, 0, 0, 0))
                         return TRUE;
                     gBattleStruct->switchInAbilityPostponed &= ~(gBitTable[i]);
@@ -1732,7 +1733,7 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u8 ability, u8 special, u16 moveA
             moveArg = gCurrentMove;
         GET_MOVE_TYPE(moveArg, moveType);
         if (IS_BATTLE_TYPE_GHOST_WITHOUT_SCOPE(gBattleTypeFlags)
-         && (gLastUsedAbility == ABILITY_INTIMIDATE || gLastUsedAbility == ABILITY_TRACE))
+         && (gLastUsedAbility == ABILITY_INTIMIDATE || gLastUsedAbility == ABILITY_TRACE || gLastUsedAbility == ABILITY_DOWNLOAD))
             return effect;
         switch (caseID)
         {
@@ -1827,6 +1828,13 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u8 ability, u8 special, u16 moveA
                 if (!(gSpecialStatuses[battler].traced))
                 {
                     gStatuses3[battler] |= STATUS3_TRACE;
+                    gSpecialStatuses[battler].traced = 1;
+                }
+                break;
+            case ABILITY_DOWNLOAD:
+                if (!(gSpecialStatuses[battler].traced))
+                {
+                    gStatuses3[battler] |= STATUS3_DOWNLOAD;
                     gSpecialStatuses[battler].traced = 1;
                 }
                 break;
@@ -2487,11 +2495,11 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u8 ability, u8 special, u16 moveA
                     u8 target2;
                     
                     side = (GetBattlerPosition(i) ^ BIT_SIDE) & BIT_SIDE; // side of the opposing pokemon
-                    target1 = GetBattlerAtPosition(side);
-                    target2 = GetBattlerAtPosition(side + BIT_FLANK);
+                    target1 = GetBattlerAtPosition(i ^ BIT_SIDE);
+                    target2 = GetBattlerAtPosition(target1 ^ BIT_FLANK);
                     if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE)
                     {
-                        if (gBattleMons[target1].ability != 0 && gBattleMons[target1].hp != 0
+                        /*if (gBattleMons[target1].ability != 0 && gBattleMons[target1].hp != 0
                          && gBattleMons[target2].ability != 0 && gBattleMons[target2].hp != 0)
                         {
                             gActiveBattler = GetBattlerAtPosition(((Random() & 1) * 2) | side);
@@ -2499,7 +2507,7 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u8 ability, u8 special, u16 moveA
                             gLastUsedAbility = gBattleMons[gActiveBattler].ability;
                             ++effect;
                         }
-                        else if (gBattleMons[target1].ability != 0 && gBattleMons[target1].hp != 0)
+                        else */if (gBattleMons[target1].ability != 0 && gBattleMons[target1].hp != 0)
                         {
                             gActiveBattler = target1;
                             gBattleMons[i].ability = gBattleMons[gActiveBattler].ability;
@@ -2526,11 +2534,149 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u8 ability, u8 special, u16 moveA
                     }
                     if (effect)
                     {
+                        if (gLastUsedAbility == ABILITY_INTIMIDATE)
+                        {
+                            gStatuses3[i] |= STATUS3_INTIMIDATE_POKES;
+                            gSpecialStatuses[i].intimidatedMon = 1;
+                        }
                         BattleScriptPushCursorAndCallback(BattleScript_TraceActivatesEnd3);
                         gStatuses3[i] &= ~(STATUS3_TRACE);
                         gBattleScripting.battler = i;
                         PREPARE_MON_NICK_WITH_PREFIX_BUFFER(gBattleTextBuff1, gActiveBattler, gBattlerPartyIndexes[gActiveBattler])
                         PREPARE_ABILITY_BUFFER(gBattleTextBuff2, gLastUsedAbility)
+                        break;
+                    }
+                }
+                else if (gBattleMons[i].ability == ABILITY_DOWNLOAD && (gStatuses3[i] & STATUS3_DOWNLOAD))
+                {
+                    target1 = GetBattlerAtPosition(i) ^ BIT_SIDE;
+                    if (gBattleMons[target1].hp == 0 && gBattleTypeFlags & BATTLE_TYPE_DOUBLE && gBattleMons[target1 ^ BIT_FLANK].hp != 0)
+                        target1 = target1 ^ BIT_FLANK;
+                        
+                    speciesAtk = 0, speciesDef = 0;
+                    if (gBattleMons[target1].hp != 0)
+                    {
+                        speciesDef += gBattleMons[target1].defense
+                         * gStatStageRatios[gBattleMons[target1].statStages[STAT_DEF]][0]
+                         / gStatStageRatios[gBattleMons[target1].statStages[STAT_DEF]][1];
+                        speciesAtk += gBattleMons[target1].spDefense
+                         * gStatStageRatios[gBattleMons[target1].statStages[STAT_SPDEF]][0]
+                         / gStatStageRatios[gBattleMons[target1].statStages[STAT_SPDEF]][1];
+                    }
+                    if (speciesAtk > speciesDef)
+                    {
+                        ++gBattleMons[i].statStages[STAT_ATK];
+                        gBattleScripting.battler = i;
+                        PREPARE_STAT_BUFFER(gBattleTextBuff1, STAT_ATK);
+                        gBattleScripting.animArg1 = 0xE + STAT_ATK;
+                        gBattleScripting.animArg2 = 0;
+                        ++effect;
+                    }
+                    else
+                    {
+                        ++gBattleMons[i].statStages[STAT_SPATK];
+                        gBattleScripting.battler = i;
+                        PREPARE_STAT_BUFFER(gBattleTextBuff1, STAT_SPATK);
+                        gBattleScripting.animArg1 = 0xE + STAT_SPATK;
+                        gBattleScripting.animArg2 = 0;
+                        ++effect;
+                    }
+                    if (effect)
+                    {
+                        BattleScriptPushCursorAndCallback(BattleScript_DownloadActivatesEnd3);
+                        gStatuses3[i] &= ~(STATUS3_DOWNLOAD);
+                        break;
+                    }
+                }
+            }
+            break;
+        case ABILITYEFFECT_DOWNLOAD:
+            for (i = 0; i < gBattlersCount; ++i)
+            {
+                if (gBattleMons[i].ability == ABILITY_DOWNLOAD && (gStatuses3[i] & STATUS3_DOWNLOAD))
+                {
+                    target1 = GetBattlerAtPosition(i) ^ BIT_SIDE;
+                    if (gBattleMons[target1].hp == 0 && gBattleTypeFlags & BATTLE_TYPE_DOUBLE && gBattleMons[target1 ^ BIT_FLANK].hp != 0)
+                        target1 = target1 ^ BIT_FLANK;
+                        
+                    speciesAtk = 0, speciesDef = 0;
+                    if (gBattleMons[target1].hp != 0)
+                    {
+                        speciesDef += gBattleMons[target1].defense
+                         * gStatStageRatios[gBattleMons[target1].statStages[STAT_DEF]][0]
+                         / gStatStageRatios[gBattleMons[target1].statStages[STAT_DEF]][1];
+                        speciesAtk += gBattleMons[target1].spDefense
+                         * gStatStageRatios[gBattleMons[target1].statStages[STAT_SPDEF]][0]
+                         / gStatStageRatios[gBattleMons[target1].statStages[STAT_SPDEF]][1];
+                    }
+                    if (speciesAtk > speciesDef)
+                    {
+                        ++gBattleMons[i].statStages[STAT_ATK];
+                        gBattleScripting.battler = i;
+                        PREPARE_STAT_BUFFER(gBattleTextBuff1, STAT_ATK);
+                        gBattleScripting.animArg1 = 0xE + STAT_ATK;
+                        gBattleScripting.animArg2 = 0;
+                        ++effect;
+                    }
+                    else
+                    {
+                        ++gBattleMons[i].statStages[STAT_SPATK];
+                        gBattleScripting.battler = i;
+                        PREPARE_STAT_BUFFER(gBattleTextBuff1, STAT_SPATK);
+                        gBattleScripting.animArg1 = 0xE + STAT_SPATK;
+                        gBattleScripting.animArg2 = 0;
+                        ++effect;
+                    }
+                    if (effect)
+                    {
+                        BattleScriptPushCursorAndCallback(BattleScript_DownloadActivatesEnd3);
+                        gStatuses3[i] &= ~(STATUS3_DOWNLOAD);
+                        break;
+                    }
+                }
+            }
+            break;
+        case ABILITYEFFECT_DOWNLOAD2:
+            speciesAtk = 0, speciesDef = 0;
+            for (i = 0; i < gBattlersCount; ++i)
+            {
+                if (gBattleMons[i].ability == ABILITY_DOWNLOAD && (gStatuses3[i] & STATUS3_DOWNLOAD))
+                {
+                    target1 = GetBattlerAtPosition(i ^ BIT_SIDE);
+                    if (gBattleMons[target1].hp == 0 && gBattleTypeFlags & BATTLE_TYPE_DOUBLE && gBattleMons[target1 ^ BIT_FLANK].hp != 0)
+                        target1 = target1 ^ BIT_FLANK;
+                    if (gBattleMons[target1].hp != 0)
+                    {
+                        speciesDef += gBattleMons[target1].defense
+                         * gStatStageRatios[gBattleMons[target1].statStages[STAT_DEF]][0]
+                         / gStatStageRatios[gBattleMons[target1].statStages[STAT_DEF]][1];
+                        speciesAtk += gBattleMons[target1].spDefense
+                         * gStatStageRatios[gBattleMons[target1].statStages[STAT_SPDEF]][0]
+                         / gStatStageRatios[gBattleMons[target1].statStages[STAT_SPDEF]][1];
+                    }
+                    if (speciesAtk > speciesDef)
+                    {
+                        ++gBattleMons[i].statStages[STAT_ATK];
+                        gBattleScripting.battler = i;
+                        PREPARE_STAT_BUFFER(gBattleTextBuff1, STAT_ATK);
+                        gBattleScripting.animArg1 = 0xE + STAT_ATK;
+                        gBattleScripting.animArg2 = 0;
+                        ++effect;
+                    }
+                    else
+                    {
+                        ++gBattleMons[i].statStages[STAT_SPATK];
+                        gBattleScripting.battler = i;
+                        PREPARE_STAT_BUFFER(gBattleTextBuff1, STAT_SPATK);
+                        gBattleScripting.animArg1 = 0xE + STAT_SPATK;
+                        gBattleScripting.animArg2 = 0;
+                        ++effect;
+                    }
+                    if (effect)
+                    {
+                        BattleScriptPushCursor();
+                        gBattlescriptCurrInstr = BattleScript_DownloadActivates;
+                        gStatuses3[i] &= ~(STATUS3_DOWNLOAD);
                         break;
                     }
                 }
@@ -2544,11 +2690,11 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u8 ability, u8 special, u16 moveA
                     u8 target2;
                     
                     side = (GetBattlerPosition(i) ^ BIT_SIDE) & BIT_SIDE; // side of the opposing pokemon
-                    target1 = GetBattlerAtPosition(side);
-                    target2 = GetBattlerAtPosition(side + BIT_FLANK);
+                    target1 = GetBattlerAtPosition(i ^ BIT_SIDE);
+                    target2 = GetBattlerAtPosition(target1 ^ BIT_FLANK);
                     if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE)
                     {
-                        if (gBattleMons[target1].ability != 0 && gBattleMons[target1].hp != 0
+                        /*if (gBattleMons[target1].ability != 0 && gBattleMons[target1].hp != 0
                          && gBattleMons[target2].ability != 0 && gBattleMons[target2].hp != 0)
                         {
                             gActiveBattler = GetBattlerAtPosition(((Random() & 1) * 2) | side);
@@ -2556,7 +2702,7 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u8 ability, u8 special, u16 moveA
                             gLastUsedAbility = gBattleMons[gActiveBattler].ability;
                             ++effect;
                         }
-                        else if (gBattleMons[target1].ability != 0 && gBattleMons[target1].hp != 0)
+                        else */if (gBattleMons[target1].ability != 0 && gBattleMons[target1].hp != 0)
                         {
                             gActiveBattler = target1;
                             gBattleMons[i].ability = gBattleMons[gActiveBattler].ability;

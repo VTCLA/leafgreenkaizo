@@ -270,24 +270,33 @@ static const struct TrainerMonNoItemDefaultMoves sParty_YoungsterBen2[] = {
     },
 };
 
-static const struct TrainerMonItemDefaultMoves sParty_BugCatcherRick[] = {
+static const struct TrainerMonItemCustomMoves sParty_BugCatcherRick[] = {
     {
         .iv = 0,
         .lvl = 5,
-        .species = SPECIES_PIKACHU,
-        .heldItem = ITEM_EJECT_PACK,
+        .species = SPECIES_CHARMANDER,
+        .heldItem = ITEM_NONE,
+        .moves = {MOVE_SEISMIC_TOSS, MOVE_NONE, MOVE_NONE, MOVE_NONE},
+        .abilitynum = 0,
+        .nature = NATURE_MODEST,
     },
     {
         .iv = 0,
         .lvl = 6,
         .species = SPECIES_WEEDLE,
         .heldItem = ITEM_EJECT_PACK,
+        .moves = {MOVE_SEISMIC_TOSS, MOVE_NONE, MOVE_NONE, MOVE_NONE},
+        .abilitynum = 0,
+        .nature = NATURE_MODEST,
     },
     {
         .iv = 0,
         .lvl = 6,
         .species = SPECIES_CATERPIE,
         .heldItem = ITEM_WHITE_HERB,
+        .moves = {MOVE_SEISMIC_TOSS, MOVE_NONE, MOVE_NONE, MOVE_NONE},
+        .abilitynum = 0,
+        .nature = NATURE_MODEST,
     },
 };
 
@@ -309,18 +318,24 @@ static const struct TrainerMonNoItemDefaultMoves sParty_BugCatcherDoug[] = {
     },
 };
 
-static const struct TrainerMonItemDefaultMoves sParty_BugCatcherSammy[] = {
+static const struct TrainerMonItemCustomMoves sParty_BugCatcherSammy[] = {
     {
         .iv = 0,
         .lvl = 5,
         .species = SPECIES_WEEDLE,
-        .heldItem = ITEM_EJECT_PACK
+        .heldItem = ITEM_NONE,
+        .moves = {MOVE_SEISMIC_TOSS, MOVE_NONE, MOVE_NONE, MOVE_NONE},
+        .abilitynum = 0,
+        .nature = NATURE_MODEST,
     },
     {
         .iv = 0,
         .lvl = 5,
-        .species = SPECIES_WEEDLE,
+        .species = SPECIES_CATERPIE,
         .heldItem = ITEM_EJECT_PACK,
+        .moves = {MOVE_SEISMIC_TOSS, MOVE_NONE, MOVE_NONE, MOVE_NONE},
+        .abilitynum = 0,
+        .nature = NATURE_MODEST,
     },
 };
 
@@ -3794,15 +3809,6 @@ static const struct TrainerMonItemCustomMoves sParty_RivalOaksLabCharmander[] = 
         .species = SPECIES_CHARMANDER,
         .heldItem = ITEM_NONE,
         .moves = {MOVE_WATER_GUN, MOVE_NONE, MOVE_NONE, MOVE_NONE},
-        .abilitynum = 2,
-        .nature = NATURE_MODEST,
-    },
-    {
-        .iv = 0,
-        .lvl = 1,
-        .species = SPECIES_CHARMANDER,
-        .heldItem = ITEM_JABOCA_BERRY,
-        .moves = {MOVE_SYNTHESIS, MOVE_NONE, MOVE_NONE, MOVE_NONE},
         .abilitynum = 0,
         .nature = NATURE_MODEST,
     },

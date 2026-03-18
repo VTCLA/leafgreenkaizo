@@ -314,6 +314,7 @@ static const u8 sText_StatSharply[] = _("sharply ");
 const u8 gBattleText_Rose[] = _("rose!");
 static const u8 sText_StatHarshly[] = _("harshly ");
 static const u8 sText_StatFell[] = _("fell!");
+static const u8 sText_DownloadRaised[] = _("DOWNLOAD raised {B_SCR_ACTIVE_NAME_WITH_PREFIX}'s\n{B_BUFF1}");
 static const u8 sText_PkmnsStatChanged[] = _("{B_ATK_NAME_WITH_PREFIX}'s {B_BUFF1}\n{B_BUFF2}");
 const u8 gText_PkmnsStatChanged2[] = _("{B_DEF_NAME_WITH_PREFIX}'s {B_BUFF1}\n{B_BUFF2}");
 static const u8 sText_UsingXTheYOfZN[] = _("Using {B_LAST_ITEM}, the {B_BUFF1}\nof {B_SCR_ACTIVE_NAME_WITH_PREFIX} {B_BUFF2}");
@@ -939,6 +940,7 @@ const u8 *const gBattleStringsTable[] = {
     [STRINGID_AIRBALLOONFLOAT - 12]               = sText_AirBalloonFloat,
     [STRINGID_AIRBALLOONPOP - 12]                 = sText_AirBalloonPop,
     [STRINGID_HARVESTEDITEM - 12]                 = sText_HarvestedItem,
+    [STRINGID_DOWNLOADRAISED - 12]                = sText_DownloadRaised,
 };
 
 const u16 gMissStringIds[] = {

@@ -4690,3 +4690,14 @@ BattleScript_HarvestActivates::
 	printstring STRINGID_HARVESTEDITEM
 	waitmessage 0x40
 	end3
+
+BattleScript_DownloadActivatesEnd3::
+	call BattleScript_DownloadActivates
+	end3
+
+BattleScript_DownloadActivates::
+	playanimation BS_SCRIPTING, B_ANIM_STATS_CHANGE, sB_ANIM_ARG1
+	waitanimation
+	printstring STRINGID_DOWNLOADRAISED
+	waitmessage 0x40
+	return
