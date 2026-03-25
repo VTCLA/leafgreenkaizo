@@ -267,6 +267,8 @@ static const u8 sText_PkmnCantUseMoveItem[] = _("{B_LAST_ITEM}'s effect prevents
 static const u8 sText_PkmnCantUseMoveSealed[] = _("{B_ACTIVE_NAME_WITH_PREFIX} can't use the\nsealed {B_CURRENT_MOVE}!\p");
 static const u8 sText_PkmnMadeItRain[] = _("{B_SCR_ACTIVE_NAME_WITH_PREFIX}'s {B_SCR_ACTIVE_ABILITY}\nmade it rain!");
 static const u8 sText_PkmnRaisedSpeed[] = _("{B_SCR_ACTIVE_NAME_WITH_PREFIX}'s {B_SCR_ACTIVE_ABILITY}\nraised its SPEED!");
+static const u8 sText_WeakArmorLowered[] = _("{B_DEF_NAME_WITH_PREFIX}'s {B_DEF_ABILITY}\nlowered its DEFENSE!");
+static const u8 sText_WeakArmorRaised[] = _("{B_DEF_NAME_WITH_PREFIX}'s {B_DEF_ABILITY}\nsharply raised its SPEED!");
 static const u8 sText_PkmnProtectedBy[] = _("{B_DEF_NAME_WITH_PREFIX} was protected\nby {B_DEF_ABILITY}!");
 static const u8 sText_PkmnPreventsUsage[] = _("{B_DEF_NAME_WITH_PREFIX}'s {B_DEF_ABILITY}\nprevents {B_ATK_NAME_WITH_PREFIX}\lfrom using {B_CURRENT_MOVE}!");
 static const u8 sText_PkmnRestoredHPUsing[] = _("{B_DEF_NAME_WITH_PREFIX} restored HP\nusing its {B_DEF_ABILITY}!");
@@ -941,6 +943,8 @@ const u8 *const gBattleStringsTable[] = {
     [STRINGID_AIRBALLOONPOP - 12]                 = sText_AirBalloonPop,
     [STRINGID_HARVESTEDITEM - 12]                 = sText_HarvestedItem,
     [STRINGID_DOWNLOADRAISED - 12]                = sText_DownloadRaised,
+    [STRINGID_WEAKARMORLOWERED - 12]              = sText_WeakArmorLowered,
+    [STRINGID_WEAKARMORRAISED - 12]               = sText_WeakArmorRaised,
 };
 
 const u16 gMissStringIds[] = {

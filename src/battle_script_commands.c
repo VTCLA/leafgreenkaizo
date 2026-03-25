@@ -4673,7 +4673,6 @@ static void atk49_moveend(void)
                     {
                         if (gBattleMons[i].statStages[j] < 6)
                         {
-                            gBattleMons[i].statStages[j] = 6;
                             effect = TRUE;
                         }
                     }

@@ -2343,6 +2343,27 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u8 ability, u8 special, u16 moveA
                     effect++;
                 }
                 break;
+            case ABILITY_WEAK_ARMOR:
+                if (!(gMoveResultFlags & MOVE_RESULT_NO_EFFECT)
+                 && TARGET_TURN_DAMAGED
+                 && gBattleMons[gBattlerTarget].hp != 0
+                 && gBattleMoves[moveArg].category == MOVE_CATEGORY_PHYSICAL
+                 && (gBattleMons[gBattlerTarget].statStages[STAT_SPEED] < 12 || gBattleMons[gBattlerTarget].statStages[STAT_DEF] > 0))
+                {
+                    /*for (i = 0; i < 2; i++)
+                    {
+                        if (gBattleMons[gBattlerTarget].statStages[STAT_SPEED] < 12)
+                        {
+                            gBattleMons[gBattlerTarget].statStages[STAT_SPEED]++;
+                        }   
+                    }*/
+                    //--gBattleMons[gBattlerTarget].statStages[STAT_DEF];
+                    gBattleScripting.battler = gBattlerTarget;
+                    BattleScriptPushCursor();
+                    gBattlescriptCurrInstr = BattleScript_WeakArmorActivates;
+                    effect++;
+                }
+                break;
             }
             break;
         case ABILITYEFFECT_IMMUNITY: // 5
@@ -3572,6 +3593,7 @@ u8 ItemBattleEffects(u8 caseID, u8 battlerId, bool8 moveTurn)
                     gBattlescriptCurrInstr = BattleScript_AirBalloonPop;
                     effect = ITEM_EFFECT_OTHER;
                 }
+                break;
             case HOLD_EFFECT_THROAT_SPRAY:
                 if (battlerId == gBattlerAttacker &&  gBattleMons[battlerId].statStages[STAT_SPATK] < 0xC)
                 {

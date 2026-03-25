@@ -3796,12 +3796,12 @@ static const struct TrainerMonNoItemDefaultMoves sParty_RivalOaksLabBulbasaur[] 
 static const struct TrainerMonItemCustomMoves sParty_RivalOaksLabCharmander[] = {
     {
         .iv = 0,
-        .lvl = 1,
+        .lvl = 6,
         .species = SPECIES_CHARMANDER,
         .heldItem = ITEM_ORAN_BERRY,
-        .moves = {MOVE_SEISMIC_TOSS, MOVE_NONE, MOVE_NONE, MOVE_NONE},
+        .moves = {MOVE_CHARM, MOVE_NONE, MOVE_NONE, MOVE_NONE},
         .abilitynum = 0,
-        .nature = NATURE_MODEST,
+        .nature = NATURE_BRAVE,
     },
     {
         .iv = 0,

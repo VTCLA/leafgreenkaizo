@@ -4701,3 +4701,22 @@ BattleScript_DownloadActivates::
 	printstring STRINGID_DOWNLOADRAISED
 	waitmessage 0x40
 	return
+
+BattleScript_WeakArmorActivates::
+	setstatchanger STAT_DEF, 1, TRUE
+	statbuffchange STAT_CHANGE_BS_PTR, BattleScript_WeakArmorTrySpeed
+	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, 2, BattleScript_WeakArmorTrySpeed
+	setgraphicalstatchangevalues
+	playanimation BS_TARGET, B_ANIM_STATS_CHANGE, sB_ANIM_ARG1
+	printstring STRINGID_WEAKARMORLOWERED
+	waitmessage 0x40
+BattleScript_WeakArmorTrySpeed::
+	setstatchanger STAT_SPEED, 2, FALSE
+	statbuffchange STAT_CHANGE_BS_PTR, BattleScript_WeakArmorEnd
+	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, 2, BattleScript_WeakArmorEnd
+	setgraphicalstatchangevalues
+	playanimation BS_TARGET, B_ANIM_STATS_CHANGE, sB_ANIM_ARG1
+	printstring STRINGID_WEAKARMORRAISED
+	waitmessage 0x40
+BattleScript_WeakArmorEnd::
+	return

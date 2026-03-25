@@ -120,6 +120,7 @@ static const u8 sIceBodyDescription[] = _("Slight HP recovery in hail.");
 static const u8 sHeavyMetalDescription[] = _("Doubles weight.");
 static const u8 sHarvestDescription[] = _("May restore used berry.");
 static const u8 sDownloadDescription[] = _("Adjusts power favorably.");
+static const u8 sWeakArmorDescription[] = _("Turns DEFENSE to SPEED when hit.");
 
 const u8 *const gAbilityDescriptionPointers[ABILITIES_COUNT] =
 {
@@ -245,6 +246,7 @@ const u8 *const gAbilityDescriptionPointers[ABILITIES_COUNT] =
     [ABILITY_HEAVY_METAL] = sHeavyMetalDescription,
     [ABILITY_HARVEST] = sHarvestDescription,
     [ABILITY_DOWNLOAD] = sDownloadDescription,
+    [ABILITY_WEAK_ARMOR] = sWeakArmorDescription,
 };
 
 const u8 gAbilityNames[ABILITIES_COUNT][ABILITY_NAME_LENGTH + 1] =
@@ -371,4 +373,5 @@ const u8 gAbilityNames[ABILITIES_COUNT][ABILITY_NAME_LENGTH + 1] =
     [ABILITY_HEAVY_METAL] = _("HEAVY METAL"),
     [ABILITY_HARVEST] = _("HARVEST"),
     [ABILITY_DOWNLOAD] = _("DOWNLOAD"),
+    [ABILITY_WEAK_ARMOR] = _("WEAK ARMOR"),
 };
