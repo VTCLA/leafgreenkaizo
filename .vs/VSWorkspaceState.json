@@ -1,14 +1,11 @@
 {
   "ExpandedNodes": [
     "",
-    "\\data\\maps",
-    "\\data\\maps\\MtMoon_B1F",
-    "\\data\\maps\\VictoryRoad_2F",
-    "\\data\\maps\\ViridianCity_Mart",
+    "\\include",
     "\\include\\constants",
     "\\src",
     "\\src\\data"
   ],
-  "SelectedNode": "\\src\\evolution_scene.c",
+  "SelectedNode": "\\include\\constants\\battle_script_commands.h",
   "PreviewInSolutionExplorer": false
 }

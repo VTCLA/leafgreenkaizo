@@ -62,10 +62,18 @@ PewterCity_Text_SprayingRepelToKeepWildMonsOut:: @ 817E644
     .string "I'm spraying REPEL to keep wild\n"
     .string "POKéMON out of my garden!$"
 
-PewterCity_Text_BrocksLookingForChallengersFollowMe:: @ 817E67E
+PewterCity_Text_BrocksNotHereRightNow:: @ 817E67E
     .string "You're a TRAINER, right?\p"
-    .string "BROCK's looking for new\n"
-    .string "challengers. Follow me!$"
+    .string "Sorry, BROCK's not here\n"
+    .string "right now.\p"
+    .string "Try looking for him in\n"
+    .string "Digglett Cave.$"
+
+PewterCity_Text_GoodLuckYoullNeedIt::
+    .string "BROCK is back! Are you\n"
+    .string "going to take him on?\p"
+    .string "Good luck then.\n"
+    .string "You're gonna need it!$"
 
 PewterCity_Text_GoTakeOnBrock:: @ 817E6C7
     .string "If you have the right stuff,\n"
