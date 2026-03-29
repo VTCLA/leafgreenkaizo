@@ -235,6 +235,9 @@ gBattleScriptsForMoveEffects::
 	.4byte BattleScript_EffectDragonDance
 	.4byte BattleScript_EffectCamouflage
 	.4byte BattleScript_EffectHammerArm
+	.4byte BattleScript_EffectStealthRock
+	.4byte BattleScript_EffectToxicSpikes
+	.4byte BattleScript_EffectStickyWeb
 
 BattleScript_EffectHit::
 	jumpifnotmove MOVE_SURF, BattleScript_HitFromAtkCanceler
@@ -1565,6 +1568,39 @@ BattleScript_EffectSpikes::
 	attackanimation
 	waitanimation
 	printstring STRINGID_SPIKESSCATTERED
+	waitmessage 0x40
+	goto BattleScript_MoveEnd
+
+BattleScript_EffectStealthRock::
+	attackcanceler
+	trysetstealthrock BattleScript_ButItFailedAtkStringPpReduce
+	attackstring
+	ppreduce
+	attackanimation
+	waitanimation
+	printstring STRINGID_POINTEDSTONESFLOAT
+	waitmessage 0x40
+	goto BattleScript_MoveEnd
+
+BattleScript_EffectToxicSpikes::
+	attackcanceler
+	trysettoxicspikes BattleScript_ButItFailedAtkStringPpReduce
+	attackstring
+	ppreduce
+	attackanimation
+	waitanimation
+	printstring STRINGID_POISONSPIKESSCATTERED
+	waitmessage 0x40
+	goto BattleScript_MoveEnd
+
+BattleScript_EffectStickyWeb::
+	attackcanceler
+	trysetstickyweb BattleScript_ButItFailedAtkStringPpReduce
+	attackstring
+	ppreduce
+	attackanimation
+	waitanimation
+	printstring STRINGID_STICKYWEBLAID
 	waitmessage 0x40
 	goto BattleScript_MoveEnd
 
@@ -3394,6 +3430,15 @@ BattleScript_SpikesOnAttacker::
 	tryfaintmon BS_ATTACKER, 1, BattleScript_SpikesOnAttackerFainted
 	return
 
+BattleScript_StealthRocksOnAttacker::
+	orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE | HITMARKER_PASSIVE_DAMAGE
+	healthbarupdate BS_ATTACKER
+	datahpupdate BS_ATTACKER
+	call BattleScript_PrintHurtByStealthRocks
+	tryfaintmon BS_ATTACKER, 0, NULL
+	tryfaintmon BS_ATTACKER, 1, BattleScript_SpikesOnAttackerFainted
+	return
+
 BattleScript_SpikesOnAttackerFainted::
 	setbyte sGIVEEXP_STATE, 0
 	getexp BS_ATTACKER
@@ -3405,6 +3450,15 @@ BattleScript_SpikesOnTarget::
 	healthbarupdate BS_TARGET
 	datahpupdate BS_TARGET
 	call BattleScript_PrintHurtBySpikes
+	tryfaintmon BS_TARGET, 0, NULL
+	tryfaintmon BS_TARGET, 1, BattleScript_SpikesOnTargetFainted
+	return
+
+BattleScript_StealthRocksOnTarget::
+	orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE | HITMARKER_PASSIVE_DAMAGE
+	healthbarupdate BS_TARGET
+	datahpupdate BS_TARGET
+	call BattleScript_PrintHurtByStealthRocks
 	tryfaintmon BS_TARGET, 0, NULL
 	tryfaintmon BS_TARGET, 1, BattleScript_SpikesOnTargetFainted
 	return
@@ -3424,14 +3478,41 @@ BattleScript_SpikesOnFaintedBattler::
 	tryfaintmon BS_FAINTED, 1, BattleScript_SpikesOnFaintedBattlerFainted
 	return
 
+BattleScript_StealthRocksOnFaintedBattler::
+	orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE | HITMARKER_PASSIVE_DAMAGE
+	healthbarupdate BS_FAINTED
+	datahpupdate BS_FAINTED
+	call BattleScript_PrintHurtByStealthRocks
+	tryfaintmon BS_FAINTED, 0, NULL
+	tryfaintmon BS_FAINTED, 1, BattleScript_SpikesOnFaintedBattlerFainted
+	return
+
 BattleScript_SpikesOnFaintedBattlerFainted::
 	setbyte sGIVEEXP_STATE, 0
 	getexp BS_FAINTED
 	moveendall
 	goto BattleScript_HandleFaintedMon
 
+BattleScript_ToxicSpikesPoisoned::
+	statusanimation BS_SCRIPTING
+	jumpifstatus BS_SCRIPTING, STATUS1_TOXIC_POISON, BattleScript_ToxicSpikesBadlyPoisoned
+	printstring STRINGID_TOXICSPIKESPOISONED
+	waitmessage 0x40
+	goto BattleScript_ToxicSpikesPoisonedEnd
+BattleScript_ToxicSpikesBadlyPoisoned::
+	printstring STRINGID_TOXICSPIKESBADLYPOISONED
+	waitmessage 0x40
+BattleScript_ToxicSpikesPoisonedEnd::
+	updatestatusicon BS_SCRIPTING
+	return
+
 BattleScript_PrintHurtBySpikes::
 	printstring STRINGID_PKMNHURTBYSPIKES
+	waitmessage 0x40
+	return
+
+BattleScript_PrintHurtByStealthRocks::
+	printstring STRINGID_POINTEDSTONESDUGINTO
 	waitmessage 0x40
 	return
 
@@ -3502,6 +3583,26 @@ BattleScript_LeechSeedFree::
 
 BattleScript_SpikesFree::
 	printstring STRINGID_PKMNBLEWAWAYSPIKES
+	waitmessage 0x40
+	return
+
+BattleScript_ToxicSpikesFree::
+	printstring STRINGID_PKMNBLEWAWAYTSPIKES
+	waitmessage 0x40
+	return
+
+BattleScript_StealthRocksFree::
+	printstring STRINGID_PKMNBLEWAWAYROCKS
+	waitmessage 0x40
+	return
+
+BattleScript_StickyWebFree::
+	printstring STRINGID_PKMNBLEWAWAYWEBS
+	waitmessage 0x40
+	return
+
+BattleScript_AbsorbedToxicSpikes::
+	printstring STRINGID_PKMNABSORBEDPOISONSPIKES
 	waitmessage 0x40
 	return
 
@@ -3993,6 +4094,14 @@ BattleScript_SpeedBoostActivates::
 	printstring STRINGID_PKMNRAISEDSPEED
 	waitmessage 0x40
 	end3
+
+BattleScript_StickyWebSpeedDrop::
+	printstring STRINGID_PKMNCAUGHTINWEB
+	waitmessage 0x40
+	playanimation BS_SCRIPTING, B_ANIM_STATS_CHANGE, sB_ANIM_ARG1
+	printstring STRINGID_WEBSLOWEREDSPEED
+	waitmessage 0x40
+	return
 
 BattleScript_DefenderSpeedUp_PPLoss::
 	ppreduce

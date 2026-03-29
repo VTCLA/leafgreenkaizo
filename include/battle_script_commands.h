@@ -21,6 +21,7 @@ void HandleBattleWindow(u8 xStart, u8 yStart, u8 xEnd, u8 yEnd, u8 flags);
 u8 GetBattlerTurnOrderNum(u8 battlerId);
 void BufferMoveToLearnIntoBattleTextBuff2(void);
 bool32 NoAliveMonsForEitherParty(void);
+bool32 CanBattlerSwitch(u32 battlerId);
 
 extern void (* const gBattleScriptingCommandsTable[])(void);
 

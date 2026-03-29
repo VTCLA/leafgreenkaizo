@@ -3004,7 +3004,7 @@ u8 ItemBattleEffects(u8 caseID, u8 battlerId, bool8 moveTurn)
                 case HOLD_EFFECT_EJECT_PACK:
                     for (i = 0; i < NUM_BATTLE_STATS; ++i)
                     {
-                        if (gBattleMons[j].statStages[i] < 6)
+                        if (gBattleMons[j].statStages[i] < 6 && CanBattlerSwitch(j))
                         {
                             effect =  ITEM_STATS_CHANGE;
                         }
@@ -3108,31 +3108,6 @@ u8 ItemBattleEffects(u8 caseID, u8 battlerId, bool8 moveTurn)
                     gPotentialItemEffectBattler = battlerId;
                     gActiveBattler = gBattlerAttacker = battlerId;
                     BattleScriptExecute(BattleScript_WhiteHerbEnd2);
-                }
-                break;
-            case HOLD_EFFECT_EJECT_PACK:
-                for (i = 0; i < NUM_BATTLE_STATS; ++i)
-                {
-                    if (gBattleMons[battlerId].statStages[i] < 6)
-                    {
-                        effect =  ITEM_STATS_CHANGE;
-                    }
-                }
-                if (effect)
-                {
-                    gActiveBattler = battlerId;
-                    gPotentialItemEffectBattler = battlerId;
-                    gActiveBattler = gBattlerAttacker = battlerId;
-                    gBattleScripting.battler = battlerId;
-                    /*if (moveTurn)
-                    {
-                        BattleScriptPushCursor();
-                        gBattlescriptCurrInstr = BattleScript_EjectPackActivate_Ret;
-                    }
-                    else
-                    {*/
-                        BattleScriptExecute(BattleScript_EjectPackActivate_End2);
-                    //}
                 }
                 break;
             case HOLD_EFFECT_LEFTOVERS:
@@ -3939,6 +3914,31 @@ u8 ItemBattleEffects(u8 caseID, u8 battlerId, bool8 moveTurn)
                     BattleScriptPushCursor();
                     gBattlescriptCurrInstr = BattleScript_WhiteHerbRet;
                     return effect;
+                }
+                break;
+            case HOLD_EFFECT_EJECT_PACK:
+                for (i = 0; i < NUM_BATTLE_STATS; ++i)
+                {
+                    if (gBattleMons[battlerId].statStages[i] < 6 && CanBattlerSwitch(battlerId))
+                    {
+                        effect =  ITEM_STATS_CHANGE;
+                    }
+                }
+                if (effect)
+                {
+                    gActiveBattler = battlerId;
+                    gPotentialItemEffectBattler = battlerId;
+                    gActiveBattler = gBattlerAttacker = battlerId;
+                    gBattleScripting.battler = battlerId;
+                    /*if (moveTurn)
+                    {
+                        BattleScriptPushCursor();
+                        gBattlescriptCurrInstr = BattleScript_EjectPackActivate_Ret;
+                    }
+                    else
+                    {*/
+                        BattleScriptExecute(BattleScript_EjectPackActivate_Ret);
+                    //}
                 }
                 break;
             }

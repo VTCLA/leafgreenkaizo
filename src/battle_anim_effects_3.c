@@ -209,6 +209,17 @@ const struct SpriteTemplate gSpikesSpriteTemplate =
     .callback = AnimSpikes,
 };
 
+const struct SpriteTemplate gToxicSpikesSpriteTemplate =    
+{
+    .tileTag = ANIM_TAG_TOXIC_SPIKES,
+    .paletteTag = ANIM_TAG_TOXIC_SPIKES,
+    .oam = &gOamData_AffineOff_ObjNormal_16x16,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimSpikes,
+};
+
 static const union AnimCmd sLeerAnimCmds[] =
 {
     ANIMCMD_FRAME(0, 3),

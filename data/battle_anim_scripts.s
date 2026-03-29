@@ -479,6 +479,9 @@ gBattleAnims_Moves::
 	.4byte Move_SMART_STRIKE
 	.4byte Move_DRAGON_HAMMER
 	.4byte Move_STEAMROLLER
+	.4byte Move_STEALTH_ROCK
+	.4byte Move_TOXIC_SPIKES
+	.4byte Move_STICKY_WEB
 	.4byte Move_COUNT
 
 gBattleAnims_StatusConditions::
@@ -12750,6 +12753,81 @@ Move_STEAMROLLER:
 	waitforvisualfinish
 	clearmonbg ANIM_TARGET
 	blendoff
+	end
+
+Move_STEALTH_ROCK:
+	loadspritegfx ANIM_TAG_STEALTH_ROCK
+	monbg ANIM_DEF_PARTNER
+	playsewithpan SE_M_JUMP_KICK, SOUND_PAN_ATTACKER
+	waitplaysewithpan SE_M_HORN_ATTACK, SOUND_PAN_TARGET, 28
+	createsprite gStealthRockSpriteTemplate, ANIM_TARGET, 2, 20, 0, 0, 24, 30
+	delay 10
+	playsewithpan SE_M_JUMP_KICK, SOUND_PAN_ATTACKER
+	waitplaysewithpan SE_M_HORN_ATTACK, SOUND_PAN_TARGET, 28
+	createsprite gStealthRockSpriteTemplate, ANIM_TARGET, 2, 20, 0, -24, 24, 30
+	delay 10
+	waitplaysewithpan SE_M_HORN_ATTACK, SOUND_PAN_TARGET, 28
+	createsprite gStealthRockSpriteTemplate, ANIM_TARGET, 2, 20, 0, 24, 24, 30
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	end
+
+Move_TOXIC_SPIKES:
+	loadspritegfx ANIM_TAG_TOXIC_SPIKES
+	loadspritegfx ANIM_TAG_POISON_BUBBLE
+	monbg ANIM_DEF_PARTNER
+	playsewithpan SE_M_JUMP_KICK, SOUND_PAN_ATTACKER
+	waitplaysewithpan SE_M_HORN_ATTACK, SOUND_PAN_TARGET, 28
+	createsprite gToxicSpikesSpriteTemplate, ANIM_TARGET, 2, 20, 0, 0, 24, 30
+	delay 10
+	playsewithpan SE_M_JUMP_KICK, SOUND_PAN_ATTACKER
+	waitplaysewithpan SE_M_HORN_ATTACK, SOUND_PAN_TARGET, 28
+	createsprite gToxicSpikesSpriteTemplate, ANIM_TARGET, 2, 20, 0, -24, 24, 30
+	delay 10
+	waitplaysewithpan SE_M_HORN_ATTACK, SOUND_PAN_TARGET, 28
+	createsprite gToxicSpikesSpriteTemplate, ANIM_TARGET, 2, 20, 0, 24, 24, 30
+	delay 40
+	call PoisonBubblesEffect
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	end
+
+Move_STICKY_WEB:
+	loadspritegfx ANIM_TAG_SPIDER_WEB
+	loadspritegfx ANIM_TAG_WEB_THREAD
+	monbg ANIM_DEF_PARTNER
+	delay 0
+	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_ATTACKER, 5, 1, 2, 0, 9, RGB_BLACK
+	waitforvisualfinish
+	monbgprio_29
+	loopsewithpan SE_M_STRING_SHOT, SOUND_PAN_ATTACKER, 9, 6
+	call SpiderWebThread
+	call SpiderWebThread
+	call SpiderWebThread
+	call SpiderWebThread
+	call SpiderWebThread
+	call SpiderWebThread
+	call SpiderWebThread
+	call SpiderWebThread
+	call SpiderWebThread
+	call SpiderWebThread
+	call SpiderWebThread
+	call SpiderWebThread
+	call SpiderWebThread
+	call SpiderWebThread
+	waitforvisualfinish
+	playsewithpan SE_M_STRING_SHOT2, SOUND_PAN_TARGET
+	createsprite gSpiderWebSpriteTemplate, ANIM_ATTACKER, 2, 0, 0, TRUE
+	delay 50
+	playsewithpan SE_M_STRING_SHOT2, SOUND_PAN_TARGET
+	createsprite gSpiderWebSpriteTemplate, ANIM_ATTACKER, 2, -30, 30, TRUE
+	delay 50
+	playsewithpan SE_M_STRING_SHOT2, SOUND_PAN_TARGET
+	createsprite gSpiderWebSpriteTemplate, ANIM_ATTACKER, 2, 30, -30, TRUE
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	delay 1
+	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_ATTACKER, 5, 1, 2, 9, 0, RGB_BLACK
 	end
 
 Move_COUNT:: @ 81D53D9

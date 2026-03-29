@@ -433,6 +433,9 @@ const u8 gMoveDescription_PowerUpPunch[] = _("A hard punch\nthat raises the\nuse
 const u8 gMoveDescription_SmartStrike[] = _("A precise horn\nstrike that never\nmisses.");
 const u8 gMoveDescription_DragonHammer[] = _("Swings its whole\nbody like a\nhammer to charge.");
 const u8 gMoveDescription_Steamroller[] = _("Crushes the foe\nwith its body\nMay cause flinching.");
+const u8 gMoveDescription_StealthRock[] = _("A trap of rocks is\nlaid around the\nfoe's party to hurt\nfoes switching in.");
+const u8 gMoveDescription_ToxicSpikes[] = _("A trap of spikes is\nlaid around the\nfoe's party to POISON\nfoes switching in.");
+const u8 gMoveDescription_StickyWeb[] = _("A web is woven and\nlaid around the\nfoe's party to slow\nfoes switching in.");
 
 
 const u8 *const gMoveDescriptionPointers[MOVES_COUNT - 1] = {
@@ -868,4 +871,7 @@ const u8 *const gMoveDescriptionPointers[MOVES_COUNT - 1] = {
     [MOVE_SMART_STRIKE  - 1] = gMoveDescription_SmartStrike,
     [MOVE_DRAGON_HAMMER - 1] = gMoveDescription_DragonHammer,
     [MOVE_STEAMROLLER   - 1] = gMoveDescription_Steamroller,
+    [MOVE_STEALTH_ROCK  - 1] = gMoveDescription_StealthRock,
+    [MOVE_TOXIC_SPIKES  - 1] = gMoveDescription_ToxicSpikes,
+    [MOVE_STICKY_WEB    - 1] = gMoveDescription_StickyWeb,
 };

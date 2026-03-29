@@ -6060,4 +6060,46 @@ const struct BattleMove gBattleMoves[MOVES_COUNT] =
         .category = MOVE_CATEGORY_PHYSICAL,
         .flags = FLAG_MAKES_CONTACT | FLAG_PROTECT_AFFECTED | FLAG_MIRROR_MOVE_AFFECTED,
     },
+
+    [MOVE_STEALTH_ROCK] =
+    {
+        .effect = EFFECT_STEALTH_ROCK,
+        .power = 0,
+        .type = TYPE_ROCK,
+        .accuracy = 0,
+        .pp = 20,
+        .secondaryEffectChance = 0,
+        .target = MOVE_TARGET_OPPONENTS_FIELD,
+        .priority = 0,
+        .category = MOVE_CATEGORY_STATUS,
+        .flags = 0,
+    },
+
+    [MOVE_TOXIC_SPIKES] =
+    {
+        .effect = EFFECT_TOXIC_SPIKES,
+        .power = 0,
+        .type = TYPE_POISON,
+        .accuracy = 0,
+        .pp = 20,
+        .secondaryEffectChance = 0,
+        .target = MOVE_TARGET_OPPONENTS_FIELD,
+        .priority = 0,
+        .category = MOVE_CATEGORY_STATUS,
+        .flags = 0,
+    },
+
+    [MOVE_STICKY_WEB] =
+    {
+        .effect = EFFECT_STICKY_WEB,
+        .power = 0,
+        .type = TYPE_BUG,
+        .accuracy = 0,
+        .pp = 20,
+        .secondaryEffectChance = 0,
+        .target = MOVE_TARGET_OPPONENTS_FIELD,
+        .priority = 0,
+        .category = MOVE_CATEGORY_STATUS,
+        .flags = 0,
+    },
 };

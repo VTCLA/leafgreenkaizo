@@ -1402,6 +1402,8 @@ const struct CompressedSpriteSheet gBattleAnimPicTable[] =
     {gBattleAnimSpriteGfx_Slash, 0x0800, ANIM_TAG_SLASH_2},
     {gBattleAnimSpriteGfx_SlamHit, 0x1000, ANIM_TAG_WHIP_HIT},
     {gBattleAnimSpriteGfx_GoldRing, 0x0100, ANIM_TAG_BLUE_RING_2},
+    {gBattleAnimSpriteGfx_Spikes, 0x0080, ANIM_TAG_TOXIC_SPIKES},
+    {gBattleAnimSpriteGfx_StealthRock, 0x0080, ANIM_TAG_STEALTH_ROCK},
 };
 
 const struct CompressedSpritePalette gBattleAnimPaletteTable[] =
@@ -1695,6 +1697,8 @@ const struct CompressedSpritePalette gBattleAnimPaletteTable[] =
     {gBattleAnimSpritePal_Slash2, ANIM_TAG_SLASH_2},
     {gBattleAnimSpritePal_WhipHit, ANIM_TAG_WHIP_HIT},
     {gBattleAnimSpritePal_BlueRing2, ANIM_TAG_BLUE_RING_2},
+    {gBattleAnimSpritePal_ToxicSpikes, ANIM_TAG_TOXIC_SPIKES},
+    {gBattleAnimSpritePal_StealthRock, ANIM_TAG_STEALTH_ROCK},
 };
 
 const struct BattleAnimBackground gBattleAnimBackgroundTable[] =

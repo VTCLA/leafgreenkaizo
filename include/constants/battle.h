@@ -194,6 +194,11 @@
 #define SIDE_STATUS_FUTUREATTACK     (1 << 6)
 #define SIDE_STATUS_MIST             (1 << 8)
 #define SIDE_STATUS_SPIKES_DAMAGED   (1 << 9)
+#define SIDE_STATUS_STEALTH_ROCK     (1 << 10)
+#define SIDE_STATUS_ROCKS_DAMAGED    (1 << 11)
+#define SIDE_STATUS_TOXIC_SPIKES     (1 << 12)
+#define SIDE_STATUS_STICKY_WEB       (1 << 13)
+#define SIDE_STATUS_WEBS_SLOWED      (1 << 14)
 
 // Flags describing move's result
 #define MOVE_RESULT_MISSED             (1 << 0)

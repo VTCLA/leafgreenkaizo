@@ -307,6 +307,9 @@ static void atkF6_finishaction(void);
 static void atkF7_finishturn(void);
 static void atkF8_jumpifholdeffect(void);
 static void atkF9_trainerslideout(void);
+static void atkFA_trysetstealthrock(void);
+static void atkFB_trysettoxicspikes(void);
+static void atkFC_trysetstickyweb(void);
 
 void (* const gBattleScriptingCommandsTable[])(void) =
 {
@@ -560,6 +563,9 @@ void (* const gBattleScriptingCommandsTable[])(void) =
     atkF7_finishturn,
     atkF8_jumpifholdeffect,
     atkF9_trainerslideout,
+    atkFA_trysetstealthrock,
+    atkFB_trysettoxicspikes,
+    atkFC_trysetstickyweb,
 };
 
 struct StatFractions
@@ -2538,9 +2544,14 @@ void SetMoveEffect(bool8 primary, u8 certain)
             if (gHitMarker & HITMARKER_IGNORE_SAFEGUARD)
             {
                 if (gLastUsedItem == ITEM_FLAME_ORB || gLastUsedItem == ITEM_TOXIC_ORB)
+                {
                     gBattleCommunication[MULTISTRING_CHOOSER] = 0;
+                    gLastUsedItem = ITEM_NONE;
+                }
                 else
+                {
                     gBattleCommunication[MULTISTRING_CHOOSER] = 1;
+                }
                 gHitMarker &= ~(HITMARKER_IGNORE_SAFEGUARD);
             }
             else
@@ -2997,6 +3008,8 @@ static void atk19_tryfaintmon(void)
             BattleScriptPop();
             gBattlescriptCurrInstr = BS_ptr;
             gSideStatuses[GetBattlerSide(gActiveBattler)] &= ~(SIDE_STATUS_SPIKES_DAMAGED);
+            gSideStatuses[GetBattlerSide(gActiveBattler)] &= ~(SIDE_STATUS_ROCKS_DAMAGED);
+            gSideStatuses[GetBattlerSide(gActiveBattler)] &= ~(SIDE_STATUS_WEBS_SLOWED);
         }
         else
         {
@@ -5359,7 +5372,8 @@ static void atk52_switchineffects(void)
      && (gSideStatuses[GetBattlerSide(gActiveBattler)] & SIDE_STATUS_SPIKES)
      && gBattleMons[gActiveBattler].ability != ABILITY_MAGIC_GUARD
      && ((!IS_BATTLER_OF_TYPE(gActiveBattler, TYPE_FLYING)
-     && gBattleMons[gActiveBattler].ability != ABILITY_LEVITATE)
+     && gBattleMons[gActiveBattler].ability != ABILITY_LEVITATE
+     && ItemId_GetHoldEffect(gBattleMons[gActiveBattler].item) != HOLD_EFFECT_AIR_BALLOON)
      || ItemId_GetHoldEffect(gBattleMons[gActiveBattler].item) == HOLD_EFFECT_IRON_BALL))
     {
         u8 spikesDmg;
@@ -5377,6 +5391,100 @@ static void atk52_switchineffects(void)
             gBattlescriptCurrInstr = BattleScript_SpikesOnAttacker;
         else
             gBattlescriptCurrInstr = BattleScript_SpikesOnFaintedBattler;
+    }
+    else if (!(gSideStatuses[GetBattlerSide(gActiveBattler)] & SIDE_STATUS_ROCKS_DAMAGED)
+     && (gSideStatuses[GetBattlerSide(gActiveBattler)] & SIDE_STATUS_STEALTH_ROCK)
+     && gBattleMons[gActiveBattler].ability != ABILITY_MAGIC_GUARD)
+    {
+
+        gSideStatuses[GetBattlerSide(gActiveBattler)] |= SIDE_STATUS_ROCKS_DAMAGED;
+        gBattleMoveDamage = gBattleMons[gActiveBattler].maxHP / 8;
+        if (gBattleMoveDamage == 0)
+            gBattleMoveDamage = 1;
+
+        i = 0;
+        while (TYPE_EFFECT_ATK_TYPE(i) != TYPE_ENDTABLE)
+        {
+            if (TYPE_EFFECT_ATK_TYPE(i) == TYPE_FORESIGHT)
+            {
+                if (gBattleMons[gBattlerTarget].status2 & STATUS2_FORESIGHT)
+                    break;
+                i += 3;
+                continue;
+            }
+            else if (TYPE_EFFECT_ATK_TYPE(i) == TYPE_ROCK)
+            {
+                // check type1
+                if (TYPE_EFFECT_DEF_TYPE(i) == gBattleMons[gBattlerTarget].type1)
+                    ModulateDmgByType(TYPE_EFFECT_MULTIPLIER(i));
+                // check type2
+                if (TYPE_EFFECT_DEF_TYPE(i) == gBattleMons[gBattlerTarget].type2 &&
+                 gBattleMons[gBattlerTarget].type1 != gBattleMons[gBattlerTarget].type2)
+                    ModulateDmgByType(TYPE_EFFECT_MULTIPLIER(i));
+            }
+            i += 3;
+        }
+        gBattleScripting.battler = gActiveBattler;
+        BattleScriptPushCursor();
+        if (gBattlescriptCurrInstr[1] == BS_TARGET)
+            gBattlescriptCurrInstr = BattleScript_StealthRocksOnTarget;
+        else if (gBattlescriptCurrInstr[1] == BS_ATTACKER)
+            gBattlescriptCurrInstr = BattleScript_StealthRocksOnAttacker;
+        else
+            gBattlescriptCurrInstr = BattleScript_StealthRocksOnFaintedBattler;
+    }
+    else if ((gSideStatuses[GetBattlerSide(gActiveBattler)] & SIDE_STATUS_TOXIC_SPIKES)
+     && gBattleMons[gActiveBattler].ability != ABILITY_IMMUNITY
+     && !IS_BATTLER_OF_TYPE(gActiveBattler, TYPE_POISON) && !IS_BATTLER_OF_TYPE(gActiveBattler, TYPE_STEEL)
+     && gBattleMons[gActiveBattler].status1 == STATUS1_NONE
+     && !(gSideStatuses[GET_BATTLER_SIDE(gActiveBattler)] & SIDE_STATUS_SAFEGUARD)
+     && ((!IS_BATTLER_OF_TYPE(gActiveBattler, TYPE_FLYING)
+     && gBattleMons[gActiveBattler].ability != ABILITY_LEVITATE
+     && ItemId_GetHoldEffect(gBattleMons[gActiveBattler].item) != HOLD_EFFECT_AIR_BALLOON)
+     || ItemId_GetHoldEffect(gBattleMons[gActiveBattler].item) == HOLD_EFFECT_IRON_BALL))
+    {
+        gBattleScripting.battler = gActiveBattler;
+        if (gSideTimers[GetBattlerSide(gActiveBattler)].toxicSpikesAmount == 2)
+        {
+            gBattleMons[gActiveBattler].status1 |= STATUS1_TOXIC_POISON;
+        }
+        else
+        {
+            gBattleMons[gActiveBattler].status1 |= STATUS1_POISON;;
+        }
+        BtlController_EmitSetMonData(0, REQUEST_STATUS_BATTLE, 0, 4, &gBattleMons[gActiveBattler].status1);
+        MarkBattlerForControllerExec(gActiveBattler);
+        BattleScriptPushCursor();
+        gBattlescriptCurrInstr = BattleScript_ToxicSpikesPoisoned;
+    }
+    else if ((gSideStatuses[GetBattlerSide(gActiveBattler)] & SIDE_STATUS_TOXIC_SPIKES)
+     && IS_BATTLER_OF_TYPE(gActiveBattler, TYPE_POISON)
+     && ((!IS_BATTLER_OF_TYPE(gActiveBattler, TYPE_FLYING)
+     && gBattleMons[gActiveBattler].ability != ABILITY_LEVITATE
+     && ItemId_GetHoldEffect(gBattleMons[gActiveBattler].item) != HOLD_EFFECT_AIR_BALLOON)
+     || ItemId_GetHoldEffect(gBattleMons[gActiveBattler].item) == HOLD_EFFECT_IRON_BALL))
+    {
+        gBattleScripting.battler = gActiveBattler;
+        gSideStatuses[GetBattlerSide(gActiveBattler)] &= ~(SIDE_STATUS_TOXIC_SPIKES);
+        BattleScriptPushCursor();
+        gBattlescriptCurrInstr = BattleScript_AbsorbedToxicSpikes;
+    }
+    else if (!(gSideStatuses[GetBattlerSide(gActiveBattler)] & SIDE_STATUS_WEBS_SLOWED)
+     && (gSideStatuses[GetBattlerSide(gActiveBattler)] & SIDE_STATUS_STICKY_WEB)
+     && gBattleMons[gActiveBattler].ability != ABILITY_CLEAR_BODY
+     && gBattleMons[gActiveBattler].item != ITEM_CLEAR_AMULET
+     && gBattleMons[gActiveBattler].statStages[STAT_SPEED] == 6
+     && ((!IS_BATTLER_OF_TYPE(gActiveBattler, TYPE_FLYING)
+     && gBattleMons[gActiveBattler].ability != ABILITY_LEVITATE
+     && ItemId_GetHoldEffect(gBattleMons[gActiveBattler].item) != HOLD_EFFECT_AIR_BALLOON)
+     || ItemId_GetHoldEffect(gBattleMons[gActiveBattler].item) == HOLD_EFFECT_IRON_BALL))
+    {
+        gBattleScripting.battler = gActiveBattler;
+        --gBattleMons[gActiveBattler].statStages[STAT_SPEED];
+        gBattleScripting.animArg1 = STAT_SPEED + STAT_ANIM_MINUS1 - 1;
+        gBattleScripting.animArg2 = 0;
+        BattleScriptPushCursor();
+        gBattlescriptCurrInstr = BattleScript_StickyWebSpeedDrop;
     }
     else
     {
@@ -5397,6 +5505,8 @@ static void atk52_switchineffects(void)
                 return;
         }
         gSideStatuses[GetBattlerSide(gActiveBattler)] &= ~(SIDE_STATUS_SPIKES_DAMAGED);
+        gSideStatuses[GetBattlerSide(gActiveBattler)] &= ~(SIDE_STATUS_ROCKS_DAMAGED);
+        gSideStatuses[GetBattlerSide(gActiveBattler)] &= ~(SIDE_STATUS_WEBS_SLOWED);
         for (i = 0; i < gBattlersCount; ++i)
         {
             if (gBattlerByTurnOrder[i] == gActiveBattler)
@@ -8344,6 +8454,55 @@ static void atkB0_trysetspikes(void)
     }
 }
 
+static void atkFA_trysetstealthrock(void)
+{
+    u8 targetSide = GetBattlerSide(gBattlerAttacker) ^ BIT_SIDE;
+
+    if (gSideStatuses[GetBattlerSide(gActiveBattler)] & SIDE_STATUS_STEALTH_ROCK)
+    {
+        gSpecialStatuses[gBattlerAttacker].ppNotAffectedByPressure = 1;
+        gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
+    }
+    else
+    {
+        gSideStatuses[targetSide] |= SIDE_STATUS_STEALTH_ROCK;
+        gBattlescriptCurrInstr += 5;
+    }
+}
+
+static void atkFB_trysettoxicspikes(void)
+{
+    u8 targetSide = GetBattlerSide(gBattlerAttacker) ^ BIT_SIDE;
+
+    if (gSideTimers[targetSide].toxicSpikesAmount == 2)
+    {
+        gSpecialStatuses[gBattlerAttacker].ppNotAffectedByPressure = 1;
+        gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
+    }
+    else
+    {
+        gSideStatuses[targetSide] |= SIDE_STATUS_TOXIC_SPIKES;
+        ++gSideTimers[targetSide].toxicSpikesAmount;
+        gBattlescriptCurrInstr += 5;
+    }
+}
+
+static void atkFC_trysetstickyweb(void)
+{
+    u8 targetSide = GetBattlerSide(gBattlerAttacker) ^ BIT_SIDE;
+
+    if (gSideStatuses[GetBattlerSide(gActiveBattler)] & SIDE_STATUS_STICKY_WEB)
+    {
+        gSpecialStatuses[gBattlerAttacker].ppNotAffectedByPressure = 1;
+        gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
+    }
+    else
+    {
+        gSideStatuses[targetSide] |= SIDE_STATUS_STICKY_WEB;
+        gBattlescriptCurrInstr += 5;
+    }
+}
+
 static void atkB1_setforesight(void)
 {
     gBattleMons[gBattlerTarget].status2 |= STATUS2_FORESIGHT;
@@ -8659,6 +8818,25 @@ static void atkBE_rapidspinfree(void)
         gSideTimers[GetBattlerSide(gBattlerAttacker)].spikesAmount = 0;
         BattleScriptPushCursor();
         gBattlescriptCurrInstr = BattleScript_SpikesFree;
+    }
+    else if (gSideStatuses[GetBattlerSide(gBattlerAttacker)] & SIDE_STATUS_TOXIC_SPIKES)
+    {
+        gSideStatuses[GetBattlerSide(gBattlerAttacker)] &= ~(SIDE_STATUS_TOXIC_SPIKES);
+        gSideTimers[GetBattlerSide(gBattlerAttacker)].toxicSpikesAmount = 0;
+        BattleScriptPushCursor();
+        gBattlescriptCurrInstr = BattleScript_ToxicSpikesFree;
+    }
+    else if (gSideStatuses[GetBattlerSide(gBattlerAttacker)] & SIDE_STATUS_STEALTH_ROCK)
+    {
+        gSideStatuses[GetBattlerSide(gBattlerAttacker)] &= ~(SIDE_STATUS_STEALTH_ROCK);
+        BattleScriptPushCursor();
+        gBattlescriptCurrInstr = BattleScript_StealthRocksFree;
+    }
+    else if (gSideStatuses[GetBattlerSide(gBattlerAttacker)] & SIDE_STATUS_STICKY_WEB)
+    {
+        gSideStatuses[GetBattlerSide(gBattlerAttacker)] &= ~(SIDE_STATUS_STICKY_WEB);
+        BattleScriptPushCursor();
+        gBattlescriptCurrInstr = BattleScript_StickyWebFree;
     }
     else
     {

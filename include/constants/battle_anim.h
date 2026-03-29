@@ -276,7 +276,7 @@
 #define ANIM_TAG_GREEN_SPIKE                (ANIM_SPRITES_START + 266)
 #define ANIM_TAG_WHITE_CIRCLE_OF_LIGHT      (ANIM_SPRITES_START + 267)
 #define ANIM_TAG_GLOWY_BLUE_ORB             (ANIM_SPRITES_START + 268)
-#define ANIM_TAG_SAFARI_BAIT                  (ANIM_SPRITES_START + 269)
+#define ANIM_TAG_SAFARI_BAIT                (ANIM_SPRITES_START + 269)
 #define ANIM_TAG_WHITE_FEATHER              (ANIM_SPRITES_START + 270)
 #define ANIM_TAG_SPARKLE_6                  (ANIM_SPRITES_START + 271)
 #define ANIM_TAG_SPLASH                     (ANIM_SPRITES_START + 272)
@@ -296,6 +296,8 @@
 #define ANIM_TAG_SLASH_2                    (ANIM_SPRITES_START + 286)
 #define ANIM_TAG_WHIP_HIT                   (ANIM_SPRITES_START + 287)
 #define ANIM_TAG_BLUE_RING_2                (ANIM_SPRITES_START + 288)
+#define ANIM_TAG_TOXIC_SPIKES               (ANIM_SPRITES_START + 289)
+#define ANIM_TAG_STEALTH_ROCK               (ANIM_SPRITES_START + 290)
 
 // battlers
 #define ANIM_ATTACKER    0
