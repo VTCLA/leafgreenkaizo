@@ -246,6 +246,10 @@ struct SideTimer
     /*0x0A*/ u8 spikesAmount;
     /*0x0B*/ u8 fieldB;
              u8 toxicSpikesAmount;
+             u8 auroraVeilTimer;
+             u8 auroraVeilBattlerId;
+             u8 tailwindTimer;
+             u8 tailwindBattlerId;
 };
 
 extern struct SideTimer gSideTimers[];

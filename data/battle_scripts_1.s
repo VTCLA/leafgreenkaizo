@@ -238,6 +238,8 @@ gBattleScriptsForMoveEffects::
 	.4byte BattleScript_EffectStealthRock
 	.4byte BattleScript_EffectToxicSpikes
 	.4byte BattleScript_EffectStickyWeb
+	.4byte BattleScript_EffectAuroraVeil
+	.4byte BattleScript_EffectTailwind
 
 BattleScript_EffectHit::
 	jumpifnotmove MOVE_SURF, BattleScript_HitFromAtkCanceler
@@ -996,6 +998,28 @@ BattleScript_PrintReflectLightScreenSafeguardString::
 	waitmessage 0x40
 	goto BattleScript_MoveEnd
 
+BattleScript_EffectAuroraVeil::
+	attackcanceler
+	attackstring
+	ppreduce
+	setauroraveil
+	attackanimation
+	waitanimation
+	printfromtable gReflectLightScreenSafeguardStringIds
+	waitmessage 0x40
+	goto BattleScript_MoveEnd
+
+BattleScript_EffectTailwind::
+	attackcanceler
+	attackstring
+	ppreduce
+	settailwind
+	attackanimation
+	waitanimation
+	printfromtable gTailwindStringIds
+	waitmessage 0x40
+	goto BattleScript_MoveEnd
+
 BattleScript_EffectPoison::
 	attackcanceler
 	attackstring
@@ -1562,7 +1586,7 @@ BattleScript_EffectProtect::
 
 BattleScript_EffectSpikes::
 	attackcanceler
-	trysetspikes BattleScript_ButItFailedAtkStringPpReduce
+	trysethazards BattleScript_ButItFailedAtkStringPpReduce
 	attackstring
 	ppreduce
 	attackanimation
@@ -1573,7 +1597,7 @@ BattleScript_EffectSpikes::
 
 BattleScript_EffectStealthRock::
 	attackcanceler
-	trysetstealthrock BattleScript_ButItFailedAtkStringPpReduce
+	trysethazards BattleScript_ButItFailedAtkStringPpReduce
 	attackstring
 	ppreduce
 	attackanimation
@@ -1584,7 +1608,7 @@ BattleScript_EffectStealthRock::
 
 BattleScript_EffectToxicSpikes::
 	attackcanceler
-	trysettoxicspikes BattleScript_ButItFailedAtkStringPpReduce
+	trysethazards BattleScript_ButItFailedAtkStringPpReduce
 	attackstring
 	ppreduce
 	attackanimation
@@ -1595,7 +1619,7 @@ BattleScript_EffectToxicSpikes::
 
 BattleScript_EffectStickyWeb::
 	attackcanceler
-	trysetstickyweb BattleScript_ButItFailedAtkStringPpReduce
+	trysethazards BattleScript_ButItFailedAtkStringPpReduce
 	attackstring
 	ppreduce
 	attackanimation
@@ -3291,6 +3315,12 @@ BattleScript_SafeguardProtected::
 BattleScript_SafeguardEnds::
 	pause 0x20
 	printstring STRINGID_PKMNSAFEGUARDEXPIRED
+	waitmessage 0x40
+	end2
+
+BattleScript_TailwindEnds::
+	pause 0x20
+	printstring STRINGID_TAILWINDPETEREDOUT
 	waitmessage 0x40
 	end2
 

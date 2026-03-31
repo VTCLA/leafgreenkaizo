@@ -428,6 +428,8 @@ enum
     ENDTURN_SANDSTORM,
     ENDTURN_SUN,
     ENDTURN_HAIL,
+    ENDTURN_AURORA_VEIL,
+    ENDTURN_TAILWIND,
     ENDTURN_FIELD_COUNT,
 };
 
@@ -578,6 +580,7 @@ u8 DoFieldEndTurnEffects(void)
             }
             if (!effect)
                 ++gBattleStruct->turnCountersTracker;
+                gBattleStruct->turnSideTracker = 0;
             break;
         case ENDTURN_RAIN:
             if (gBattleWeather & WEATHER_RAIN_ANY)
@@ -662,6 +665,56 @@ u8 DoFieldEndTurnEffects(void)
                 ++effect;
             }
             ++gBattleStruct->turnCountersTracker;
+            break;
+        case ENDTURN_AURORA_VEIL:
+            while (gBattleStruct->turnSideTracker < 2)
+            {
+                side = gBattleStruct->turnSideTracker;
+                gActiveBattler = gBattlerAttacker = gSideTimers[side].auroraVeilBattlerId;
+                if (gSideStatuses[side] & SIDE_STATUS_AURORA_VEIL)
+                {
+                    if (--gSideTimers[side].auroraVeilTimer == 0)
+                    {
+                        gSideStatuses[side] &= ~SIDE_STATUS_AURORA_VEIL;
+                        gCurrentMove = MOVE_AURORA_VEIL;
+                        BattleScriptExecute(BattleScript_SideStatusWoreOff);
+                        PREPARE_MOVE_BUFFER(gBattleTextBuff1, gCurrentMove);
+                        ++effect;
+                    }
+                }
+                ++gBattleStruct->turnSideTracker;
+                if (effect)
+                    break;
+            }
+            if (!effect)
+            {
+                ++gBattleStruct->turnCountersTracker;
+                gBattleStruct->turnSideTracker = 0;
+            }
+            break;
+        case ENDTURN_TAILWIND:
+            while (gBattleStruct->turnSideTracker < 2)
+            {
+                side = gBattleStruct->turnSideTracker;
+                gActiveBattler = gBattlerAttacker = gSideTimers[side].tailwindBattlerId;
+                if (gSideStatuses[side] & SIDE_STATUS_TAILWIND)
+                {
+                    if (--gSideTimers[side].tailwindTimer == 0)
+                    {
+                        gSideStatuses[side] &= ~SIDE_STATUS_TAILWIND;
+                        BattleScriptExecute(BattleScript_TailwindEnds);
+                        ++effect;
+                    }
+                }
+                ++gBattleStruct->turnSideTracker;
+                if (effect)
+                    break;
+            }
+            if (!effect)
+            {
+                ++gBattleStruct->turnCountersTracker;
+                gBattleStruct->turnSideTracker = 0;
+            }
             break;
         case ENDTURN_FIELD_COUNT:
             ++effect;

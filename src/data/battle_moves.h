@@ -6102,4 +6102,32 @@ const struct BattleMove gBattleMoves[MOVES_COUNT] =
         .category = MOVE_CATEGORY_STATUS,
         .flags = 0,
     },
+
+    [MOVE_AURORA_VEIL] =
+    {
+        .effect = EFFECT_AURORA_VEIL,
+        .power = 0,
+        .type = TYPE_ICE,
+        .accuracy = 0,
+        .pp = 20,
+        .secondaryEffectChance = 0,
+        .target = MOVE_TARGET_USER,
+        .priority = 0,
+        .category = MOVE_CATEGORY_STATUS,
+        .flags =  FLAG_SNATCH_AFFECTED,
+    },
+
+    [MOVE_TAILWIND] =
+    {
+        .effect = EFFECT_TAILWIND,
+        .power = 0,
+        .type = TYPE_FLYING,
+        .accuracy = 0,
+        .pp = 15,
+        .secondaryEffectChance = 0,
+        .target = MOVE_TARGET_USER,
+        .priority = 0,
+        .category = MOVE_CATEGORY_STATUS,
+        .flags =  FLAG_SNATCH_AFFECTED,
+    },
 };

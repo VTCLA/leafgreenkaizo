@@ -436,6 +436,8 @@ const u8 gMoveDescription_Steamroller[] = _("Crushes the foe\nwith its body\nMay
 const u8 gMoveDescription_StealthRock[] = _("A trap of rocks is\nlaid around the\nfoe's party to hurt\nfoes switching in.");
 const u8 gMoveDescription_ToxicSpikes[] = _("A trap of spikes is\nlaid around the\nfoe's party to POISON\nfoes switching in.");
 const u8 gMoveDescription_StickyWeb[] = _("A web is woven and\nlaid around the\nfoe's party to slow\nfoes switching in.");
+const u8 gMoveDescription_AuroraVeil[] = _("A veil of light\nhalves move damage\nfor five turns. Only\nworks in hailstorm.");
+const u8 gMoveDescription_Tailwind[] = _("A strong wind that\ndoubles the SPEED\n of the user's party\nfor five turns.");
 
 
 const u8 *const gMoveDescriptionPointers[MOVES_COUNT - 1] = {
@@ -874,4 +876,6 @@ const u8 *const gMoveDescriptionPointers[MOVES_COUNT - 1] = {
     [MOVE_STEALTH_ROCK  - 1] = gMoveDescription_StealthRock,
     [MOVE_TOXIC_SPIKES  - 1] = gMoveDescription_ToxicSpikes,
     [MOVE_STICKY_WEB    - 1] = gMoveDescription_StickyWeb,
+    [MOVE_AURORA_VEIL   - 1] = gMoveDescription_AuroraVeil,
+    [MOVE_TAILWIND      - 1] = gMoveDescription_Tailwind,
 };

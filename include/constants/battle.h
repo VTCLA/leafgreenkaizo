@@ -188,7 +188,8 @@
 // Per-side statuses that affect an entire party
 #define SIDE_STATUS_REFLECT          (1 << 0)
 #define SIDE_STATUS_LIGHTSCREEN      (1 << 1)
-#define SIDE_STATUS_X4               (1 << 2)
+#define SIDE_STATUS_AURORA_VEIL      (1 << 2)
+#define SIDE_STATUS_TAILWIND         (1 << 3)
 #define SIDE_STATUS_SPIKES           (1 << 4)
 #define SIDE_STATUS_SAFEGUARD        (1 << 5)
 #define SIDE_STATUS_FUTUREATTACK     (1 << 6)

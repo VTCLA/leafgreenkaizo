@@ -280,6 +280,7 @@ extern const u8 BattleScript_DownloadActivatesEnd3[];
 extern const u8 BattleScript_WeakArmorActivates[];
 extern const u8 BattleScript_WeakArmorTrySpeed[];
 extern const u8 BattleScript_WeakArmorEnd[];
+extern const u8 BattleScript_TailwindEnds[];
 
 extern const u8 *const gBattleScriptsForMoveEffects[];
 extern const u8 *const gBattlescriptsForBallThrow[];

@@ -131,6 +131,9 @@ static const u8 sText_PkmnRaisedDefALittle[] = _("{B_ATK_PREFIX2}'s {B_CURRENT_M
 static const u8 sText_PkmnCoveredByVeil[] = _("{B_ATK_PREFIX2}'s party is covered\nby a veil!");
 static const u8 sText_PkmnUsedSafeguard[] = _("{B_DEF_NAME_WITH_PREFIX}'s party is protected\nby SAFEGUARD!");
 static const u8 sText_PkmnSafeguardExpired[] = _("{B_ATK_PREFIX3}'s party is no longer\nprotected by SAFEGUARD!");
+static const u8 sText_TailwindPeteredOut[] = _("{B_ATK_PREFIX1}'s tailwind\npetered out!");
+static const u8 sText_TailwindBlew[] = _("A tailwind blew from behind\n{B_ATK_PREFIX1}'s team!");
+static const u8 sText_TestAuroraVeil[] = _("{B_BUFF1} {B_BUFF1} {B_BUFF1}");
 static const u8 sText_PkmnWentToSleep[] = _("{B_ATK_NAME_WITH_PREFIX} went\nto sleep!");
 static const u8 sText_PkmnSleptHealthy[] = _("{B_ATK_NAME_WITH_PREFIX} slept and\nbecame healthy!");
 static const u8 sText_PkmnWhippedWhirlwind[] = _("{B_ATK_NAME_WITH_PREFIX} whipped\nup a whirlwind!");
@@ -968,7 +971,10 @@ const u8 *const gBattleStringsTable[] = {
     [STRINGID_PKMNCAUGHTINWEB - 12]               = sText_PkmnCaughtInWeb,
     [STRINGID_PKMNABSORBEDPOISONSPIKES - 12]      = sText_PkmnAbsorbedPoisonSpikes,
     [STRINGID_TOXICSPIKESPOISONED - 12]           = sText_ToxicSpikesPoisoned,
-    [STRINGID_TOXICSPIKESBADLYPOISONED - 12]           = sText_ToxicSpikesBadlyPoisoned,
+    [STRINGID_TOXICSPIKESBADLYPOISONED - 12]      = sText_ToxicSpikesBadlyPoisoned,
+    [STRINGID_TAILWINDPETEREDOUT - 12]            = sText_TailwindPeteredOut,
+    [STRINGID_TAILWINDBLEW - 12]                  = sText_TailwindBlew,
+    [STRINGID_TESTAURORAVEIL - 12]                = sText_TestAuroraVeil,
 };
 
 const u16 gMissStringIds[] = {
@@ -1109,6 +1115,11 @@ const u16 gWrappedStringIds[] = {
 
 const u16 gMistUsedStringIds[] = {
     STRINGID_PKMNSHROUDEDINMIST,
+    STRINGID_BUTITFAILED
+};
+
+const u16 gTailwindStringIds[] = {
+    STRINGID_TAILWINDBLEW,
     STRINGID_BUTITFAILED
 };
 

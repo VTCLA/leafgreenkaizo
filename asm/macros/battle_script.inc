@@ -914,7 +914,7 @@
 	.4byte \param0
 	.endm
 
-	.macro trysetspikes param0:req
+	.macro trysethazards param0:req
 	.byte 0xb0
 	.4byte \param0
 	.endm
@@ -1254,19 +1254,12 @@
 	.byte \battler
 	.endm
 
-	.macro trysetstealthrock param0:req
+	.macro setauroraveil
 	.byte 0xfa
-	.4byte \param0
 	.endm
 
-	.macro trysettoxicspikes param0:req
+	.macro settailwind
 	.byte 0xfb
-	.4byte \param0
-	.endm
-
-	.macro trysetstickyweb param0:req
-	.byte 0xfc
-	.4byte \param0
 	.endm
 
 @ various command changed to more readable macros

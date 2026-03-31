@@ -482,6 +482,8 @@ gBattleAnims_Moves::
 	.4byte Move_STEALTH_ROCK
 	.4byte Move_TOXIC_SPIKES
 	.4byte Move_STICKY_WEB
+	.4byte Move_AURORA_VEIL
+	.4byte Move_TAILWIND
 	.4byte Move_COUNT
 
 gBattleAnims_StatusConditions::
@@ -10394,7 +10396,7 @@ Move_DARK_PULSE::
 	waitbgfadein
 	end
 
-Move_NIGHT_SLASH:
+Move_NIGHT_SLASH::
 	loadspritegfx ANIM_TAG_SLASH
 	createvisualtask AnimTask_BlendNightSlash, 2, ANIM_TARGET, 2, 0, 8, 1
 	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_ATTACKER, 0, 1, 3, 0, 12, RGB_BLACK
@@ -10414,7 +10416,7 @@ Move_NIGHT_SLASH:
 	waitforvisualfinish
 	end
 
-Move_AQUA_TAIL:
+Move_AQUA_TAIL::
 	loadspritegfx ANIM_TAG_WATER_IMPACT
 	loadspritegfx ANIM_TAG_SMALL_BUBBLES
 	loadspritegfx ANIM_TAG_ICE_CRYSTALS
@@ -10468,7 +10470,7 @@ Move_AQUA_TAIL:
 	blendoff
 	end
 
-Move_SEED_BOMB:
+Move_SEED_BOMB::
 	loadspritegfx ANIM_TAG_SEED
 	loadspritegfx ANIM_TAG_EXPLOSION
 	createsprite gBulletSeedSpriteTemplate, ANIM_TARGET, 2, 20, 0
@@ -10517,7 +10519,7 @@ Move_SEED_BOMB:
 	waitforvisualfinish
 	end
 
-Move_AIR_SLASH:
+Move_AIR_SLASH::
 	loadspritegfx ANIM_TAG_SLASH
 	call SetSkyBg
 	createsprite gSlashSliceSpriteTemplate, ANIM_TARGET, 2, 1, -8, 0
@@ -10530,7 +10532,7 @@ Move_AIR_SLASH:
 	call UnsetSkyBg
 	end
 
-Move_X_SCISSOR:
+Move_X_SCISSOR::
 	loadspritegfx ANIM_TAG_CUT
 	monbg ANIM_TARGET
 	setalpha 12, 8
@@ -10547,7 +10549,7 @@ Move_X_SCISSOR:
 	blendoff
 	end
 
-Move_BUG_BUZZ:
+Move_BUG_BUZZ::
 	loadspritegfx ANIM_TAG_JAGGED_MUSIC_NOTE
 	loadspritegfx ANIM_TAG_THIN_RING
 	monbg ANIM_DEF_PARTNER
@@ -10688,7 +10690,7 @@ Move_POWER_GEM::
 	blendoff
 	end
 
-Move_VACUUM_WAVE:
+Move_VACUUM_WAVE::
 	loadspritegfx ANIM_TAG_IMPACT
 	loadspritegfx ANIM_TAG_HANDS_AND_FEET
 	loadspritegfx ANIM_TAG_THIN_RING
@@ -11689,7 +11691,7 @@ ScaldHitSplats::
 	createsprite gWaterHitSplatSpriteTemplate, ANIM_ATTACKER, 4, 0, 0, ANIM_TARGET, 1
 	return
 
-Move_BULLDOZE:
+Move_BULLDOZE::
 	createvisualtask AnimTask_Splash, 0x2, 0x0, 0x3
 	delay 0x8
 	goto Move_EARTHQUAKE
@@ -11793,7 +11795,7 @@ Move_ICICLE_CRASH::
 	restorebg
 	waitbgfadeout
 	end
-LaunchIcicleCrashSpear:
+LaunchIcicleCrashSpear::
 	createsprite gIcicleCrashSpearTemplate, ANIM_TARGET, 2, 0xffec, 0x0, 0xfff6, 0x0
 	playsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET
 	delay 0x2
@@ -11973,7 +11975,7 @@ Move_PLAY_ROUGH::
 	waitforvisualfinish
 	end
 
-Move_LAVA_PLUME:
+Move_LAVA_PLUME::
 	loadspritegfx ANIM_TAG_FIRE_PLUME
 	loopsewithpan 152, SOUND_PAN_ATTACKER, 9, 2
 	createvisualtask AnimTask_CurseBlendEffect, 2, 2, 2, 2, 0, 11, RGB(31, 0, 0)
@@ -11993,7 +11995,7 @@ Move_LAVA_PLUME:
 	waitforvisualfinish
 	end
 
-Move_LEAF_STORM:
+Move_LEAF_STORM::
 	loadspritegfx ANIM_TAG_RAZOR_LEAF
 	loadspritegfx ANIM_TAG_IMPACT
 	loadspritegfx ANIM_TAG_LEAF
@@ -12640,7 +12642,7 @@ Move_MYSTICAL_FIRE::
 	call UnsetPsychicBg
 	end
 
-Move_POWER_UP_PUNCH:
+Move_POWER_UP_PUNCH::
 	loadspritegfx ANIM_TAG_IMPACT
 	loadspritegfx ANIM_TAG_HANDS_AND_FEET
 	loadspritegfx ANIM_TAG_BREATH
@@ -12729,7 +12731,7 @@ Move_DRAGON_HAMMER::
 	blendoff
 	end
 
-Move_STEAMROLLER:
+Move_STEAMROLLER::
 	loadspritegfx ANIM_TAG_IMPACT
 	monbg ANIM_TARGET
 	setalpha 12, 8
@@ -12755,7 +12757,7 @@ Move_STEAMROLLER:
 	blendoff
 	end
 
-Move_STEALTH_ROCK:
+Move_STEALTH_ROCK::
 	loadspritegfx ANIM_TAG_STEALTH_ROCK
 	monbg ANIM_DEF_PARTNER
 	playsewithpan SE_M_JUMP_KICK, SOUND_PAN_ATTACKER
@@ -12772,7 +12774,7 @@ Move_STEALTH_ROCK:
 	clearmonbg ANIM_DEF_PARTNER
 	end
 
-Move_TOXIC_SPIKES:
+Move_TOXIC_SPIKES::
 	loadspritegfx ANIM_TAG_TOXIC_SPIKES
 	loadspritegfx ANIM_TAG_POISON_BUBBLE
 	monbg ANIM_DEF_PARTNER
@@ -12792,7 +12794,7 @@ Move_TOXIC_SPIKES:
 	clearmonbg ANIM_DEF_PARTNER
 	end
 
-Move_STICKY_WEB:
+Move_STICKY_WEB::
 	loadspritegfx ANIM_TAG_SPIDER_WEB
 	loadspritegfx ANIM_TAG_WEB_THREAD
 	monbg ANIM_DEF_PARTNER
@@ -12829,6 +12831,78 @@ Move_STICKY_WEB:
 	delay 1
 	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_ATTACKER, 5, 1, 2, 9, 0, RGB_BLACK
 	end
+
+Move_AURORA_VEIL::
+	loadspritegfx ANIM_TAG_GUARD_RING
+	fadetobg 20
+	waitbgfadeout
+	createvisualtask AnimTask_StartSlidingBg, 0x5, 0x400, 0x0, 0x0, 0xffff
+	waitbgfadein
+	monbg ANIM_ATK_PARTNER
+	setalpha 8, 8
+	playsewithpan SE_M_MILK_DRINK, SOUND_PAN_ATTACKER
+	createsprite gGuardRingSpriteTemplate, ANIM_ATTACKER, 2
+	delay 0x4
+	createsprite gGuardRingSpriteTemplate, ANIM_ATTACKER, 2
+	delay 0x4
+	createsprite gGuardRingSpriteTemplate, ANIM_ATTACKER, 2
+	waitforvisualfinish
+	playsewithpan SE_SHINY, SOUND_PAN_ATTACKER
+	createvisualtask AnimTask_CurseBlendEffect, 0x2, 0xa, 0x0, 0x2, 0x0, 0xa, 0x7fff
+	waitforvisualfinish
+	call UnsetPsychicBg
+	waitforvisualfinish
+	clearmonbg ANIM_ATK_PARTNER
+	blendoff
+	end
+
+Move_TAILWIND::
+	loadspritegfx ANIM_TAG_FLYING_DIRT
+	playsewithpan SE_M_GUST, SOUND_PAN_ATTACKER
+	createvisualtask AnimTask_GetAttackerSide, 2, 
+	jumpargeq 7, 1, TailwindOnPlayer
+	fadetobg BG_HIGHSPEED_OPPONENT
+
+TailwindContinue:: @ 81CE77E
+	waitbgfadeout
+	createvisualtask AnimTask_StartSlidingBg, 5, -2304, 0, 1, -1
+	waitbgfadein
+	monbg ANIM_ATK_PARTNER
+	setalpha 12, 8
+	createvisualtask AnimTask_TranslateMonEllipticalRespectSide, 2, ANIM_ATTACKER, 24, 6, 4, 4
+	createvisualtask AnimTask_CloneBattlerSpriteWithBlend, 2, 0, 4, 7, 10
+	playsewithpan SE_M_DOUBLE_TEAM, SOUND_PAN_ATTACKER
+	createsprite gFlyingSandCrescentSpriteTemplate, ANIM_ATTACKER, 40, 10, 2304, 96, 0
+	delay 12
+	playsewithpan SE_M_DOUBLE_TEAM, SOUND_PAN_ATTACKER
+	createsprite gFlyingSandCrescentSpriteTemplate, ANIM_ATTACKER, 40, 90, 2048, 96, 0
+	delay 12
+	playsewithpan SE_M_DOUBLE_TEAM, SOUND_PAN_ATTACKER
+	createsprite gFlyingSandCrescentSpriteTemplate, ANIM_ATTACKER, 40, 50, 2560, 96, 0
+	delay 12
+	playsewithpan SE_M_DOUBLE_TEAM, SOUND_PAN_ATTACKER
+	createsprite gFlyingSandCrescentSpriteTemplate, ANIM_ATTACKER, 40, 20, 2304, 96, 0
+	delay 12
+	playsewithpan SE_M_DOUBLE_TEAM, SOUND_PAN_ATTACKER
+	createsprite gFlyingSandCrescentSpriteTemplate, ANIM_ATTACKER, 40, 70, 1984, 96, 0
+	delay 12
+	createsprite gFlyingSandCrescentSpriteTemplate, ANIM_ATTACKER, 40, 0, 2816, 96, 0
+	delay 10
+	createsprite gFlyingSandCrescentSpriteTemplate, ANIM_ATTACKER, 40, 60, 2560, 96, 0
+	waitforvisualfinish
+	stopsound
+	restorebg
+	waitbgfadeout
+	setarg 7, 65535
+	waitbgfadein
+	clearmonbg ANIM_ATK_PARTNER
+	blendoff
+	delay 1
+	end
+
+TailwindOnPlayer:: @ 81CE8ED
+	fadetobg BG_HIGHSPEED_PLAYER
+	goto TailwindContinue
 
 Move_COUNT:: @ 81D53D9
 	loadspritegfx ANIM_TAG_IMPACT

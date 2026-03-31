@@ -233,7 +233,7 @@ static void atkAC_remaininghptopower(void);
 static void atkAD_tryspiteppreduce(void);
 static void atkAE_healpartystatus(void);
 static void atkAF_cursetarget(void);
-static void atkB0_trysetspikes(void);
+static void atkB0_trysethazards(void);
 static void atkB1_setforesight(void);
 static void atkB2_trysetperishsong(void);
 static void atkB3_rolloutdamagecalculation(void);
@@ -307,9 +307,8 @@ static void atkF6_finishaction(void);
 static void atkF7_finishturn(void);
 static void atkF8_jumpifholdeffect(void);
 static void atkF9_trainerslideout(void);
-static void atkFA_trysetstealthrock(void);
-static void atkFB_trysettoxicspikes(void);
-static void atkFC_trysetstickyweb(void);
+static void atkFA_setauroraveil(void);
+static void atkFB_settailwind(void);
 
 void (* const gBattleScriptingCommandsTable[])(void) =
 {
@@ -489,7 +488,7 @@ void (* const gBattleScriptingCommandsTable[])(void) =
     atkAD_tryspiteppreduce,
     atkAE_healpartystatus,
     atkAF_cursetarget,
-    atkB0_trysetspikes,
+    atkB0_trysethazards,
     atkB1_setforesight,
     atkB2_trysetperishsong,
     atkB3_rolloutdamagecalculation,
@@ -563,9 +562,8 @@ void (* const gBattleScriptingCommandsTable[])(void) =
     atkF7_finishturn,
     atkF8_jumpifholdeffect,
     atkF9_trainerslideout,
-    atkFA_trysetstealthrock,
-    atkFB_trysettoxicspikes,
-    atkFC_trysetstickyweb,
+    atkFA_setauroraveil,
+    atkFB_settailwind,
 };
 
 struct StatFractions
@@ -6848,6 +6846,28 @@ static void atk7E_setreflect(void)
     ++gBattlescriptCurrInstr;
 }
 
+static void atkFA_setauroraveil(void)
+{
+    if (gSideStatuses[GET_BATTLER_SIDE(gBattlerAttacker)] & SIDE_STATUS_AURORA_VEIL
+     || !(gBattleWeather & WEATHER_HAIL_ANY))
+    {
+        gMoveResultFlags |= MOVE_RESULT_MISSED;
+        gBattleCommunication[MULTISTRING_CHOOSER] = 0;
+    }
+    else
+    {
+        gSideStatuses[GET_BATTLER_SIDE(gBattlerAttacker)] |= SIDE_STATUS_AURORA_VEIL;
+        if (ItemId_GetHoldEffect(gBattleMons[gBattlerAttacker].item) == HOLD_EFFECT_LIGHT_CLAY)
+            gSideTimers[GET_BATTLER_SIDE(gBattlerAttacker)].auroraVeilTimer = 8;
+        else
+            gSideTimers[GET_BATTLER_SIDE(gBattlerAttacker)].auroraVeilTimer = 5;
+        gSideTimers[GET_BATTLER_SIDE(gBattlerAttacker)].auroraVeilBattlerId = gBattlerAttacker;
+
+        gBattleCommunication[MULTISTRING_CHOOSER] = 5;
+    }
+    ++gBattlescriptCurrInstr;
+}
+
 static void atk7F_setseeded(void)
 {
     if (gMoveResultFlags & MOVE_RESULT_NO_EFFECT || gStatuses3[gBattlerTarget] & STATUS3_LEECHSEED)
@@ -8437,22 +8457,65 @@ static void atkAF_cursetarget(void)
     }
 }
 
-static void atkB0_trysetspikes(void)
+static void atkB0_trysethazards(void)
 {
     u8 targetSide = GetBattlerSide(gBattlerAttacker) ^ BIT_SIDE;
 
-    if (gSideTimers[targetSide].spikesAmount == 3)
+    
+    switch (gCurrentMove)
     {
-        gSpecialStatuses[gBattlerAttacker].ppNotAffectedByPressure = 1;
-        gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
+        case MOVE_SPIKES:
+            if (gSideTimers[targetSide].spikesAmount == 3)
+            {
+                gSpecialStatuses[gBattlerAttacker].ppNotAffectedByPressure = 1;
+                gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
+            }
+            else
+            {
+                gSideStatuses[targetSide] |= SIDE_STATUS_SPIKES;
+                ++gSideTimers[targetSide].spikesAmount;
+                gBattlescriptCurrInstr += 5;
+            }
+            break;
+        case MOVE_STEALTH_ROCK:
+            if (gSideStatuses[GetBattlerSide(gActiveBattler)] & SIDE_STATUS_STEALTH_ROCK)
+            {
+                gSpecialStatuses[gBattlerAttacker].ppNotAffectedByPressure = 1;
+                gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
+            }
+            else
+            {
+                gSideStatuses[targetSide] |= SIDE_STATUS_STEALTH_ROCK;
+                gBattlescriptCurrInstr += 5;
+            }
+            break;
+        case MOVE_TOXIC_SPIKES:
+            if (gSideTimers[targetSide].toxicSpikesAmount == 2)
+            {
+                gSpecialStatuses[gBattlerAttacker].ppNotAffectedByPressure = 1;
+                gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
+            }
+            else
+            {
+                gSideStatuses[targetSide] |= SIDE_STATUS_TOXIC_SPIKES;
+                ++gSideTimers[targetSide].toxicSpikesAmount;
+                gBattlescriptCurrInstr += 5;
+            }
+            break;
+        case MOVE_STICKY_WEB:
+            if (gSideStatuses[GetBattlerSide(gActiveBattler)] & SIDE_STATUS_STICKY_WEB)
+            {
+                gSpecialStatuses[gBattlerAttacker].ppNotAffectedByPressure = 1;
+                gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
+            }
+            else
+            {
+                gSideStatuses[targetSide] |= SIDE_STATUS_STICKY_WEB;
+                gBattlescriptCurrInstr += 5;
+            }
+            break;
     }
-    else
-    {
-        gSideStatuses[targetSide] |= SIDE_STATUS_SPIKES;
-        ++gSideTimers[targetSide].spikesAmount;
-        gBattlescriptCurrInstr += 5;
-    }
-}
+}/*
 
 static void atkFA_trysetstealthrock(void)
 {
@@ -8501,7 +8564,7 @@ static void atkFC_trysetstickyweb(void)
         gSideStatuses[targetSide] |= SIDE_STATUS_STICKY_WEB;
         gBattlescriptCurrInstr += 5;
     }
-}
+}*/
 
 static void atkB1_setforesight(void)
 {
@@ -8654,6 +8717,23 @@ static void atkB8_setsafeguard(void)
         gSideTimers[GET_BATTLER_SIDE(gBattlerAttacker)].safeguardTimer = 5;
         gSideTimers[GET_BATTLER_SIDE(gBattlerAttacker)].safeguardBattlerId = gBattlerAttacker;
         gBattleCommunication[MULTISTRING_CHOOSER] = 5;
+    }
+    ++gBattlescriptCurrInstr;
+}
+
+static void atkFB_settailwind(void)
+{
+    if (gSideStatuses[GET_BATTLER_SIDE(gBattlerAttacker)] & SIDE_STATUS_TAILWIND)
+    {
+        gMoveResultFlags |= MOVE_RESULT_MISSED;
+        gBattleCommunication[MULTISTRING_CHOOSER] = 1;
+    }
+    else
+    {
+        gSideStatuses[GET_BATTLER_SIDE(gBattlerAttacker)] |= SIDE_STATUS_TAILWIND;
+        gSideTimers[GET_BATTLER_SIDE(gBattlerAttacker)].tailwindTimer = 4;
+        gSideTimers[GET_BATTLER_SIDE(gBattlerAttacker)].tailwindBattlerId = gBattlerAttacker;
+        gBattleCommunication[MULTISTRING_CHOOSER] = 0;
     }
     ++gBattlescriptCurrInstr;
 }
@@ -9753,12 +9833,14 @@ static void atkEE_removelightscreenreflect(void) // brick break
 {
     u8 opposingSide = GetBattlerSide(gBattlerAttacker) ^ BIT_SIDE;
 
-    if (gSideTimers[opposingSide].reflectTimer || gSideTimers[opposingSide].lightscreenTimer)
+    if (gSideTimers[opposingSide].reflectTimer || gSideTimers[opposingSide].lightscreenTimer || gSideTimers[opposingSide].auroraVeilTimer)
     {
         gSideStatuses[opposingSide] &= ~(SIDE_STATUS_REFLECT);
         gSideStatuses[opposingSide] &= ~(SIDE_STATUS_LIGHTSCREEN);
+        gSideStatuses[opposingSide] &= ~(SIDE_STATUS_AURORA_VEIL);
         gSideTimers[opposingSide].reflectTimer = 0;
         gSideTimers[opposingSide].lightscreenTimer = 0;
+        gSideTimers[opposingSide].auroraVeilTimer = 0;
         gBattleScripting.animTurn = 1;
         gBattleScripting.animTargetsHit = 1;
     }
