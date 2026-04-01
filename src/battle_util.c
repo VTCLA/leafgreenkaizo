@@ -428,6 +428,7 @@ enum
     ENDTURN_SANDSTORM,
     ENDTURN_SUN,
     ENDTURN_HAIL,
+    ENDTURN_TRICK_ROOM,
     ENDTURN_AURORA_VEIL,
     ENDTURN_TAILWIND,
     ENDTURN_FIELD_COUNT,
@@ -590,17 +591,10 @@ u8 DoFieldEndTurnEffects(void)
                     if (--gWishFutureKnock.weatherDuration == 0)
                     {
                         gBattleWeather &= ~WEATHER_RAIN_TEMPORARY;
-                        gBattleWeather &= ~WEATHER_RAIN_DOWNPOUR;
                         gBattleCommunication[MULTISTRING_CHOOSER] = 2;
                     }
-                    else if (gBattleWeather & WEATHER_RAIN_DOWNPOUR)
-                        gBattleCommunication[MULTISTRING_CHOOSER] = 1;
                     else
                         gBattleCommunication[MULTISTRING_CHOOSER] = 0;
-                }
-                else if (gBattleWeather & WEATHER_RAIN_DOWNPOUR)
-                {
-                    gBattleCommunication[MULTISTRING_CHOOSER] = 1;
                 }
                 else
                 {
@@ -666,6 +660,18 @@ u8 DoFieldEndTurnEffects(void)
             }
             ++gBattleStruct->turnCountersTracker;
             break;
+        case ENDTURN_TRICK_ROOM:
+            if (gBattleWeather & WEATHER_TRICK_ROOM)
+            {
+                if (--gWishFutureKnock.weatherDuration == 0)
+                {
+                    gBattleWeather &= ~WEATHER_TRICK_ROOM;
+                    BattleScriptExecute(BattleScript_TrickRoomEnds);
+                    ++effect;
+                }
+            }
+            ++gBattleStruct->turnCountersTracker;
+            break;
         case ENDTURN_AURORA_VEIL:
             while (gBattleStruct->turnSideTracker < 2)
             {
@@ -678,7 +684,7 @@ u8 DoFieldEndTurnEffects(void)
                         gSideStatuses[side] &= ~SIDE_STATUS_AURORA_VEIL;
                         gCurrentMove = MOVE_AURORA_VEIL;
                         BattleScriptExecute(BattleScript_SideStatusWoreOff);
-                        PREPARE_MOVE_BUFFER(gBattleTextBuff1, gCurrentMove);
+                        PREPARE_MOVE_BUFFER(gBattleTextBuff1, gCurrentMove  );
                         ++effect;
                     }
                 }

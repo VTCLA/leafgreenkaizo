@@ -3494,7 +3494,7 @@ u8 GetWhoStrikesFirst(u8 battler1, u8 battler2, bool8 ignoreChosenMoves)
         {
             if (speedBattler1 == speedBattler2 && Random() & 1)
                 strikesFirst = 2; // same speeds, same priorities
-            else if (speedBattler1 < speedBattler2)
+            else if ((speedBattler1 < speedBattler2) ^ (gBattleWeather == WEATHER_TRICK_ROOM))
                 strikesFirst = 1; // battler2 has more speed
             // else battler1 has more speed
         }
@@ -3507,7 +3507,7 @@ u8 GetWhoStrikesFirst(u8 battler1, u8 battler2, bool8 ignoreChosenMoves)
     {
         if (speedBattler1 == speedBattler2 && Random() & 1)
             strikesFirst = 2; // same speeds, same priorities
-        else if (speedBattler1 < speedBattler2)
+        else if ((speedBattler1 < speedBattler2) ^ (gBattleWeather == WEATHER_TRICK_ROOM))
             strikesFirst = 1; // battler2 has more speed
         // else battler1 has more speed
     }

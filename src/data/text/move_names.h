@@ -437,4 +437,5 @@ const u8 gMoveNames[][13] = {
     _("STICKY WEB"),
     _("AURORA VEIL"),
     _("TAILWIND"),
+    _("TRICK ROOM"),
 };

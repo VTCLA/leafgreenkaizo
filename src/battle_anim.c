@@ -1730,6 +1730,7 @@ const struct BattleAnimBackground gBattleAnimBackgroundTable[] =
     [BG_SOLARBEAM_OPPONENT] = {gBattleAnimBgImage_Impact, gBattleAnimBgPalette_Solarbeam, gBattleAnimBgTilemap_ImpactOpponent},
     [BG_SOLARBEAM_PLAYER] = {gBattleAnimBgImage_Impact, gBattleAnimBgPalette_Solarbeam, gBattleAnimBgTilemap_ImpactPlayer},
     [BG_SOLARBEAM_CONTESTS] = {gBattleAnimBgImage_Impact, gBattleAnimBgPalette_Solarbeam, gBattleAnimBgTilemap_ImpactContests},
+    [BG_TRICK_ROOM] = {gBattleAnimBgImage_TrickRoom, gBattleAnimBgPalette_TrickRoom, gBattleAnimBgTilemap_TrickRoom},
 };
 
 static void (*const sScriptCmdTable[])(void) =

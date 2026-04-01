@@ -280,6 +280,7 @@ static const u8 sText_PkmnCantUseMoveTorment[] = _("{B_ACTIVE_NAME_WITH_PREFIX} 
 static const u8 sText_PkmnCantUseMoveTaunt[] = _("{B_ACTIVE_NAME_WITH_PREFIX} can't use\n{B_CURRENT_MOVE} after the TAUNT!\p");
 static const u8 sText_PkmnCantUseMoveItem[] = _("{B_LAST_ITEM}'s effect prevents\n{B_CURRENT_MOVE} from being used!\p");
 static const u8 sText_PkmnCantUseMoveSealed[] = _("{B_ACTIVE_NAME_WITH_PREFIX} can't use the\nsealed {B_CURRENT_MOVE}!\p");
+static const u8 sText_PkmnTwistedDimensions[] = _("{B_SCR_ACTIVE_NAME_WITH_PREFIX} twisted\nthe dimensions!");
 static const u8 sText_PkmnMadeItRain[] = _("{B_SCR_ACTIVE_NAME_WITH_PREFIX}'s {B_SCR_ACTIVE_ABILITY}\nmade it rain!");
 static const u8 sText_PkmnRaisedSpeed[] = _("{B_SCR_ACTIVE_NAME_WITH_PREFIX}'s {B_SCR_ACTIVE_ABILITY}\nraised its SPEED!");
 static const u8 sText_WeakArmorLowered[] = _("{B_DEF_NAME_WITH_PREFIX}'s {B_DEF_ABILITY}\nlowered its DEFENSE!");
@@ -374,6 +375,7 @@ static const u8 sText_DownpourStarted[] = _("A downpour started!"); // correspon
 static const u8 sText_RainContinues[] = _("Rain continues to fall.");
 static const u8 sText_DownpourContinues[] = _("The downpour continues."); // unused
 static const u8 sText_RainStopped[] = _("The rain stopped.");
+static const u8 sText_TwistedDimensionsReturned[] = _("The twisted dimensions\nreturned to normal!");
 static const u8 sText_SandstormBrewed[] = _("A sandstorm brewed!");
 static const u8 sText_SandstormRages[] = _("The sandstorm rages.");
 static const u8 sText_SandstormSubsided[] = _("The sandstorm subsided.");
@@ -975,6 +977,8 @@ const u8 *const gBattleStringsTable[] = {
     [STRINGID_TAILWINDPETEREDOUT - 12]            = sText_TailwindPeteredOut,
     [STRINGID_TAILWINDBLEW - 12]                  = sText_TailwindBlew,
     [STRINGID_TESTAURORAVEIL - 12]                = sText_TestAuroraVeil,
+    [STRINGID_PKMNTWISTEDDIMENSIONS - 12]         = sText_PkmnTwistedDimensions,
+    [STRINGID_TWISTEDDIMENSIONSRETURNED - 12]    = sText_TwistedDimensionsReturned,
 };
 
 const u16 gMissStringIds[] = {
@@ -999,7 +1003,12 @@ const u16 gMoveWeatherChangeStringIds[] = {
     STRINGID_BUTITFAILED,
     STRINGID_SANDSTORMBREWED,
     STRINGID_SUNLIGHTGOTBRIGHT,
-    STRINGID_STARTEDHAIL
+    STRINGID_STARTEDHAIL,
+};
+
+const u16 gTrickRoomStringIds[] = {
+    STRINGID_PKMNTWISTEDDIMENSIONS,
+    STRINGID_TWISTEDDIMENSIONSRETURNED,
 };
 
 const u16 gSandstormHailContinuesStringIds[] = {

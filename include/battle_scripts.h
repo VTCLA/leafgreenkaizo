@@ -281,6 +281,7 @@ extern const u8 BattleScript_WeakArmorActivates[];
 extern const u8 BattleScript_WeakArmorTrySpeed[];
 extern const u8 BattleScript_WeakArmorEnd[];
 extern const u8 BattleScript_TailwindEnds[];
+extern const u8 BattleScript_TrickRoomEnds[];
 
 extern const u8 *const gBattleScriptsForMoveEffects[];
 extern const u8 *const gBattlescriptsForBallThrow[];

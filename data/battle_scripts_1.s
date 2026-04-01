@@ -240,6 +240,7 @@ gBattleScriptsForMoveEffects::
 	.4byte BattleScript_EffectStickyWeb
 	.4byte BattleScript_EffectAuroraVeil
 	.4byte BattleScript_EffectTailwind
+	.4byte BattleScript_EffectTrickRoom
 
 BattleScript_EffectHit::
 	jumpifnotmove MOVE_SURF, BattleScript_HitFromAtkCanceler
@@ -1832,6 +1833,22 @@ BattleScript_EffectSunnyDay::
 	ppreduce
 	setsunny
 	goto BattleScript_MoveWeatherChange
+
+BattleScript_EffectTrickRoom::
+	attackcanceler
+	attackstring
+	ppreduce
+	settrickroom
+	attackanimation
+	waitanimation
+	printfromtable gTrickRoomStringIds
+	waitmessage 0x40
+	goto BattleScript_MoveEnd
+
+BattleScript_TrickRoomEnds::
+	printstring STRINGID_TWISTEDDIMENSIONSRETURNED
+	waitmessage 0x40
+	end2
 
 BattleScript_EffectDefenseUpHit::
 	setmoveeffect MOVE_EFFECT_DEF_PLUS_1 | MOVE_EFFECT_AFFECTS_USER

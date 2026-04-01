@@ -309,6 +309,7 @@ static void atkF8_jumpifholdeffect(void);
 static void atkF9_trainerslideout(void);
 static void atkFA_setauroraveil(void);
 static void atkFB_settailwind(void);
+static void atkFC_settrickroom(void);
 
 void (* const gBattleScriptingCommandsTable[])(void) =
 {
@@ -564,6 +565,7 @@ void (* const gBattleScriptingCommandsTable[])(void) =
     atkF9_trainerslideout,
     atkFA_setauroraveil,
     atkFB_settailwind,
+    atkFC_settrickroom,
 };
 
 struct StatFractions
@@ -8836,6 +8838,24 @@ static void atkBB_setsunny(void)
         gBattleWeather = WEATHER_SUN_TEMPORARY;
         gBattleCommunication[MULTISTRING_CHOOSER] = 4;
         gWishFutureKnock.weatherDuration = 5;
+    }
+    ++gBattlescriptCurrInstr;
+}
+
+static void atkFC_settrickroom(void)
+{
+    if (gBattleWeather & WEATHER_TRICK_ROOM)
+    {
+        gBattleWeather &= ~WEATHER_TRICK_ROOM;
+        gBattleCommunication[MULTISTRING_CHOOSER] = 1;
+        gWishFutureKnock.weatherDuration = 0;
+    }
+    else
+    {
+        gBattleScripting.battler = gBattlerAttacker;
+        gBattleWeather = WEATHER_TRICK_ROOM;
+        gBattleCommunication[MULTISTRING_CHOOSER] = 0;
+        gWishFutureKnock.weatherDuration = 4;
     }
     ++gBattlescriptCurrInstr;
 }

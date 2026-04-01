@@ -484,6 +484,7 @@ gBattleAnims_Moves::
 	.4byte Move_STICKY_WEB
 	.4byte Move_AURORA_VEIL
 	.4byte Move_TAILWIND
+	.4byte Move_TRICK_ROOM
 	.4byte Move_COUNT
 
 gBattleAnims_StatusConditions::
@@ -12903,6 +12904,18 @@ TailwindContinue:: @ 81CE77E
 TailwindOnPlayer:: @ 81CE8ED
 	fadetobg BG_HIGHSPEED_PLAYER
 	goto TailwindContinue
+
+Move_TRICK_ROOM::
+	setalpha 8, 8
+	playsewithpan SE_M_SUPERSONIC, SOUND_PAN_TARGET
+	createvisualtask AnimTask_ScaleMonAndRestore, 5, 0xfffa, 0xfffa, 15, 1, 1
+	fadetobg BG_TRICK_ROOM
+	waitbgfadein
+	delay 0x40
+	restorebg
+	waitbgfadein
+	blendoff
+	end
 
 Move_COUNT:: @ 81D53D9
 	loadspritegfx ANIM_TAG_IMPACT
